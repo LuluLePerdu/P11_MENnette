@@ -59,7 +59,9 @@ void Jeu::genererLabyrinthe(int startX, int startY) {
         labyrinthe[0][x] = labyrinthe[HAUTEUR - 1][x] = MUR;
     }
 }
+
 void Jeu::afficherLabyrinthe() {
+    std::cout << "\033[?25l";
     std::cout << "\033[H";
 
     for (int y = 0; y < HAUTEUR; y++) {
@@ -81,6 +83,7 @@ void Jeu::afficherLabyrinthe() {
     }
 
     setCouleur(BLANC, NOIR);
+    std::cout << "\033[?25h";
     std::cout.flush();
 }
 

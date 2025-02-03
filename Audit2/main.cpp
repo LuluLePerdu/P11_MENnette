@@ -33,7 +33,6 @@ int main() {
                 }
                 jeu.deplacerJoueur();
                 jeu.afficherLabyrinthe();
-                Sleep(100);
             }
 
             ecranFin.afficher(jeu.aGagne());

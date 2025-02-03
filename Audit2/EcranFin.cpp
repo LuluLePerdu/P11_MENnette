@@ -12,11 +12,13 @@ void EcranFin::afficher(bool victoire) {
     if (victoire) {
         setCouleur(VERT_CLAIR, NOIR);
         std::cout << "=== Vous avez gagne ! ===" << std::endl;
+        _getch();
     } else {
         setCouleur(ROUGE_CLAIR, NOIR);
         std::cout << "=== Vous avez perdu ! ===" << std::endl;
-    }
-        setCouleur(BLANC, NOIR);
-        std::cout << "Appuyez sur une touche pour retourner au menu..." << std::endl;
         _getch();
+    }
+    setCouleur(BLANC, NOIR);
+    std::cout << "Appuyez sur une touche pour retourner au menu..." << std::endl;
+    _getch();
 }
