@@ -2,7 +2,7 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
-#include "Couleur.cpp"
+#include "Couleur.h"
 #include "Jeu.h"
 
 void setCouleur(int textColor, int bgColor);

@@ -5,7 +5,7 @@
 #include <ctime>
 #include <chrono>
 #include <windows.h> 
-#include "Couleur.cpp"
+#include "Couleur.h"
 
 void setCouleur(int texte, int fond) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
