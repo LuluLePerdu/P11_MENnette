@@ -1,0 +1,3 @@
+- Views : Tout ce qui est lié à l'affichage de l'application
+- Models : Tout ce qui est lié à la gestion des données, logique
+- Controllers : Tout ce qui est lié aux interactions entre les vues et les modèles, ex  : j'appuis sur un bouton(views), je veux que ça fasse tel méthode du model
