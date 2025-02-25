@@ -1,6 +1,7 @@
 #pragma once
 #include "MainMenuController.h"
 #include "SnakeMazeController.h"
+#include "ShakeItController.h"    
 #include <conio.h>
 #include <iostream>
 #include <chrono>
@@ -34,11 +35,17 @@ void MainMenuController::run() {
 				if (model.getSelectedOption() == 2) {
 					return;
 				}
+				if (model.getSelectedOption() == 3) {
+					ShakeItView shakeItView;
+					ShakeItController shakeItController(shakeItView);
+                    shakeItController.run();
+				}
                 break;  
             }
         }
         this_thread::sleep_for(std::chrono::milliseconds(50));
     }
+
 }
 
 void MainMenuController::startSnakeGame() {

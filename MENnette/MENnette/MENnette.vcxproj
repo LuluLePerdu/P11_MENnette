@@ -158,6 +158,9 @@
     <ClInclude Include="MainMenuView.h" />
     <ClInclude Include="MainMenuController.h" />
     <ClInclude Include="MainMenuModel.h" />
+    <ClInclude Include="ShakeItController.h" />
+    <ClInclude Include="ShakeItModel.h" />
+    <ClInclude Include="ShakeItView.h" />
     <ClInclude Include="SnakeMazeController.h" />
     <ClInclude Include="SnakeMazeModel.h" />
     <ClInclude Include="SnakeMazeView.h" />

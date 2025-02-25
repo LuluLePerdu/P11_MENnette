@@ -116,5 +116,14 @@
     <ClInclude Include="MainMenuController.h">
       <Filter>Fichiers sources\Controllers</Filter>
     </ClInclude>
+    <ClInclude Include="ShakeItModel.h">
+      <Filter>Fichiers sources\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="ShakeItView.h">
+      <Filter>Fichiers sources\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="ShakeItController.h">
+      <Filter>Fichiers sources\Controllers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
