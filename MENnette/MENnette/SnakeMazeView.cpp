@@ -10,9 +10,7 @@ void SnakeMazeView::setColor(int text, int background) {
     SetConsoleTextAttribute(hConsole, (background << 4) | text);
 }
 
-void SnakeMazeView::render(const SnakeMazeModel& model) {
-    
-    
+void SnakeMazeView::render(const SnakeMazeModel& model) {  
     std::cout << "\033[?25l"; 
     std::cout << "\033[H";  
 
