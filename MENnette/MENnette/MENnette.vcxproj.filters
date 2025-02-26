@@ -116,5 +116,23 @@
     <ClInclude Include="MainMenuController.h">
       <Filter>Fichiers sources\Controllers</Filter>
     </ClInclude>
+    <ClInclude Include="ThreadCutterController.h">
+      <Filter>Fichiers sources\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadCutterModel.h">
+      <Filter>Fichiers sources\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadCutterView.h">
+      <Filter>Fichiers sources\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonSaysModel.h">
+      <Filter>Fichiers sources\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonSaysController.h">
+      <Filter>Fichiers sources\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonSaysView.h">
+      <Filter>Fichiers sources\Views</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

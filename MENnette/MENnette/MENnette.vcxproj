@@ -158,9 +158,15 @@
     <ClInclude Include="MainMenuView.h" />
     <ClInclude Include="MainMenuController.h" />
     <ClInclude Include="MainMenuModel.h" />
+    <ClInclude Include="SimonSaysController.h" />
+    <ClInclude Include="SimonSaysModel.h" />
+    <ClInclude Include="SimonSaysView.h" />
     <ClInclude Include="SnakeMazeController.h" />
     <ClInclude Include="SnakeMazeModel.h" />
     <ClInclude Include="SnakeMazeView.h" />
+    <ClInclude Include="ThreadCutterController.h" />
+    <ClInclude Include="ThreadCutterModel.h" />
+    <ClInclude Include="ThreadCutterView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
