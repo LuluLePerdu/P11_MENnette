@@ -6,12 +6,14 @@ mt19937 gen(rd());
 uniform_int_distribution<int> distr(0, 1023);
 
 ShakeItModel::ShakeItModel(){
+	value = 0;
 }
 ShakeItModel::~ShakeItModel(){
 }
 
 int ShakeItModel::getLength() {
-	return interpolateLength(distr(gen));
+	//return interpolateLength(distr(gen));
+	return interpolateLength(this->value);
 }
 
 int ShakeItModel::getMaxLength() const{
@@ -20,6 +22,10 @@ int ShakeItModel::getMaxLength() const{
 
 int ShakeItModel::getMaxValue() const{
 	return MAX_BARGRAPH_VALUE;
+}
+
+void ShakeItModel::setValue(float value) {
+	this->value = value;
 }
 
 int ShakeItModel::interpolateLength(float value) {

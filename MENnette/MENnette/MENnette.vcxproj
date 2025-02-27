@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameModel.h" />
+    <ClInclude Include="common.hpp" />
     <ClInclude Include="MainMenuView.h" />
     <ClInclude Include="MainMenuController.h" />
     <ClInclude Include="MainMenuModel.h" />

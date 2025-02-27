@@ -11,9 +11,10 @@ class ShakeItController
 public:
 	ShakeItController(ShakeItView& view);
 	~ShakeItController();
-	void returnToMainMenu();
+	//void returnToMainMenu();
 	void update();
 	void run();
+	
 private:
 	ShakeItModel model;
 	ShakeItView& view;
