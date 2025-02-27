@@ -2,6 +2,7 @@
 #include "ShakeItModel.h"
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 #define RESET   "\033[0m"
 #define GREEN   "\033[32m"
@@ -16,6 +17,7 @@ void ShakeItView::render(ShakeItModel& model)
     int maxLength = model.getMaxLength();
     int maxValue = model.getMaxValue();
 
+    cout << "\033[?25l"; //flicker resolver
     cout << "\033[H";
 
     for (int i = 0; i < maxLength + 2; i++) {
@@ -24,8 +26,8 @@ void ShakeItView::render(ShakeItModel& model)
     cout << "\n|";
 
     for (int i = 0; i < maxLength; i++) {
-        if (i < length) {
-            if (i < maxLength * 0.3) {
+        if (i <= length) {
+            if (i < maxLength * 0.35) {
                 cout << GREEN << "#" << RESET;
             }
             else if (i < maxLength * 0.7) {
@@ -44,5 +46,7 @@ void ShakeItView::render(ShakeItModel& model)
     for (int i = 0; i < maxLength + 2; i++) {
         cout << "-";
     }
-    cout << std::endl;
+
+    cout << endl;
+    cout << "Value: " << setw(5) << right << model.realValue << " / 1023" << endl;
 }

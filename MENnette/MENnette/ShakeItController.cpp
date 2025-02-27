@@ -21,17 +21,28 @@ void ShakeItController::run() {
 	while (true)
 	{
 		if (_kbhit()) {
-			if (_getch() == 27) { //27 = [ESC] key
+			switch (_getch())
+			{
+			case 'a':
+				model.setValue(800);
+				break;
+			case 'r':
+				model.setValue(0);
+				break;
+			case 27:
+				returnToMainMenu();
+				break;
+			default:
 				break;
 			}
+
 		}
 		view.render(model);
-		model.setValue(inc);
-		inc += 50;
-		this_thread::sleep_for(std::chrono::milliseconds(300));
+		model.setValue(model.realValue + 50);
+		this_thread::sleep_for(std::chrono::milliseconds(100));
+
 	}
 	system("cls");
 	cout << "Returning to main menu" << endl;
 	returnToMainMenu();
-
 }
