@@ -1,11 +1,14 @@
 #include "SimonSaysController.h"
 #include "iostream"
+#include "MainMenuView.h"
+#include "MainMenuController.h"
 using namespace std;
 
 SimonSaysController::SimonSaysController(SimonSaysView& v) : view(v) {}
 
 void SimonSaysController::run() {
-	int tempArray[10];
+    system("cls");
+    int tempArray[10];
 	int ansArray[10];
     for (int i = 0; i < 10; i++) {
         tempArray[i] = model.getElement(i);
@@ -22,9 +25,18 @@ void SimonSaysController::run() {
         for (int l = 0; l < i + 1; l++) {
             if (ansArray[l] != tempArray[l]) {
                 cout << endl << "Mauvaise sequence!" << endl;
-                return;
+                system("pause");
+                returnToMainMenu();
             }
         }
-        cout << endl << "Module desamorce." << endl;
     }
+    cout << endl << "Module desamorce." << endl;
+    system("pause");
+    returnToMainMenu();
+}
+
+void SimonSaysController::returnToMainMenu() {
+    MainMenuView menuView;
+    MainMenuController menuController(menuView);
+    menuController.run();
 }

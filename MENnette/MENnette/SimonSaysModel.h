@@ -9,5 +9,5 @@ public:
 private:
 	void simonSequence();
 	bool completed = false;
-	bool seqArray[10];
+	int seqArray[10];
 };

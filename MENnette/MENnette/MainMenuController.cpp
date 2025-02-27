@@ -1,7 +1,9 @@
 #pragma once
 #include "MainMenuController.h"
 #include "SnakeMazeController.h"
-#include "ShakeItController.h"    
+#include "ShakeItController.h"
+#include "SimonSaysController.h"
+#include "ThreadCutterController.h"
 #include <conio.h>
 #include <iostream>
 #include <chrono>
@@ -40,6 +42,16 @@ void MainMenuController::run() {
 					ShakeItController shakeItController(shakeItView);
                     shakeItController.run();
 				}
+                if (model.getSelectedOption() == 4) {
+                    ThreadCutterView threadView;
+                    ThreadCutterController threadController(threadView);
+                    threadController.run();
+                }
+                if (model.getSelectedOption() == 5) {
+                    SimonSaysView simonView;
+                    SimonSaysController simonController(simonView);
+                    simonController.run();
+                }
                 break;  
             }
         }

@@ -5,6 +5,7 @@
 using namespace std;
 
 ThreadCutterModel::ThreadCutterModel() {
+    srand(time(0));
     for (int i = 0; i < 4; i++) {
         LEDarray[i] = rand() % 2;
     }

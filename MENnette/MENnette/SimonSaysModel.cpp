@@ -2,6 +2,7 @@
 #include <random>
 
 SimonSaysModel::SimonSaysModel() {
+    srand(time(0));
     simonSequence();
 }
 
