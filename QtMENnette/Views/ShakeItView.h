@@ -21,6 +21,7 @@ class ShakeItView
 {
 public:
 	void render(ShakeItModel& model);
+
 private:
 };
 

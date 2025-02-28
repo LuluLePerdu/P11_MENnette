@@ -6,7 +6,7 @@ mt19937 gen(rd());
 uniform_int_distribution<int> distr(0, 1023);
 
 ShakeItModel::ShakeItModel(){
-	realValue = 800;
+	realValue = 0;
 	targetValue = 0;
 }
 ShakeItModel::~ShakeItModel(){
@@ -23,6 +23,10 @@ int ShakeItModel::getMaxLength() const{
 
 int ShakeItModel::getMaxValue() const{
 	return MAX_BARGRAPH_VALUE;
+}
+
+int ShakeItModel::getValue() const {
+	return realValue;
 }
 
 void ShakeItModel::setValue(float value) {

@@ -5,8 +5,9 @@
 #include "MainMenuView.h"
 #include "MainMenuController.h"
 #include <iostream>
+#include <qwidget.h>
 
-class ShakeItController
+class ShakeItController //: public QWidget
 {
 public:
 	ShakeItController(ShakeItView& view);
@@ -14,6 +15,10 @@ public:
 	//void returnToMainMenu();
 	void update();
 	void run();
+
+protected:
+	//void keyPressEvent(QKeyEvent* event) override;
+
 	
 private:
 	ShakeItModel model;
