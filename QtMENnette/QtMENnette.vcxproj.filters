@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>qml;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{1e0438eb-d7d0-4a6f-a7cb-9644096e1255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views">
+      <UniqueIdentifier>{b1625eb5-98ff-4481-b966-18b4dc385af6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{e92457b7-2342-4b4f-8c9b-9748fa3c7c23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controllers">
+      <UniqueIdentifier>{5580bed2-2593-4c90-bb4e-dec5f87258ae}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="QtMENnette.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtUic Include="QtMENnette.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="QtMENnette.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClCompile Include="QtMENnette.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\MainMenuModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\ShakeItModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\SimonSaysModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\SnakeMazeModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\ThreadCutterModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Clock.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Communication.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\MENnette.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Controllers\GameController.cpp">
+      <Filter>Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Controllers\MainMenuController.cpp">
+      <Filter>Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Controllers\ShakeItController.cpp">
+      <Filter>Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Controllers\SimonSaysController.cpp">
+      <Filter>Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Controllers\SnakeMazeController.cpp">
+      <Filter>Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Controllers\ThreadCutterController.cpp">
+      <Filter>Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\GameView.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\MainMenuView.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ShakeItView.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\SimonSaysView.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\SnakeMazeView.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ThreadCutterView.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Models\GameModel.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\MainMenuModel.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\ShakeItModel.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\SimonSaysModel.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\SnakeMazeModel.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\ThreadCutterModel.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Color.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\common.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Controllers\MainMenuController.h">
+      <Filter>Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Controllers\ShakeItController.h">
+      <Filter>Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Controllers\SimonSaysController.h">
+      <Filter>Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Controllers\SnakeMazeController.h">
+      <Filter>Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Controllers\ThreadCutterController.h">
+      <Filter>Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\MainMenuView.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ShakeItView.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\SimonSaysView.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\SnakeMazeView.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ThreadCutterView.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Utils\Information.txt">
+      <Filter>Utils</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

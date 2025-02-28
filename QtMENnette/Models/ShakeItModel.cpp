@@ -1,5 +1,5 @@
 #pragma once
-#include "shakeitmodel.h"
+#include "ShakeItModel.h"
 
 random_device rd;
 mt19937 gen(rd());

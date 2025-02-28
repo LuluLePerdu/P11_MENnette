@@ -5,12 +5,13 @@
 #include "MainMenuModel.h"
 #include "MainMenuView.h"
 #include "MainMenuController.h"
+#include "stdafx.h"
 
-int main() {
-    MainMenuView viewMenu;
-    MainMenuController controllerMenu(viewMenu);
-
-    controllerMenu.run();
-
-    return 0;
-}
+//int main() {
+//    MainMenuView viewMenu;
+//    MainMenuController controllerMenu(viewMenu);
+//
+//    controllerMenu.run();
+//
+//    return 0;
+//}
