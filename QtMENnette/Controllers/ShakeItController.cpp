@@ -4,7 +4,7 @@
 #include <conio.h>
 #include "common.hpp"
 
-#include "QtMENnette.h"
+#include "MainWindow.h"
 #include <qwidget.h>
 #include <QKeyEvent>
 #include <QObject>

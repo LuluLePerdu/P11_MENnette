@@ -115,7 +115,6 @@
     <ClCompile Include="Controllers\ThreadCutterController.cpp" />
     <ClCompile Include="Utils\Clock.cpp" />
     <ClCompile Include="Utils\Communication.cpp" />
-    <ClCompile Include="Utils\MENnette.cpp" />
     <ClCompile Include="Views\GameView.cpp" />
     <ClCompile Include="Views\MainMenuView.cpp" />
     <ClCompile Include="Views\ShakeItView.cpp" />
@@ -134,15 +133,15 @@
     <ClInclude Include="Views\SimonSaysView.h" />
     <ClInclude Include="Views\SnakeMazeView.h" />
     <ClInclude Include="Views\ThreadCutterView.h" />
-    <QtRcc Include="QtMENnette.qrc" />
-    <QtUic Include="QtMENnette.ui" />
-    <QtMoc Include="QtMENnette.h" />
+    <QtRcc Include="MainWindow.qrc" />
+    <QtUic Include="MainWindow.ui" />
+    <QtMoc Include="MainWindow.h" />
     <ClCompile Include="Models\MainMenuModel.cpp" />
     <ClCompile Include="Models\ShakeItModel.cpp" />
     <ClCompile Include="Models\SimonSaysModel.cpp" />
     <ClCompile Include="Models\SnakeMazeModel.cpp" />
     <ClCompile Include="Models\ThreadCutterModel.cpp" />
-    <ClCompile Include="QtMENnette.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClInclude Include="Models\GameModel.h" />
     <ClInclude Include="Models\MainMenuModel.h" />

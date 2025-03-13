@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include "ShakeItModel.h"
-#include "ui_QtMENnette.h"
+#include "ui_MainWindow.h"
 #include <QWidget>
 #include <QKeyEvent>
 #include <QProgressBar>
@@ -28,6 +28,6 @@ protected:
     void focusInEvent(QFocusEvent* event) override; 
 
 private:
-    Ui::QtMENnetteClass ui;
+	Ui::MainWindowClass ui;
     ShakeItModel* model = nullptr;
 };

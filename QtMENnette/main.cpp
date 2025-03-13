@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "QtMENnette.h"
+#include "MainWindow.h"
 #include <QtWidgets/QApplication>
 #include <qtimer.h>
 
@@ -9,7 +9,7 @@
 
 
 
-QtMENnette* QtMENnette::w = NULL;
+MainWindow* MainWindow::w = NULL;
 
 int main(int argc, char *argv[])
 {
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 	a.setStyle(QStyleFactory::create("Fusion"));	// * Force le style des widgets a etre de la meme apparence que celle dans QtDesigner
 
-	QtMENnette* w = QtMENnette::instance();
+	MainWindow* w = MainWindow::instance();
 
 	ShakeItView shakeItView;
 	ShakeItController shakeItController(shakeItView);
@@ -32,8 +32,8 @@ int main(int argc, char *argv[])
 	timer.start(33);
 
 	// ! Pas touche
-    //w->show();
-	shakeItView.show();  // Assurez-vous que ShakeItView est aussi affichée
-	shakeItView.setFocus();
+    w->show();
+	//shakeItView.show();  // Assurez-vous que ShakeItView est aussi affichée
+	//shakeItView.setFocus();
     return a.exec();
 }

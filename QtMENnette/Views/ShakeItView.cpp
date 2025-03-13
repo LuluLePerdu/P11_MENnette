@@ -1,6 +1,6 @@
 #include "ShakeItView.h"
 #include "ShakeItModel.h"
-#include "QtMENnette.h"
+#include "MainWindow.h"
 #include <QKeyEvent>
 #include <qprogressbar.h>
 #include <QTimer>
