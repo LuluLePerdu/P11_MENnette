@@ -15,7 +15,7 @@ public:
 
 private:
     static MainWindow* w;
-    Ui::MainWindowClass ui;
+    Ui::MainWindow ui;
 
 private slots:
 	void on_btnHome_clicked();

@@ -28,6 +28,6 @@ protected:
     void focusInEvent(QFocusEvent* event) override; 
 
 private:
-	Ui::MainWindowClass ui;
+	Ui::MainWindow ui;
     ShakeItModel* model = nullptr;
 };
