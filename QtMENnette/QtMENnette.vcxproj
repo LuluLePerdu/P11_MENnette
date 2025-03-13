@@ -65,7 +65,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\Ludwi\Desktop\P11_MENnette\QtMENnette\Controllers;C:\Users\Ludwi\Desktop\P11_MENnette\QtMENnette\Models;C:\Users\Ludwi\Desktop\P11_MENnette\QtMENnette\Utils;C:\Users\Ludwi\Desktop\P11_MENnette\QtMENnette\Views;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\QtMENnette\Controllers;..\QtMENnette\Models;..\QtMENnette\Utils;..\QtMENnette\Views;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">

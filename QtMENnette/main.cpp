@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	timer.start(33);
 
 	// ! Pas touche
-    w->show();
+    //w->show();
 	shakeItView.show();  // Assurez-vous que ShakeItView est aussi affichée
 	shakeItView.setFocus();
     return a.exec();
