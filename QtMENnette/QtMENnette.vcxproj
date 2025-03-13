@@ -65,7 +65,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\thein\OneDrive\Documents\UNI\S2\Project\Qt\QtMENnette\QtMENnette\Controllers;C:\Users\thein\OneDrive\Documents\UNI\S2\Project\Qt\QtMENnette\QtMENnette\Models;C:\Users\thein\OneDrive\Documents\UNI\S2\Project\Qt\QtMENnette\QtMENnette\Utils;C:\Users\thein\OneDrive\Documents\UNI\S2\Project\Qt\QtMENnette\QtMENnette\Views;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Ludwi\Desktop\P11_MENnette\QtMENnette\Controllers;C:\Users\Ludwi\Desktop\P11_MENnette\QtMENnette\Models;C:\Users\Ludwi\Desktop\P11_MENnette\QtMENnette\Utils;C:\Users\Ludwi\Desktop\P11_MENnette\QtMENnette\Views;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -123,14 +123,14 @@
     <ClCompile Include="Views\SnakeMazeView.cpp" />
     <ClCompile Include="Views\ThreadCutterView.cpp" />
     <ClInclude Include="Controllers\MainMenuController.h" />
-    <ClInclude Include="Controllers\ShakeItController.h" />
+    <QtMoc Include="Controllers\ShakeItController.h" />
     <ClInclude Include="Controllers\SimonSaysController.h" />
     <ClInclude Include="Controllers\SnakeMazeController.h" />
     <ClInclude Include="Controllers\ThreadCutterController.h" />
     <ClInclude Include="Utils\Color.h" />
     <ClInclude Include="Utils\common.hpp" />
     <ClInclude Include="Views\MainMenuView.h" />
-    <ClInclude Include="Views\ShakeItView.h" />
+    <QtMoc Include="Views\ShakeItView.h" />
     <ClInclude Include="Views\SimonSaysView.h" />
     <ClInclude Include="Views\SnakeMazeView.h" />
     <ClInclude Include="Views\ThreadCutterView.h" />
@@ -146,7 +146,7 @@
     <ClCompile Include="main.cpp" />
     <ClInclude Include="Models\GameModel.h" />
     <ClInclude Include="Models\MainMenuModel.h" />
-    <ClInclude Include="Models\ShakeItModel.h" />
+    <QtMoc Include="Models\ShakeItModel.h" />
     <ClInclude Include="Models\SimonSaysModel.h" />
     <ClInclude Include="Models\SnakeMazeModel.h" />
     <ClInclude Include="Models\ThreadCutterModel.h" />

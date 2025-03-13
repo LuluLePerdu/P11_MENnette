@@ -126,9 +126,6 @@
     <ClInclude Include="Models\MainMenuModel.h">
       <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="Models\ShakeItModel.h">
-      <Filter>Models</Filter>
-    </ClInclude>
     <ClInclude Include="Models\SimonSaysModel.h">
       <Filter>Models</Filter>
     </ClInclude>
@@ -147,9 +144,6 @@
     <ClInclude Include="Controllers\MainMenuController.h">
       <Filter>Controllers</Filter>
     </ClInclude>
-    <ClInclude Include="Controllers\ShakeItController.h">
-      <Filter>Controllers</Filter>
-    </ClInclude>
     <ClInclude Include="Controllers\SimonSaysController.h">
       <Filter>Controllers</Filter>
     </ClInclude>
@@ -160,9 +154,6 @@
       <Filter>Controllers</Filter>
     </ClInclude>
     <ClInclude Include="Views\MainMenuView.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ShakeItView.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\SimonSaysView.h">
@@ -179,5 +170,16 @@
     <Text Include="Utils\Information.txt">
       <Filter>Utils</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Views\ShakeItView.h">
+      <Filter>Views</Filter>
+    </QtMoc>
+    <QtMoc Include="Controllers\ShakeItController.h">
+      <Filter>Controllers</Filter>
+    </QtMoc>
+    <QtMoc Include="Models\ShakeItModel.h">
+      <Filter>Models</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

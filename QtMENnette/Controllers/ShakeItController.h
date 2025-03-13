@@ -1,26 +1,21 @@
 #pragma once
-#include "ShakeItModel.h"
+#include <QObject> 
 #include "ShakeItView.h"
+#include "ShakeItModel.h"
 
-#include "MainMenuView.h"
-#include "MainMenuController.h"
-#include <iostream>
-#include <qwidget.h>
-
-class ShakeItController //: public QWidget
-{
+class ShakeItController : public QObject {
+    Q_OBJECT 
 public:
-	ShakeItController(ShakeItView& view);
-	~ShakeItController();
-	//void returnToMainMenu();
-	void update();
-	void run();
+    explicit ShakeItController(ShakeItView& view);
+    ~ShakeItController();
 
-protected:
-	//void keyPressEvent(QKeyEvent* event) override;
+    void update();
+    void run();
 
-	
+private slots:
+    void onKeyPressed(QKeyEvent* event);
+
 private:
-	ShakeItModel model;
-	ShakeItView& view;
+    ShakeItView& view;
+    ShakeItModel model;
 };

@@ -1,14 +1,40 @@
 #include "ShakeItView.h"
 #include "ShakeItModel.h"
-
 #include "QtMENnette.h"
+#include <QKeyEvent>
 #include <qprogressbar.h>
+#include <QTimer>
 
+ShakeItView::ShakeItView(QWidget* parent) : QWidget(parent) {
+    ui.setupUi(this);
+    setFocusPolicy(Qt::StrongFocus);
+    setFocus(Qt::ActiveWindowFocusReason);
+    qDebug() << "ShakeItView initialisée, focusPolicy =" << focusPolicy();
 
-void ShakeItView::render(ShakeItModel& model)
-{
-	QtMENnette* w = QtMENnette::instance();
+    QTimer::singleShot(1000, this, [this]() {
+        this->raise();
+        this->activateWindow();
+        this->setFocus(); 
+        QWidget* w = QApplication::focusWidget();
+        });
 
-	QProgressBar* prbBargraph = w->findChild<QProgressBar*>("prbBargraph");
-	prbBargraph->setValue(model.getLength());
+}
+
+void ShakeItView::render(ShakeItModel& model) {
+    ui.prbBargraph->setValue(model.getLength()); 
+}
+
+void ShakeItView::link(ShakeItModel* model) {
+    this->model = model; 
+    connect(model, &ShakeItModel::lengthChanged, ui.prbBargraph, &QProgressBar::setValue);
+}
+
+void ShakeItView::keyPressEvent(QKeyEvent* event) {
+    qDebug() << "Touche pressée :" << event->text(); 
+    emit keyPressed(event); 
+}
+
+void ShakeItView::focusInEvent(QFocusEvent* event) {
+    QWidget::focusInEvent(event); 
+    qDebug() << "ShakeItView a le focus"; 
 }

@@ -5,6 +5,8 @@
 
 #include "ShakeItController.h"
 #include "ShakeItView.h"
+#include <QDebug>
+
 
 
 QtMENnette* QtMENnette::w = NULL;
@@ -20,7 +22,7 @@ int main(int argc, char *argv[])
 	ShakeItView shakeItView;
 	ShakeItController shakeItController(shakeItView);
 
-	//loop qiu repart a chaque 33ms
+	//loop qui repart a chaque 33ms
 	QTimer timer;
 	QObject::connect(&timer, &QTimer::timeout, [&]() {
 		
@@ -31,5 +33,7 @@ int main(int argc, char *argv[])
 
 	// ! Pas touche
     w->show();
+	shakeItView.show();  // Assurez-vous que ShakeItView est aussi affichée
+	shakeItView.setFocus();
     return a.exec();
 }
