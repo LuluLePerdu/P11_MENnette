@@ -17,20 +17,31 @@ using namespace std;
 #define MSG_SIZE 9
 #define MSG_ID_FROM_ARDUINO 142
 #define MSG_ID_FROM_PC 242
+#define MSG_ID_ERROR 71
 
-int ledState = 0;
-int inc = 0;
+struct Frame { 
+    uint8_t id;
+    uint8_t ledState;
+    uint8_t potentiometer;
+    uint8_t joystickX;
+    uint8_t joystickY;
+    uint8_t accelerometerX;
+    uint8_t accelerometerY;
+    uint8_t accelerometerZ;
+    uint8_t checksum;
+};
 
-void sendMsg(HANDLE hSerial);
-void readMsg(HANDLE hSerial);
+Frame errorFrame = {MSG_ID_ERROR, 0, 0, 0, 0, 0, 0, 0, 0};
+
+void sendMsg(HANDLE hSerial, Frame frame);
+Frame readMsg(HANDLE hSerial);
 bool configureSerialPort(HANDLE hSerial);
 
 int main() {
     string com;
     cout << "Entrer le port de communication du Arduino: ";
     cin >> com;
-
-    // Open the serial port
+    
     wstring comW(com.begin(), com.end());
     HANDLE hSerial = CreateFileW(comW.c_str(), GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
     if (hSerial == INVALID_HANDLE_VALUE) {
@@ -44,10 +55,11 @@ int main() {
         CloseHandle(hSerial);
         return -1;
     }
+    Frame frame = {MSG_ID_FROM_PC, 255, 2, 3, 4, 5, 6, 7, 0};
 
     while (true) {
-        sendMsg(hSerial);
-        readMsg(hSerial);
+        sendMsg(hSerial, frame);
+        Frame test = readMsg(hSerial);
         this_thread::sleep_for(chrono::milliseconds(33));
     }
 
@@ -76,18 +88,12 @@ bool configureSerialPort(HANDLE hSerial) {
     return true;
 }
 
-void sendMsg(HANDLE hSerial) {
+void sendMsg(HANDLE hSerial, Frame frame) {
     // Creation de message
-    // message bidon de base qui fait clignoter toute les leds
-    byte msg[MSG_SIZE] = {MSG_ID_FROM_PC, ledState, 0, 0, 0, 0, 0, 0, 0};
-    inc++;
-    if (inc >= 15) {
-        ledState == 0 ? ledState = 255 : ledState = 0;
-        inc = 0;
-    }
+    uint8_t msg[MSG_SIZE] = {frame.id, frame.ledState, frame.potentiometer, frame.joystickX, frame.joystickY, frame.accelerometerX, frame.accelerometerY, frame.accelerometerZ, 0};
 
     // Checksum via XOR de tous les bytes
-    byte checksum = 0;
+    uint8_t checksum = 0;
     for (int i = 0; i < MSG_SIZE - 1; i++) {
         checksum ^= msg[i];
     }
@@ -105,16 +111,16 @@ void sendMsg(HANDLE hSerial) {
     }
 }
 
-void readMsg(HANDLE hSerial) {
-    byte msg[MSG_SIZE] = {0}; 
+Frame readMsg(HANDLE hSerial) {
+    uint8_t msg[MSG_SIZE] = {0}; 
     DWORD bytesRead;
-    byte startByte = MSG_ID_FROM_ARDUINO;
+    uint8_t startByte = MSG_ID_FROM_ARDUINO;
 
     // Synchronize avec le debut du message MSG_ID_FROM_ARDUINO
     while (true) {
         if (!ReadFile(hSerial, &msg[0], 1, &bytesRead, NULL) || bytesRead < 1) {
             cerr << "WARNING-PC: Not enough bytes read! Message ignored" << endl;
-            return;
+            return errorFrame;
         }
         if (msg[0] == startByte) {
             break;
@@ -124,16 +130,16 @@ void readMsg(HANDLE hSerial) {
     // Lecture 
     if (!ReadFile(hSerial, &msg[1], MSG_SIZE - 1, &bytesRead, NULL) || bytesRead < MSG_SIZE - 1) {
         cerr << "WARNING-PC: Not enough bytes read! Message ignored" << endl;
-        return;
+        return errorFrame;
     }
 
-    byte checksum = 0;
+    uint8_t checksum = 0;
     for (int i = 0; i < MSG_SIZE - 1; i++) {
         checksum ^= msg[i];
     }
     if (checksum != msg[MSG_SIZE - 1]) {
         cerr << "WARNING-PC: Checksum error! Message ignored" << endl;
-        return;
+        return errorFrame;
     }
 
     cout << "LOG-PC: Received message: ";
@@ -141,4 +147,6 @@ void readMsg(HANDLE hSerial) {
         cout << setw(3) << (int)msg[i] << " ";
     }
     cout << endl;
+    Frame frame = {msg[0], msg[1], msg[2], msg[3], msg[4], msg[5], msg[6], msg[7], msg[8]};
+    return frame;
 }
