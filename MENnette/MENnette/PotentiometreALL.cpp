@@ -7,6 +7,8 @@ bool playPot() {
     char characters[] = "!@±/£$¢%¤?¬&¦*()=+#|\\*-[]^¨<>}{`;:,.'";
     char digits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     int target = (rand() % 255);
+    int seed = time(0);
+    default_random_engine randomEngine(seed);
     cout << "Target : " << target << endl;
     char code[10];
     for (int i = 0; i < 10; i++) {
@@ -35,7 +37,7 @@ bool playPot() {
             for (int i = distanceTen; i < 10; i++) {
                 tempArray[i] = code[i];
             }
-            shuffle(begin(tempArray), end(tempArray), default_random_engine(time));
+            shuffle(begin(tempArray), end(tempArray), randomEngine());
             for (int i = 0; i < 10; i++) {
                 cout << tempArray[i];
             }
