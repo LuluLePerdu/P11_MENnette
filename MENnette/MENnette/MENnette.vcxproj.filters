@@ -149,10 +149,10 @@
     <ClInclude Include="common.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="SerialPort.h">
+    <ClInclude Include="Communication.h">
       <Filter>Fichiers sources\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Communication.h">
+    <ClInclude Include="PotentiometreALL.h">
       <Filter>Fichiers sources\Utils</Filter>
     </ClInclude>
   </ItemGroup>

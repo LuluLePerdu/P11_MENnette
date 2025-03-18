@@ -1,7 +1,7 @@
 #include "MainMenuModel.h"
 
 MainMenuModel::MainMenuModel() : selectedOption(0) {
-    options = { "Jouer", "Options", "Quitter", "Bargraph", "DEL", "Simon"};
+    options = { "Jouer", "Options", "Quitter", "Bargraph", "DEL", "Simon", "PotentiometreTest"};
 }
 
 const std::vector<std::string>& MainMenuModel::getOptions() const {

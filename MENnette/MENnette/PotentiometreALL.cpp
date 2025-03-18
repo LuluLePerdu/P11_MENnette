@@ -1,7 +1,4 @@
-#include <iostream>
-#include <random>
-#include <random>
-using namespace std;
+#include "PotentiometreALL.h"
 
 bool playPot() {
     char characters[] = "!@±/£$¢%¤?¬&¦*()=+#|\\*-[]^¨<>}{`;:,.'";
@@ -35,7 +32,7 @@ bool playPot() {
             for (int i = distance; i < 10; i++) {
                 outputCode[i] = code[i];
             }
-            shuffle(begin(outputCode), end(outputCode), randomEngine());
+            shuffle(begin(outputCode), end(outputCode), randomEngine);
             for (int i = 0; i < 10; i++) {
                 cout << outputCode[i];
             }

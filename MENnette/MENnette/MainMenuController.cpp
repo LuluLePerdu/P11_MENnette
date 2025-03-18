@@ -9,6 +9,7 @@
 #include <chrono>
 #include <thread>
 #include "Communication.h"
+#include "PotentiometreAll.h"
 
 using namespace std;
 
@@ -19,13 +20,12 @@ MainMenuController::MainMenuController(MainMenuView& v) : view(v) {
 void MainMenuController::run() {
     view.render(model);
     
-    Communication comm;
-	comm.begin();
+    
 
     while (true) {
 
-        int msg = comm.readMsg(MSG_ID_POTENTIOMETER);
-		comm.clear();
+        //int msg = comm.readMsg(MSG_ID_POTENTIOMETER);
+		//comm.clear();
         if (_kbhit()) {
             char key = _getch();
 
@@ -60,12 +60,15 @@ void MainMenuController::run() {
                     SimonSaysController simonController(simonView);
                     simonController.run();
                 }
+				if (model.getSelectedOption() == 6) {
+					playPot();
+					return;
+				}
                 break;
             }
         }
         this_thread::sleep_for(std::chrono::milliseconds(33));
     }
-	comm.closeSerialPort();
 }
 
 void MainMenuController::startSnakeGame() {
