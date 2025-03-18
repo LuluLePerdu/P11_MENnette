@@ -30,8 +30,14 @@ bool playPot() {
             // cout << "Base 10 distance : " << distance << endl;
             if (distance == 0) {
                 isOver = true;
-                cout << "Code : " << code << endl;
-                cout << "Resultat : " << outputCode;
+                cout << "Code : ";
+                for (int i = 0; i < 10; i++) {
+                    cout << code[i];
+                }
+                cout << endl << "Resultat : ";
+                for (int i = 0; i < 10; i++) {
+                    cout << outputCode[i];
+                }
                 system("pause");
             }
             else {
