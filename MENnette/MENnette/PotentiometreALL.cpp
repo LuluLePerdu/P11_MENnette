@@ -33,6 +33,9 @@ bool playPot() {
             // cout << "Base 10 distance : " << distance << endl;
             if (distance == 0) {
                 isOver = true;
+                cout << "Code : " << code << endl;
+                cout << "Resultat : " << outputCode;
+                system("pause");
             }
             else {
                 // cout << "nbchar : " << distance << endl;
