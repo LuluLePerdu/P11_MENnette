@@ -29,5 +29,8 @@ Muon detector -> random function, common to all modules?
 |*prb* | QProgressBar |
 |*lab* | QLabel |
 |*lcd* | QLCDNumber |
+|*pge* | QWidget (page) |
 
+## Communication
+![](https://github.com/LuluLePerdu/P11_MENnette/blob/main/table.png)
 
