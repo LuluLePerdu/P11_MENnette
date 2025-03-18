@@ -9,7 +9,7 @@ bool playPot() {
     int target = (rand() % 255);
     int seed = time(0);
     default_random_engine randomEngine(seed);
-    cout << "Target : " << target << endl;
+    // cout << "Target : " << target << endl;
     char code[10];
     for (int i = 0; i < 10; i++) {
         code[i] = digits[rand() % 9];
@@ -17,29 +17,27 @@ bool playPot() {
 
     bool isOver = false;
     float usrInput, distance;
-    char tempArray[10];
+    char outputCode[10];
 
     while (!isOver) {
         cout << "Entrez un nombre (0-255) : ";
         cin >> usrInput;
-        distance = abs(target - usrInput);
-        int distanceTen = 10 * distance / 128;
-        if (distanceTen > 10) distanceTen = 10;
-        cout << "Base 10 distance : " << distanceTen << endl;
-        if (distanceTen == 0) {
+        int distance = 10 * abs(target - usrInput) / 128;
+        if (distance > 10) distance = 10;
+        cout << "Base 10 distance : " << distance << endl;
+        if (distance == 0) {
             isOver = true;
-        }
-        else {
-            cout << "nbchar : " << distanceTen << endl;
-            for (int i = 0; i < distanceTen; i++) {
-                tempArray[i] = characters[rand() % 44];
+        } else {
+            cout << "nbchar : " << distance << endl;
+            for (int i = 0; i < distance; i++) {
+                outputCode[i] = characters[rand() % 44];
             }
-            for (int i = distanceTen; i < 10; i++) {
-                tempArray[i] = code[i];
+            for (int i = distance; i < 10; i++) {
+                outputCode[i] = code[i];
             }
-            shuffle(begin(tempArray), end(tempArray), randomEngine());
+            shuffle(begin(outputCode), end(outputCode), randomEngine());
             for (int i = 0; i < 10; i++) {
-                cout << tempArray[i];
+                cout << outputCode[i];
             }
             cout << endl;
             system("pause");
