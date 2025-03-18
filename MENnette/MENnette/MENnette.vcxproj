@@ -102,7 +102,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -137,6 +137,7 @@
     <ClCompile Include="MainMenuModel.cpp" />
     <ClCompile Include="MainMenuView.cpp" />
     <ClCompile Include="MENnette.cpp" />
+    <ClCompile Include="SerialPort.cpp" />
     <ClCompile Include="ShakeItController.cpp" />
     <ClCompile Include="ShakeItModel.cpp" />
     <ClCompile Include="ShakeItView.cpp" />
@@ -154,11 +155,13 @@
     <Text Include="Information.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Communication.h" />
     <ClInclude Include="GameModel.h" />
     <ClInclude Include="common.hpp" />
     <ClInclude Include="MainMenuView.h" />
     <ClInclude Include="MainMenuController.h" />
     <ClInclude Include="MainMenuModel.h" />
+    <ClInclude Include="SerialPort.h" />
     <ClInclude Include="ShakeItController.h" />
     <ClInclude Include="ShakeItModel.h" />
     <ClInclude Include="ShakeItView.h" />

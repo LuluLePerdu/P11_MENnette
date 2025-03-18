@@ -90,6 +90,9 @@
     <ClCompile Include="Color.h">
       <Filter>Fichiers sources\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="SerialPort.cpp">
+      <Filter>Fichiers sources\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Information.txt" />
@@ -142,6 +145,15 @@
     </ClInclude>
     <ClInclude Include="SimonSaysView.h">
       <Filter>Fichiers sources\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="common.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="SerialPort.h">
+      <Filter>Fichiers sources\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication.h">
+      <Filter>Fichiers sources\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

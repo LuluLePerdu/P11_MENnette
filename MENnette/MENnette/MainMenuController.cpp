@@ -8,6 +8,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include "Communication.h"
 
 using namespace std;
 
@@ -17,10 +18,17 @@ MainMenuController::MainMenuController(MainMenuView& v) : view(v) {
 
 void MainMenuController::run() {
     view.render(model);
+    
+    Communication comm;
+	comm.begin();
 
     while (true) {
+
+        int msg = comm.readMsg(MSG_ID_POTENTIOMETER);
+		comm.clear();
         if (_kbhit()) {
             char key = _getch();
+
 
             if (key == 'w') {
                 model.selectPreviousOption();
@@ -31,17 +39,17 @@ void MainMenuController::run() {
                 view.render(model);
             }
             else if (key == '\r') {
-				if (model.getSelectedOption() == 0) {
-				    startSnakeGame();
-				}
-				if (model.getSelectedOption() == 2) {
-					return;
-				}
-				if (model.getSelectedOption() == 3) {
-					ShakeItView shakeItView;
-					ShakeItController shakeItController(shakeItView);
+                if (model.getSelectedOption() == 0) {
+                    startSnakeGame();
+                }
+                if (model.getSelectedOption() == 2) {
+                    return;
+                }
+                if (model.getSelectedOption() == 3) {
+                    ShakeItView shakeItView;
+                    ShakeItController shakeItController(shakeItView);
                     shakeItController.run();
-				}
+                }
                 if (model.getSelectedOption() == 4) {
                     ThreadCutterView threadView;
                     ThreadCutterController threadController(threadView);
@@ -52,12 +60,12 @@ void MainMenuController::run() {
                     SimonSaysController simonController(simonView);
                     simonController.run();
                 }
-                break;  
+                break;
             }
         }
-        this_thread::sleep_for(std::chrono::milliseconds(50));
+        this_thread::sleep_for(std::chrono::milliseconds(33));
     }
-
+	comm.closeSerialPort();
 }
 
 void MainMenuController::startSnakeGame() {
