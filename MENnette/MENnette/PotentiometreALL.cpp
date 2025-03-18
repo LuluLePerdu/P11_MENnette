@@ -1,5 +1,6 @@
 #include <iostream>
 #include <random>
+#include <random>
 using namespace std;
 
 bool playPot() {
@@ -34,7 +35,7 @@ bool playPot() {
             for (int i = distanceTen; i < 10; i++) {
                 tempArray[i] = code[i];
             }
-            random_shuffle(begin(tempArray), end(tempArray));
+            shuffle(begin(tempArray), end(tempArray), default_random_engine(time));
             for (int i = 0; i < 10; i++) {
                 cout << tempArray[i];
             }
