@@ -24,8 +24,7 @@ void MainMenuController::run() {
 
     while (true) {
 
-        //int msg = comm.readMsg(MSG_ID_POTENTIOMETER);
-		//comm.clear();
+		Communication& comm = Communication::getInstance();
         if (_kbhit()) {
             char key = _getch();
 

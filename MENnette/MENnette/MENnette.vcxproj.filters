@@ -93,6 +93,9 @@
     <ClCompile Include="PotentiometreALL.cpp">
       <Filter>Fichiers sources\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Common.cpp">
+      <Filter>Fichiers sources\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Information.txt" />
@@ -153,6 +156,9 @@
       <Filter>Fichiers sources\Utils</Filter>
     </ClInclude>
     <ClInclude Include="PotentiometreALL.h">
+      <Filter>Fichiers sources\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
       <Filter>Fichiers sources\Utils</Filter>
     </ClInclude>
   </ItemGroup>

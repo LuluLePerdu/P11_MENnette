@@ -32,8 +32,13 @@ struct Frame {
 
 class Communication {
 public:
-    Communication();
-    ~Communication();
+    static Communication& getInstance() {
+        static Communication instance;
+        return instance;
+    }
+    Communication(Communication const&) = delete;
+    void operator=(Communication const&) = delete;
+
     bool begin();
     bool configureSerialPort();
     void sendMsg(Frame frame);
@@ -45,6 +50,8 @@ public:
     void clear();
 
 private:
-    Frame errorFrame;
+    Communication() { this->begin(); }
+    ~Communication() {}
+    Frame errorFrame = { MSG_ID_ERROR, 0, 0 };;
 	HANDLE hSerial;
 };

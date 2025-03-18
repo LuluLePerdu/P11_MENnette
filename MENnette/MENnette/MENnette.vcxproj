@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Color.h" />
+    <ClCompile Include="Common.cpp" />
     <ClCompile Include="Communication.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameView.cpp" />
@@ -155,6 +156,7 @@
     <Text Include="Information.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Common.h" />
     <ClInclude Include="Communication.h" />
     <ClInclude Include="GameModel.h" />
     <ClInclude Include="common.hpp" />

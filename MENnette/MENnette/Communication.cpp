@@ -1,13 +1,5 @@
 #include "Communication.h"
 
-Communication::Communication() {
-    errorFrame = { MSG_ID_ERROR, 0, 0 };
-    
-}
-
-Communication::~Communication() {
-    // Destructor implementation (if needed)
-}
 
 bool Communication::begin() {
     hSerial = CreateFileW(L"COM3", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
