@@ -2,7 +2,7 @@
 
 Communication::Communication() {
     errorFrame = { MSG_ID_ERROR, 0, 0 };
-    
+	this->begin();
 }
 
 Communication::~Communication() {

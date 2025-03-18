@@ -1,7 +1,7 @@
 #include "PotentiometreALL.h"
-
+#include "Common.h"
 bool playPot() {
-    Communication comm;
+    comm
     char characters[] = "!@±/£$¢%¤?¬&¦*()=+#|\\*-[]^¨<>}{`;:,.'";
     char digits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     int target = (rand() % 255);
@@ -20,10 +20,12 @@ bool playPot() {
     while (!isOver) {
         // cout << "Entrez un nombre (0-255) : ";
         // cin >> usrInput;
-        usrInput = comm.readMsg();
+        usrInput = comm.readMsg(MSG_ID_POTENTIOMETER);
+		comm.clear();
+		cout << "usrInput : " << usrInput << endl;
         if (usrInput < 0) {
             cout << "Erreur d'entreé";
-            system("pause");
+            //system("pause");
         } else {
             int distance = 10 * abs(target - usrInput) / 128;
             if (distance > 10) distance = 10;
@@ -48,7 +50,7 @@ bool playPot() {
                 // system("pause");
             }
         }
-
+        this_thread::sleep_for(std::chrono::milliseconds(33));
         system("cls");
     }
 
