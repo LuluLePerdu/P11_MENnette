@@ -1,7 +1,4 @@
-#include <iostream>
-#include <random>
-#include "Communication.h"
-using namespace std;
+#include "PotentiometreALL.h"
 
 bool playPot() {
     Communication comm;

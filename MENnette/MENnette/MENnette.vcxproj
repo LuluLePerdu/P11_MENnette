@@ -161,7 +161,7 @@
     <ClInclude Include="MainMenuView.h" />
     <ClInclude Include="MainMenuController.h" />
     <ClInclude Include="MainMenuModel.h" />
-    <ClInclude Include="SerialPort.h" />
+    <ClInclude Include="PotentiometreALL.h" />
     <ClInclude Include="ShakeItController.h" />
     <ClInclude Include="ShakeItModel.h" />
     <ClInclude Include="ShakeItView.h" />

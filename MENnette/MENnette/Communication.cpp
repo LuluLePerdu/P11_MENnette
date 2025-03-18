@@ -142,11 +142,11 @@ int Communication::readMsg(uint8_t id) {
         return -1;
     }
 
-    cout << "LOG-PC: Received message: ";
+    /*cout << "LOG-PC: Received message: ";
     for (int i = 0; i < MSG_SIZE; i++) {
         cout << setw(3) << (int)msg[i] << " ";
     }
-    cout << endl;
+    cout << endl;*/
     //Frame frame = { msg[0], msg[1], msg[2] };
     return msg[1];
 }
