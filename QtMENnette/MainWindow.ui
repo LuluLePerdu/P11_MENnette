@@ -210,6 +210,19 @@ QPushButton:hover{
       <string>TextLabel</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>330</y>
+       <width>211</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>test À ENLEVER</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page_7"/>
   </widget>
