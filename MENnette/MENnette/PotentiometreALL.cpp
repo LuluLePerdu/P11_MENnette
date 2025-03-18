@@ -1,7 +1,6 @@
 #include "PotentiometreALL.h"
-#include "Common.h"
 bool playPot() {
-    comm
+	Communication& comm = Communication::getInstance();
     char characters[] = "!@±/£$¢%¤?¬&¦*()=+#|\\*-[]^¨<>}{`;:,.'";
     char digits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     int target = (rand() % 255);
