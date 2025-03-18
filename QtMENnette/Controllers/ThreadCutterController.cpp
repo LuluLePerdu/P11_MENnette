@@ -5,8 +5,8 @@
 using namespace std;
 
 ThreadCutterController::ThreadCutterController(ThreadCutterView& v) : view(v) {
-    system("cls");
-    view.render(model);
+    //system("cls");
+    view.render();
 }
 
 void ThreadCutterController::run() {
@@ -17,11 +17,13 @@ void ThreadCutterController::run() {
     model.playCutter(usrInput);
     if (model.getCompleted()) {
         cout << endl << "Module desamorce." << endl;
+        view.moduleState(true);
         system("pause");
         returnToMainMenu();
     }
     else {
         cout << endl << "Mauvais bouton!" << endl;
+        view.moduleState(false);
         system("pause");
         returnToMainMenu();
     }

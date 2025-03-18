@@ -43,9 +43,9 @@ void MainMenuController::run() {
                     shakeItController.run();
 				}
                 if (model.getSelectedOption() == 4) {
-                    ThreadCutterView threadView;
-                    ThreadCutterController threadController(threadView);
-                    threadController.run();
+                    //ThreadCutterView threadView;
+                    //ThreadCutterController threadController(threadView);
+                    //threadController.run();
                 }
                 if (model.getSelectedOption() == 5) {
                     SimonSaysView simonView;

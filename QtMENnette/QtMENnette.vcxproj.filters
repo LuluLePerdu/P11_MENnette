@@ -147,9 +147,6 @@
     <ClInclude Include="Controllers\SnakeMazeController.h">
       <Filter>Controllers</Filter>
     </ClInclude>
-    <ClInclude Include="Controllers\ThreadCutterController.h">
-      <Filter>Controllers</Filter>
-    </ClInclude>
     <ClInclude Include="Views\MainMenuView.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -159,8 +156,8 @@
     <ClInclude Include="Views\SnakeMazeView.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Views\ThreadCutterView.h">
-      <Filter>Views</Filter>
+    <ClInclude Include="Controllers\ThreadCutterController.h">
+      <Filter>Controllers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +174,9 @@
     </QtMoc>
     <QtMoc Include="Models\ShakeItModel.h">
       <Filter>Models</Filter>
+    </QtMoc>
+    <QtMoc Include="Views\ThreadCutterView.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>
