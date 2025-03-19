@@ -1,17 +1,22 @@
 #pragma once
-#include "SnakeMazeModel.h"
 #include "SnakeMazeView.h"
-#include <iostream>
+#include "SnakeMazeModel.h"
+#include "Clock.h"
+#include <conio.h>
+#include <thread>
 
-
-class SnakeMazeController
-{
-private:
-	SnakeMazeModel model;
-	SnakeMazeView& view;
+class SnakeMazeController {
 public:
-	SnakeMazeController(SnakeMazeView& view);
-	void returnToMainMenu();
-	void update();
-	void run();
+    SnakeMazeController(SnakeMazeView& v);
+    void run();
+
+private:
+    SnakeMazeView& view;
+    SnakeMazeModel model;
+    Clock gameClock;
+    Clock frameClock;
+
+    void returnToMainMenu();
+    void displayEndGameMessage(bool victory, int time);
+    void handleJoystickInput();
 };

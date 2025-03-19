@@ -156,6 +156,7 @@
     <Text Include="Information.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Clock.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Communication.h" />
     <ClInclude Include="GameModel.h" />
