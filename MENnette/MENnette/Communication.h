@@ -13,10 +13,10 @@ using namespace std;
 
 #define MSG_ID_ERROR 71
 
-#define MSG_ID_JOYSTICK 101
-#define MSG_ID_POTENTIOMETER 102
-#define MSG_ID_ACCELEROMETER 103
-#define MSG_ID_BUTTON 104
+#define MSG_ID_AR_JOYSTICK 101
+#define MSG_ID_AR_POTENTIOMETER 102
+#define MSG_ID_AR_ACCELEROMETER 103
+#define MSG_ID_AR_BUTTON 104
 
 #define MSG_ID_PC_LED 201
 #define MSG_ID_PC_MOTOR 202
@@ -48,10 +48,12 @@ public:
 	void setSerialPort(HANDLE hSerial);
 	void closeSerialPort();
     void clear();
+    uint8_t convertBoolsToByte(bool p_sw[8]);
+	void byteToBoolArray(byte b, bool arr[8]);
 
 private:
     Communication() { this->begin(); }
-    ~Communication() {}
-    Frame errorFrame = { MSG_ID_ERROR, 0, 0 };;
+    ~Communication() { this->closeSerialPort(); }
+    Frame errorFrame = { MSG_ID_ERROR, 0, 0 };
 	HANDLE hSerial;
 };

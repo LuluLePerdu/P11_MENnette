@@ -17,14 +17,11 @@ bool playPot() {
     char outputCode[10];
 
     while (!isOver) {
-        // cout << "Entrez un nombre (0-255) : ";
-        // cin >> usrInput;
-        usrInput = comm.readMsg(MSG_ID_POTENTIOMETER);
+        usrInput = comm.readMsg(MSG_ID_AR_POTENTIOMETER);
 		comm.clear();
 		cout << "usrInput : " << usrInput << endl;
         if (usrInput < 0) {
             cout << "Erreur d'entreé";
-            //system("pause");
         } else {
             int distance = 10 * abs(target - usrInput) / 128;
             if (distance > 10) distance = 10;

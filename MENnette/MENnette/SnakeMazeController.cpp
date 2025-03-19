@@ -5,6 +5,7 @@
 #include "SnakeMazeController.h"
 #include "MainMenuView.h"
 #include "MainMenuController.h"
+#include "Communication.h"
 
 SnakeMazeController::SnakeMazeController(SnakeMazeView& v) : view(v) {
     model.initialize();
@@ -12,21 +13,26 @@ SnakeMazeController::SnakeMazeController(SnakeMazeView& v) : view(v) {
 
 void SnakeMazeController::run()
 {
+    Communication& comm = Communication::getInstance();
     while (model.inGame()) {
-        if (_kbhit()) {
-            char touche = _getch(); 
 
-            switch (touche) {
-            case 'w':
+        uint8_t rawInput = comm.readMsg(MSG_ID_AR_JOYSTICK);
+        comm.clear();
+        if (rawInput != 0) {
+            bool input[8] = { 0 };
+            comm.byteToBoolArray(rawInput, input);
+
+            switch (rawInput) {
+			case 2: //UP
                 model.changeDirection(0, -1); 
                 break;
-            case 's':
+			case 1: //DOWN
                 model.changeDirection(0, 1); 
                 break;
-            case 'a':
+			case 8: //LEFT
                 model.changeDirection(-1, 0);  
                 break;
-            case 'd':
+			case 4: //RIGHT
                 model.changeDirection(1, 0);  
                 break;
             case 27:

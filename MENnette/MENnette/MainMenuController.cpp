@@ -10,6 +10,7 @@
 #include <thread>
 #include "Communication.h"
 #include "PotentiometreAll.h"
+//#include "common.hpp"
 
 using namespace std;
 
@@ -25,19 +26,21 @@ void MainMenuController::run() {
     while (true) {
 
 		Communication& comm = Communication::getInstance();
-        if (_kbhit()) {
-            char key = _getch();
+		uint8_t rawInput = comm.readMsg(MSG_ID_AR_JOYSTICK);
+		comm.clear();
+        if (rawInput != 0 && rawInput != -1) {
+            bool input[8] = { 0 };
+            comm.byteToBoolArray(rawInput, input);
 
-
-            if (key == 'w') {
+            if (input[1] == true) { //UP
                 model.selectPreviousOption();
                 view.render(model);
             }
-            else if (key == 's') {
+            else if (input[0] == true) { // DOWN
                 model.selectNextOption();
                 view.render(model);
             }
-            else if (key == '\r') {
+			else if (input[2] == true) { // RIGHT/SELECT
                 if (model.getSelectedOption() == 0) {
                     startSnakeGame();
                 }
@@ -61,7 +64,10 @@ void MainMenuController::run() {
                 }
 				if (model.getSelectedOption() == 6) {
 					playPot();
-					return;
+					//returnToMainMenu();
+                    MainMenuView menuView;
+                    MainMenuController menuController(menuView);
+                    menuController.run();
 				}
                 break;
             }

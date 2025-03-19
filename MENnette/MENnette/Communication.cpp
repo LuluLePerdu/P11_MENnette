@@ -1,6 +1,6 @@
 #include "Communication.h"
 
-
+//Initialisation de la communication
 bool Communication::begin() {
     hSerial = CreateFileW(L"COM3", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
     if (hSerial == INVALID_HANDLE_VALUE) {
@@ -19,6 +19,7 @@ bool Communication::begin() {
 	return true;
 }
 
+//Config de base
 bool Communication::configureSerialPort() {
 
     DCB dcbSerialParams = { 0 };
@@ -50,11 +51,6 @@ void Communication::sendMsg(Frame frame) {
         checksum ^= msg[i];
     }
     msg[MSG_SIZE - 1] = checksum;
-    //cout << "LOG-PC: Sending message:  ";
-    for (int i = 0; i < MSG_SIZE; i++) {
-        cout << setw(3) << (int)msg[i] << " ";
-    }
-    cout << endl;
 
     // envoie
     DWORD bytesWritten;
@@ -63,6 +59,11 @@ void Communication::sendMsg(Frame frame) {
     }
 }
 
+// DESCRIPTION: Lit le message le plus recent du buffer serial et retourne la valeur apres l'ID.
+//              Retourne -1 si le message est invalide
+// P.S: Est techniquement fonctionnel, mais je ne recommande pas de l'utiliser; Tres volatile et indeterministe
+// ! Utiliser plutot la version avec un ID si possible!
+// -Zakary
 int Communication::readMsg() {
     uint8_t msg[MSG_SIZE] = { 0 };
     Frame frame;
@@ -72,7 +73,6 @@ int Communication::readMsg() {
     // Synchronize avec le debut du message MSG_ID_FROM_ARDUINO
     while (true) {
         if (!ReadFile(hSerial, &msg[0], 1, &bytesRead, NULL) || bytesRead < 1) {
-            //cerr << "WARNING-PC: Not enough bytes read! Message ignored" << endl;
             return -1;
         }
         if (msg[0] == startByte) {
@@ -82,7 +82,6 @@ int Communication::readMsg() {
 
     // Lecture 
     if (!ReadFile(hSerial, &msg[1], MSG_SIZE - 1, &bytesRead, NULL) || bytesRead < MSG_SIZE - 1) {
-        //cerr << "WARNING-PC: Not enough bytes read! Message ignored" << endl;
         return -1;
     }
 
@@ -91,19 +90,16 @@ int Communication::readMsg() {
         checksum ^= msg[i];
     }
     if (checksum != msg[MSG_SIZE - 1]) {
-        //cerr << "WARNING-PC: Checksum error! Message ignored" << endl;
         return -1;
     }
-
-    /*cout << "LOG-PC: Received message: ";
-    for (int i = 0; i < MSG_SIZE; i++) {
-        cout << setw(3) << (int)msg[i] << " ";
-    }
-    cout << endl;*/
-    //frame = { msg[0], msg[1], msg[2] };
     return msg[1];
 }
 
+
+// DESCRIPTION: Cherche et lit un message avec un ID, et retourne la valeur de data.
+//              Retourne -1 si le message est invalide
+// ! P.S: Utiliser cette fonction plutot que la version sans ID; Plus stable et fiable!
+// Je recommande de faire un Communication::clear() apres la lecture, ca evite les problemes de backlogs dans le buffer
 int Communication::readMsg(uint8_t id) {
     uint8_t msg[MSG_SIZE] = { 0 };
     DWORD bytesRead;
@@ -111,17 +107,14 @@ int Communication::readMsg(uint8_t id) {
     // Synchronize avec le debut du message MSG_ID_FROM_ARDUINO
     while (true) {
         if (!ReadFile(hSerial, &msg[0], 1, &bytesRead, NULL) || bytesRead < 1) {
-            //cerr << "WARNING-PC: Not enough bytes read! Message ignored" << endl;
             return -1;
         }
         if (msg[0] == id) {
             break;
         }
     }
-
     // Lecture 
     if (!ReadFile(hSerial, &msg[1], MSG_SIZE - 1, &bytesRead, NULL) || bytesRead < MSG_SIZE - 1) {
-        //cerr << "WARNING-PC: Not enough bytes read! Message ignored" << endl;
         return -1;
     }
 
@@ -130,16 +123,8 @@ int Communication::readMsg(uint8_t id) {
         checksum ^= msg[i];
     }
     if (checksum != msg[MSG_SIZE - 1]) {
-        //cerr << "WARNING-PC: Checksum error! Message ignored" << endl;
         return -1;
     }
-
-    /*cout << "LOG-PC: Received message: ";
-    for (int i = 0; i < MSG_SIZE; i++) {
-        cout << setw(3) << (int)msg[i] << " ";
-    }
-    cout << endl;*/
-    //Frame frame = { msg[0], msg[1], msg[2] };
     return msg[1];
 }
 
@@ -155,6 +140,21 @@ void Communication::closeSerialPort() {
 	CloseHandle(hSerial);
 }
 
+// DESCRIPTION: Vide le buffer du serial. Peut etre utile pour eviter les problemes de backlog lors de la lecture
 void Communication::clear() {
     PurgeComm(hSerial, PURGE_RXCLEAR | PURGE_TXCLEAR);
+}
+
+uint8_t Communication::convertBoolsToByte(bool p_sw[8]) {
+    byte b = 0;
+    for (int i = 0; i < 8; i++) {
+        b |= (p_sw[i] << i); // Met le bit i à 1 si p_sw[i] est vrai
+    }
+    return b;
+}
+
+void Communication::byteToBoolArray(byte b, bool arr[8]) {
+    for (int i = 0; i < 8; i++) {
+        arr[i] = (b >> i) & 1; // Met arr[i] à vrai si le bit i de b est à 1
+    }
 }
