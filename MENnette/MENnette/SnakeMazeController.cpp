@@ -6,6 +6,7 @@
 #include "SnakeMazeController.h"
 #include "MainMenuView.h"
 #include "MainMenuController.h"
+#include "Communication.h"
 
 SnakeMazeController::SnakeMazeController(SnakeMazeView& v) : view(v) {
     model.initialize();
@@ -48,6 +49,8 @@ void SnakeMazeController::run() {
             }
         }
 
+        handleJoystickInput();
+
         if (accumulator >= frameTime) {
             model.updateTimer();
             accumulator -= frameTime;
@@ -62,6 +65,27 @@ void SnakeMazeController::run() {
     displayEndGameMessage(model.victoryEOG(), timeTaken);
 
     returnToMainMenu();
+
+}
+
+void SnakeMazeController::handleJoystickInput() {
+    int joystickValue = Communication::getInstance().readMsg(MSG_ID_JOYSTICK);
+
+    if (joystickValue == -1) {
+        return; 
+    }
+
+    if (joystickValue < 50) {
+        model.changeDirection(-1, 0); 
+        model.movePlayer();
+    }
+    else if (joystickValue > 150) {
+        model.changeDirection(1, 0);
+        model.movePlayer();
+    }
+    else if (joystickValue >= 50 && joystickValue <= 150) {
+        model.changeDirection(0, 0); 
+    }
 
 }
 

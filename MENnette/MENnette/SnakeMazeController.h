@@ -18,4 +18,5 @@ private:
 
     void returnToMainMenu();
     void displayEndGameMessage(bool victory, int time);
+    void handleJoystickInput();
 };
