@@ -1,20 +1,8 @@
-#pragma once
-
 #include "SnakeMazeModel.h"
-#include <iostream>
-#include <stack>
-#include <cstdlib>
-#include <ctime>
-#include <chrono>
-#include <windows.h> 
-#include <vector>
-#include "Color.h"
-
-using namespace std;
 
 SnakeMazeModel::SnakeMazeModel()
 {
-	score = 0;
+    score = 0;
 }
 
 void SnakeMazeModel::initialize()
@@ -31,6 +19,8 @@ void SnakeMazeModel::initialize()
 
     maze[1][1] = PLAYER;
     placeObjective();
+
+    timeLeft = 60;
 }
 
 void SnakeMazeModel::buildRandomMaze(int startX, int startY) {
@@ -72,14 +62,13 @@ void SnakeMazeModel::movePlayer()
     int newY = playerY + directionY;
 
     if (maze[newY][newX] == WALL) {
-        ingame = false;
         return;
     }
 
     if (maze[newY][newX] == OBJECTIVE) {
-		score++;
-		ingame = false;
-		victory = true;
+        score++;
+        ingame = false;
+        victory = true;
         return;
     }
 
@@ -107,14 +96,27 @@ void SnakeMazeModel::placeObjective()
 
 bool SnakeMazeModel::inGame() const
 {
-	return ingame;
+    return ingame;
 }
 
 bool SnakeMazeModel::victoryEOG() const
 {
-	return victory;
+    return victory;
 }
 
 const char(&SnakeMazeModel::getMaze() const)[HEIGHT][WIDTH]{
     return maze;
+}
+
+void SnakeMazeModel::updateTimer() {
+    double elapsed = timerClock.getElapsedTime();
+    timeLeft = 60 - static_cast<int>(elapsed);
+}
+
+int SnakeMazeModel::getTimeLeft() const {
+    return timeLeft;
+}
+
+int SnakeMazeModel::getScore() const {
+    return score;
 }

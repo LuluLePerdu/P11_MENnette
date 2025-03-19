@@ -1,3 +1,4 @@
+#pragma once
 enum Couleur {
     NOIR = 0,
     BLEU_FONCE = 1,
