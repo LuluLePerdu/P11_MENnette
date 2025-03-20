@@ -2,6 +2,7 @@
 #include "MainMenuView.h"
 #include "MainMenuController.h"
 #include <iostream>
+#include <typeinfo>
 using namespace std;
 
 ThreadCutterController::ThreadCutterController(ThreadCutterView& v) : view(v) {
@@ -15,12 +16,14 @@ void ThreadCutterController::run() {
     cout << "** Lisez les instructions fournies attentivement **" << endl;
     cout << "Choix de bouton a appuyer : ";
 
-    uint8_t msgInput;
-
+    int msgInput;
+	comm.clear();
     do
     {
-        comm.clear();
         msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
+		//cout << msgInput;
+		//cout << endl << typeid(msgInput).name() << endl;
+        comm.clear();
     } while (msgInput == -1);
 
     switch (msgInput)
