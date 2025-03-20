@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <windows.h>
+#include <WinBase.h>
 #include <string>
 #include <iomanip>
 #include <thread>
@@ -10,6 +11,7 @@ using namespace std;
 
 #define BAUD 9600 
 #define MSG_SIZE 3
+#define TIMEOUT_READ 50
 
 #define MSG_ID_ERROR 71
 
@@ -17,6 +19,7 @@ using namespace std;
 #define MSG_ID_AR_POTENTIOMETER 102
 #define MSG_ID_AR_ACCELEROMETER 103
 #define MSG_ID_AR_BUTTON 104
+#define MSG_ID_AR_SHAKED 105
 
 #define MSG_ID_PC_LED 201
 #define MSG_ID_PC_MOTOR 202

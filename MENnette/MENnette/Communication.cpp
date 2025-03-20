@@ -2,6 +2,8 @@
 
 //Initialisation de la communication
 bool Communication::begin() {
+
+	//GetCommPorts();
     hSerial = CreateFileW(L"COM4", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
     if (hSerial == INVALID_HANDLE_VALUE) {
         cerr << " ERROR-PC: Error opening serial port" << endl;
@@ -36,6 +38,18 @@ bool Communication::configureSerialPort() {
     dcbSerialParams.Parity = NOPARITY;
     if (!SetCommState(hSerial, &dcbSerialParams)) {
         cerr << "ERROR-PC: Error setting serial port state" << endl;
+        return false;
+    }
+
+	COMMTIMEOUTS timeouts = { 0 };
+    timeouts.ReadIntervalTimeout = 500; 
+    timeouts.ReadTotalTimeoutConstant = TIMEOUT_READ; 
+    timeouts.ReadTotalTimeoutMultiplier = 1; // ?
+    timeouts.WriteTotalTimeoutConstant = 50; 
+    timeouts.WriteTotalTimeoutMultiplier = 1;
+
+    if (!SetCommTimeouts(hSerial, &timeouts)) {
+        cerr << "ERROR-PC: Error setting serial port timeouts" << endl;
         return false;
     }
     return true;
@@ -103,10 +117,15 @@ int Communication::readMsg() {
 int Communication::readMsg(uint8_t id) {
     uint8_t msg[MSG_SIZE] = { 0 };
     DWORD bytesRead;
+	DWORD startTime = GetTickCount();
 
     // Synchronize avec le debut du message MSG_ID_FROM_ARDUINO
     while (true) {
         if (!ReadFile(hSerial, &msg[0], 1, &bytesRead, NULL) || bytesRead < 1) {
+			if (GetTickCount() - startTime > TIMEOUT_READ) {
+				//cerr << "ERROR-PC: Timeout reading message" << endl;
+				return -1;
+			}
             return -1;
         }
         if (msg[0] == id) {
