@@ -10,7 +10,6 @@
 #include <thread>
 #include "Communication.h"
 #include "PotentiometreAll.h"
-//#include "common.hpp"
 
 using namespace std;
 
@@ -24,6 +23,7 @@ void MainMenuController::run() {
 
 
     Communication& comm = Communication::getInstance();
+	comm.clear();
     while (true) {
 
         uint8_t rawInput = comm.readMsg(MSG_ID_AR_JOYSTICK);
