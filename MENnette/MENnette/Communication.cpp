@@ -144,11 +144,12 @@ int Communication::readMsg(uint8_t id) {
     if (checksum != msg[MSG_SIZE - 1]) {
         return -1;
     }
-
+    
 	for (int i = 0; i < MSG_SIZE; i++) {
 		cout << (int)msg[i] << " ";
 	}
 	cout << endl;
+    
     return msg[1];
 }
 
