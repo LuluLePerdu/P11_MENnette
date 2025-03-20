@@ -25,14 +25,13 @@ void ThreadCutterController::run() {
 		//cout << endl << typeid(msgInput).name() << endl;
         comm.clear();
     } while (msgInput == -1);
-
     switch (msgInput)
     {
     case 1:
         model.playCutter(3);
         break;
     case 2:
-        model.playCutter(3);
+        model.playCutter(2);
         break;
     case 4:
         model.playCutter(1);

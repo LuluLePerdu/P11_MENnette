@@ -15,17 +15,17 @@ ThreadCutterModel::ThreadCutterModel() {
 void ThreadCutterModel::LEDscenario() {
     if (LEDarray[0] && LEDarray[1] + LEDarray[2] + LEDarray[3] == 2)
     {
-        correctLED = 1;
+        correctLED = 0;
     }
     else if ((LEDarray[0] && LEDarray[2] && !LEDarray[1] && !LEDarray[3])
             || (LEDarray[0] && LEDarray[1] && LEDarray[2] && LEDarray[3])) {
-        correctLED = 3;
+        correctLED = 2;
     }
     else if (!LEDarray[0] && !LEDarray[1] && !LEDarray[2] && !LEDarray[3]) {
-        correctLED = 4;
+        correctLED = 3;
     }
     else {
-        correctLED = 2;
+        correctLED = 1;
     }
 }
 
