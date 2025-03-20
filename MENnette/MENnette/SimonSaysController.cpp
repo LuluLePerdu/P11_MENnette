@@ -7,6 +7,10 @@ using namespace std;
 SimonSaysController::SimonSaysController(SimonSaysView& v) : view(v) {}
 
 void SimonSaysController::run() {
+    Communication& comm = Communication::getInstance();
+    uint8_t msgInput;
+    bool ledArray[8];
+    int usrInput;
     system("cls");
     int tempArray[10];
 	int ansArray[10];
@@ -20,7 +24,30 @@ void SimonSaysController::run() {
         cout << endl << "Repetez : ";
 
         for (int k = 0; k < i + 1; k++) {
-            cin >> ansArray[k];
+            //cin >> ansArray[k];
+            do
+            {
+                comm.clear();
+                msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
+            } while (msgInput == -1);
+
+            switch (msgInput)
+            {
+            case 1:
+                ansArray[k] = 0;
+                break;
+            case 2:
+                ansArray[k] = 1;
+                break;
+            case 4:
+                ansArray[k] = 2;
+                break;
+            case 8:
+                ansArray[k] = 3;
+                break;
+            default:
+                break;
+            }
         }
         for (int l = 0; l < i + 1; l++) {
             if (ansArray[l] != tempArray[l]) {
