@@ -10,11 +10,26 @@ ThreadCutterController::ThreadCutterController(ThreadCutterView& v) : view(v) {
 }
 
 void ThreadCutterController::run() {
-    
-    int usrInput = 0;
+    bool ledArray[8];
+    Communication& comm = Communication::getInstance();
     cout << "** Lisez les instructions fournies attentivement **" << endl;
     cout << "Choix de bouton a appuyer : ";
-    cin >> usrInput;
+
+    uint8_t msgInput;
+
+    do
+    {
+        comm.clear();
+        msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
+    } while (msgInput == -1);
+
+    comm.byteToBoolArray(msgInput, ledArray);
+    int usrInput = -1;
+    for (int i = 0; i < 4; i++) {
+        if (usrInput == -1 && ledArray[i]) {
+            usrInput = i;
+        }
+    }   
     model.playCutter(usrInput);
     if (model.getCompleted()) {
         cout << endl << "Module desamorce." << endl;
