@@ -69,20 +69,29 @@ void SnakeMazeController::run() {
 }
 
 void SnakeMazeController::handleJoystickInput() {
-    int joystickValue = Communication::getInstance().readMsg(MSG_ID_JOYSTICK);
-
+    Communication& comm = Communication::getInstance();
+	uint8_t joystickValue = comm.readMsg(MSG_ID_AR_JOYSTICK);
+	comm.clear();
     if (joystickValue == -1) {
         return; 
     }
 
-    if (joystickValue < 50) {
+    if (joystickValue == 4) {
         model.changeDirection(-1, 0); 
         model.movePlayer();
     }
-    else if (joystickValue > 150) {
+    else if (joystickValue == 8) {
         model.changeDirection(1, 0);
         model.movePlayer();
     }
+    else if (joystickValue == 2) {
+        model.changeDirection(0, -1);
+        model.movePlayer();
+    }
+	else if (joystickValue == 1) {
+		model.changeDirection(0, 1);
+		model.movePlayer();
+	}
     else if (joystickValue >= 50 && joystickValue <= 150) {
         model.changeDirection(0, 0); 
     }

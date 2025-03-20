@@ -8,7 +8,7 @@
 
 using namespace std;
 
-#define BAUD 115200       
+#define BAUD 9600 
 #define MSG_SIZE 3
 
 #define MSG_ID_ERROR 71

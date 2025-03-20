@@ -29,18 +29,18 @@ void MainMenuController::run() {
 		uint8_t rawInput = comm.readMsg(MSG_ID_AR_JOYSTICK);
 		comm.clear();
         if (rawInput != 0 && rawInput != -1) {
-            bool input[8] = { 0 };
-            comm.byteToBoolArray(rawInput, input);
+            /*bool input[8] = { 0 };
+            comm.byteToBoolArray(rawInput, input);*/
 
-            if (input[1] == true) { //UP
+            if (rawInput == 2) { //UP
                 model.selectPreviousOption();
                 view.render(model);
             }
-            else if (input[0] == true) { // DOWN
+            else if (rawInput == 1) { // DOWN
                 model.selectNextOption();
                 view.render(model);
             }
-			else if (input[2] == true) { // RIGHT/SELECT
+			else if (rawInput == 8) { // RIGHT/SELECT
                 if (model.getSelectedOption() == 0) {
                     startSnakeGame();
                 }
