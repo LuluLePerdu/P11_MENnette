@@ -2,7 +2,7 @@
 
 //Initialisation de la communication
 bool Communication::begin() {
-    hSerial = CreateFileW(L"COM4", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+    hSerial = CreateFileW(L"COM3", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
     if (hSerial == INVALID_HANDLE_VALUE) {
         cerr << " ERROR-PC: Error opening serial port" << endl;
 		return false;
@@ -125,11 +125,12 @@ int Communication::readMsg(uint8_t id) {
     if (checksum != msg[MSG_SIZE - 1]) {
         return -1;
     }
-
+    
 	for (int i = 0; i < MSG_SIZE; i++) {
 		cout << (int)msg[i] << " ";
 	}
 	cout << endl;
+    
     return msg[1];
 }
 

@@ -10,6 +10,7 @@ ThreadCutterController::ThreadCutterController(ThreadCutterView& v) : view(v) {
 }
 
 void ThreadCutterController::run() {
+    
     int usrInput = 0;
     cout << "** Lisez les instructions fournies attentivement **" << endl;
     cout << "Choix de bouton a appuyer : ";
