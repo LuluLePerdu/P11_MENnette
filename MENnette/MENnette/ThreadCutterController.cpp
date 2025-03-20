@@ -26,16 +26,16 @@ void ThreadCutterController::run() {
     switch (msgInput)
     {
     case 1:
-        model.playCutter(0);
+        model.playCutter(3);
         break;
     case 2:
-        model.playCutter(1);
+        model.playCutter(3);
         break;
     case 4:
-        model.playCutter(2);
+        model.playCutter(1);
         break;
     case 8:
-        model.playCutter(3);
+        model.playCutter(0);
         break;
     default:
         break;
