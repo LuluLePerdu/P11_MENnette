@@ -23,14 +23,24 @@ void ThreadCutterController::run() {
         msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
     } while (msgInput == -1);
 
-    comm.byteToBoolArray(msgInput, ledArray);
-    int usrInput = -1;
-    for (int i = 0; i < 4; i++) {
-        if (usrInput == -1 && ledArray[i]) {
-            usrInput = i;
-        }
-    }   
-    model.playCutter(usrInput);
+    switch (msgInput)
+    {
+    case 1:
+        model.playCutter(0);
+        break;
+    case 2:
+        model.playCutter(1);
+        break;
+    case 4:
+        model.playCutter(2);
+        break;
+    case 8:
+        model.playCutter(3);
+        break;
+    default:
+        break;
+    }
+
     if (model.getCompleted()) {
         cout << endl << "Module desamorce." << endl;
         system("pause");
