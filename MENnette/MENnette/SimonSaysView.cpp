@@ -11,5 +11,12 @@ void SimonSaysView::renderElement(const SimonSaysModel& model, int index) {
     uint8_t byteMsg = comm.convertBoolsToByte(delStates);
     msgLED.data = byteMsg;
     comm.sendMsg(msgLED);
+
+    Sleep(1000);
+
+    delStates[index] = 0;
+    uint8_t byteMsg = comm.convertBoolsToByte(delStates);
+    msgLED.data = byteMsg;
+    comm.sendMsg(msgLED);
     cout << model.getElement(index) << " ";
 }

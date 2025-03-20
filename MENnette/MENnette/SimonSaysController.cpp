@@ -8,7 +8,7 @@ SimonSaysController::SimonSaysController(SimonSaysView& v) : view(v) {}
 
 void SimonSaysController::run() {
     Communication& comm = Communication::getInstance();
-    uint8_t msgInput;
+    int msgInput;
     bool ledArray[8];
     int usrInput;
     system("cls");
