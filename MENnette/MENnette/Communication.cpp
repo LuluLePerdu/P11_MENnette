@@ -8,7 +8,7 @@ bool Communication::begin() {
         return false;
     }
     PurgeComm(hSerial, PURGE_RXCLEAR | PURGE_TXCLEAR); // vide le buffer du serial
-    this_thread::sleep_for(chrono::milliseconds(1000));
+    this_thread::sleep_for(chrono::milliseconds(100));
 
 
     if (!configureSerialPort()) {

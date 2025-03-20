@@ -34,16 +34,16 @@ void SimonSaysController::run() {
             switch (msgInput)
             {
             case 1:
-                ansArray[k] = 0;
+                ansArray[k] = 3;
                 break;
             case 2:
-                ansArray[k] = 1;
-                break;
-            case 4:
                 ansArray[k] = 2;
                 break;
+            case 4:
+                ansArray[k] = 1;
+                break;
             case 8:
-                ansArray[k] = 3;
+                ansArray[k] = 0;
                 break;
             default:
                 break;
