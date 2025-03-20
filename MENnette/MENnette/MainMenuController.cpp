@@ -15,19 +15,19 @@
 using namespace std;
 
 MainMenuController::MainMenuController(MainMenuView& v) : view(v) {
-	model = MainMenuModel();
+    model = MainMenuModel();
 }
 
 void MainMenuController::run() {
     view.render(model);
-    
-    
 
+
+
+    Communication& comm = Communication::getInstance();
     while (true) {
 
-		Communication& comm = Communication::getInstance();
-		uint8_t rawInput = comm.readMsg(MSG_ID_AR_JOYSTICK);
-		comm.clear();
+        uint8_t rawInput = comm.readMsg(MSG_ID_AR_JOYSTICK);
+        comm.clear();
         if (rawInput != 0 && rawInput != -1) {
             /*bool input[8] = { 0 };
             comm.byteToBoolArray(rawInput, input);*/
@@ -40,7 +40,7 @@ void MainMenuController::run() {
                 model.selectNextOption();
                 view.render(model);
             }
-			else if (rawInput == 8) { // RIGHT/SELECT
+            else if (rawInput == 8) { // RIGHT/SELECT
                 if (model.getSelectedOption() == 0) {
                     startSnakeGame();
                 }
@@ -62,13 +62,13 @@ void MainMenuController::run() {
                     SimonSaysController simonController(simonView);
                     simonController.run();
                 }
-				if (model.getSelectedOption() == 6) {
-					playPot();
-					//returnToMainMenu();
+                if (model.getSelectedOption() == 6) {
+                    playPot();
+                    //returnToMainMenu();
                     MainMenuView menuView;
                     MainMenuController menuController(menuView);
                     menuController.run();
-				}
+                }
                 break;
             }
         }

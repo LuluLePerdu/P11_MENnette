@@ -2,12 +2,10 @@
 
 //Initialisation de la communication
 bool Communication::begin() {
-
-	//GetCommPorts();
     hSerial = CreateFileW(L"COM4", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
     if (hSerial == INVALID_HANDLE_VALUE) {
         cerr << " ERROR-PC: Error opening serial port" << endl;
-		return false;
+        return false;
     }
     PurgeComm(hSerial, PURGE_RXCLEAR | PURGE_TXCLEAR); // vide le buffer du serial
     this_thread::sleep_for(chrono::milliseconds(1000));
@@ -18,7 +16,7 @@ bool Communication::begin() {
         CloseHandle(hSerial);
         return false;
     }
-	return true;
+    return true;
 }
 
 //Config de base
@@ -42,16 +40,15 @@ bool Communication::configureSerialPort() {
     }
 
 	COMMTIMEOUTS timeouts = { 0 };
-    timeouts.ReadIntervalTimeout = 500; 
-    timeouts.ReadTotalTimeoutConstant = TIMEOUT_READ; 
-    timeouts.ReadTotalTimeoutMultiplier = 1; // ?
-    timeouts.WriteTotalTimeoutConstant = 50; 
-    timeouts.WriteTotalTimeoutMultiplier = 1;
-
-    if (!SetCommTimeouts(hSerial, &timeouts)) {
-        cerr << "ERROR-PC: Error setting serial port timeouts" << endl;
-        return false;
-    }
+	timeouts.ReadIntervalTimeout = 50;
+	timeouts.ReadTotalTimeoutConstant = TIMEOUT_READ;
+	timeouts.ReadTotalTimeoutMultiplier = 10;
+	timeouts.WriteTotalTimeoutConstant = 50;
+	timeouts.WriteTotalTimeoutMultiplier = 10;
+	if (!SetCommTimeouts(hSerial, &timeouts)) {
+		cerr << "ERROR-PC: Error setting serial port timeouts" << endl;
+		return false;
+	}
     return true;
 }
 
@@ -78,37 +75,39 @@ void Communication::sendMsg(Frame frame) {
 // P.S: Est techniquement fonctionnel, mais je ne recommande pas de l'utiliser; Tres volatile et indeterministe
 // ! Utiliser plutot la version avec un ID si possible!
 // -Zakary
-int Communication::readMsg() {
+Frame Communication::readMsg() {
     uint8_t msg[MSG_SIZE] = { 0 };
-    Frame frame;
     DWORD bytesRead;
-    uint8_t startByte = msg[0];
+    DWORD startTime = GetTickCount();
 
-    // Synchronize avec le debut du message MSG_ID_FROM_ARDUINO
+    // Read the first byte
     while (true) {
         if (!ReadFile(hSerial, &msg[0], 1, &bytesRead, NULL) || bytesRead < 1) {
-            return -1;
+            if (GetTickCount() - startTime > TIMEOUT_READ) { // Timeout after TIMEOUT_READ ms
+                return errorFrame;
+            }
+            continue;
         }
-        if (msg[0] == startByte) {
-            break;
-        }
+        break;
     }
 
-    // Lecture 
+    // Read the rest of the message
     if (!ReadFile(hSerial, &msg[1], MSG_SIZE - 1, &bytesRead, NULL) || bytesRead < MSG_SIZE - 1) {
-        return -1;
+        return errorFrame;
     }
 
+    // Validate the checksum
     uint8_t checksum = 0;
     for (int i = 0; i < MSG_SIZE - 1; i++) {
         checksum ^= msg[i];
     }
     if (checksum != msg[MSG_SIZE - 1]) {
-        return -1;
+        return errorFrame;
     }
-    return msg[1];
-}
 
+    Frame frame = { msg[0], msg[1], msg[2] };
+    return frame;
+}
 
 // DESCRIPTION: Cherche et lit un message avec un ID, et retourne la valeur de data.
 //              Retourne -1 si le message est invalide
@@ -123,7 +122,6 @@ int Communication::readMsg(uint8_t id) {
     while (true) {
         if (!ReadFile(hSerial, &msg[0], 1, &bytesRead, NULL) || bytesRead < 1) {
 			if (GetTickCount() - startTime > TIMEOUT_READ) {
-				//cerr << "ERROR-PC: Timeout reading message" << endl;
 				return -1;
 			}
             return -1;
@@ -144,25 +142,24 @@ int Communication::readMsg(uint8_t id) {
     if (checksum != msg[MSG_SIZE - 1]) {
         return -1;
     }
-    
-	for (int i = 0; i < MSG_SIZE; i++) {
-		cout << (int)msg[i] << " ";
-	}
-	cout << endl;
-    
+
+    /*for (int i = 0; i < MSG_SIZE; i++) {
+        cout << (int)msg[i] << " ";
+    }
+    cout << endl;*/
     return msg[1];
 }
 
 HANDLE Communication::getSerialPort() {
-	return hSerial;
+    return hSerial;
 }
 
 void Communication::setSerialPort(HANDLE hSerial) {
-	this->hSerial = hSerial;
+    this->hSerial = hSerial;
 }
 
 void Communication::closeSerialPort() {
-	CloseHandle(hSerial);
+    CloseHandle(hSerial);
 }
 
 // DESCRIPTION: Vide le buffer du serial. Peut etre utile pour eviter les problemes de backlog lors de la lecture

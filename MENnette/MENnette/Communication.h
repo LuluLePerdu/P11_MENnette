@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <windows.h>
-#include <WinBase.h>
 #include <string>
 #include <iomanip>
 #include <thread>
@@ -45,7 +44,7 @@ public:
     bool begin();
     bool configureSerialPort();
     void sendMsg(Frame frame);
-    int readMsg();
+    Frame readMsg();
     int readMsg(uint8_t id);
 	HANDLE getSerialPort();
 	void setSerialPort(HANDLE hSerial);

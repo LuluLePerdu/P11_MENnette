@@ -12,48 +12,51 @@ bool playPot() {
         code[i] = digits[rand() % 9];
     }
 
+    float usrInput = -1;
+    int joyInput = -1;
     bool isOver = false;
-    float usrInput, distance;
+    float distance;
     char outputCode[10];
     comm.clear();
     while (!isOver) {
-        usrInput = comm.readMsg(MSG_ID_AR_POTENTIOMETER);
-		//comm.clear();
-		//cout << "usrInput : " << usrInput << endl;
-        if (usrInput < 0) {
-            cout << "Erreur d'entreé";
-        } else {
+		int joyInput = comm.readMsg(MSG_ID_AR_JOYSTICK);
+		if (joyInput == 4) {
+			isOver = true;
+		}
+
+        int potInput = comm.readMsg(MSG_ID_AR_POTENTIOMETER);
+        if (potInput >= 0) {
+            usrInput = potInput;
+        }
+
+        comm.clear();
+
+        if (usrInput >= 0) {
             int distance = 10 * abs(target - usrInput) / 128;
             if (distance > 10) distance = 10;
-            // cout << "Base 10 distance : " << distance << endl;
-            if (comm.readMsg(MSG_ID_AR_JOYSTICK) != -1) {
+
+            if (joyInput != -1) {
+                cout << "FIN";
                 comm.clear();
                 isOver = true;
             }
             else {
-                // cout << "nbchar : " << distance << endl;
                 for (int i = 0; i < 10; i++) {
                     outputCode[i] = characters[rand() % 44];
                 }
-                for (int i = 0; i < 10-distance; i++) {
+                for (int i = 0; i < 10 - distance; i++) {
                     outputCode[i] = code[i];
                 }
-                //shuffle(begin(outputCode), end(outputCode), randomEngine());
-                //shuffle(begin(outputCode), end(outputCode), randomEngine);
                 for (int i = 0; i < 10; i++) {
                     cout << outputCode[i];
-                    // cout << outputCode[i];
                 }
-                cout << "Distance : " << distance;
+                cout << " Distance : " << distance;
                 cout << "\r";
-                //cout << endl;
-                // system("pause");
             }
         }
+
         this_thread::sleep_for(std::chrono::milliseconds(33));
-        // system("cls");
     }
 
     return true;
-
 }
