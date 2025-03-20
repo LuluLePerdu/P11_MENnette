@@ -1,5 +1,6 @@
 #pragma once
 #include "SimonSaysModel.h"
+#include "Communication.h"
 
 class SimonSaysView
 {

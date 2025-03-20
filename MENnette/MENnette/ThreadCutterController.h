@@ -1,6 +1,7 @@
 #pragma once
 #include "ThreadCutterModel.h"
 #include "ThreadCutterView.h"
+#include "Communication.h"
 
 class ThreadCutterController
 {
