@@ -113,6 +113,7 @@
     <ClCompile Include="Controllers\SimonSaysController.cpp" />
     <ClCompile Include="Controllers\SnakeMazeController.cpp" />
     <ClCompile Include="Controllers\ThreadCutterController.cpp" />
+    <ClCompile Include="SimonSays.cpp" />
     <ClCompile Include="ThreadCutter.cpp" />
     <ClCompile Include="Utils\Clock.cpp" />
     <ClCompile Include="Utils\Communication.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Controllers\SimonSaysController.h" />
     <ClInclude Include="Controllers\SnakeMazeController.h" />
     <ClInclude Include="Controllers\ThreadCutterController.h" />
+    <ClInclude Include="SimonSays.h" />
     <ClInclude Include="ThreadCutter.h" />
     <ClInclude Include="Utils\Color.h" />
     <ClInclude Include="Utils\common.hpp" />
