@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="pgeMain">
     <widget class="QPushButton" name="btnSnake">
@@ -167,9 +167,50 @@ QPushButton:hover{
    </widget>
    <widget class="QWidget" name="pgeSnake"/>
    <widget class="QWidget" name="pgeAccel"/>
-   <widget class="QWidget" name="pgeLED"/>
+   <widget class="QWidget" name="pgeLED">
+    <widget class="QLabel" name="labInstruc">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>20</y>
+       <width>600</width>
+       <height>300</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labResult">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>350</y>
+       <width>600</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </widget>
    <widget class="QWidget" name="pgeSimon"/>
-   <widget class="QWidget" name="pgePoten"/>
+   <widget class="QWidget" name="pgePoten">
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>100</y>
+       <width>300</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </widget>
    <widget class="QWidget" name="page_7"/>
   </widget>
   <widget class="QLCDNumber" name="lcdClock">

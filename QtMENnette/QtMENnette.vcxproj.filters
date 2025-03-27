@@ -147,9 +147,6 @@
     <ClInclude Include="Controllers\SnakeMazeController.h">
       <Filter>Controllers</Filter>
     </ClInclude>
-    <ClInclude Include="Controllers\ThreadCutterController.h">
-      <Filter>Controllers</Filter>
-    </ClInclude>
     <ClInclude Include="Views\MainMenuView.h">
       <Filter>Views</Filter>
     </ClInclude>
