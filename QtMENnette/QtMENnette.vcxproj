@@ -113,6 +113,8 @@
     <ClCompile Include="Controllers\SimonSaysController.cpp" />
     <ClCompile Include="Controllers\SnakeMazeController.cpp" />
     <ClCompile Include="Controllers\ThreadCutterController.cpp" />
+    <ClCompile Include="CryptographicSequencer.cpp" />
+    <ClCompile Include="ShakeIt.cpp" />
     <ClCompile Include="Utils\Clock.cpp" />
     <ClCompile Include="Utils\Communication.cpp" />
     <ClCompile Include="Views\GameView.cpp" />
@@ -127,6 +129,8 @@
     <ClInclude Include="Controllers\SimonSaysController.h" />
     <ClInclude Include="Controllers\SnakeMazeController.h" />
     <ClInclude Include="Controllers\ThreadCutterController.h" />
+    <ClInclude Include="CryptographicSequencer.h" />
+    <ClInclude Include="ShakeIt.h" />
     <ClInclude Include="Utils\Color.h" />
     <ClInclude Include="Utils\common.hpp" />
     <ClInclude Include="Views\MainMenuView.h" />

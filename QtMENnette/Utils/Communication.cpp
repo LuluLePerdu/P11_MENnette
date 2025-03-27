@@ -76,6 +76,22 @@ bool Communication::configureSerialPort() {
     return true;
 }
 
+int Communication::createSeed() {
+	time_t initTime = time(nullptr);
+    int a;
+	while (a == 0) {
+		a = readMsg(MSG_ID_FROM_MISC);
+		clear();
+	    if (a == MSG_DATA_ERROR) {
+		    return 0;
+	    }
+	}
+	time_t finalTime = time(nullptr);
+	int seed = difftime(finalTime, initTime);
+	return seed;
+}
+
+
 void Communication::sendMsg(Frame frame) {
     // Creation de message
     uint8_t msg[MSG_SIZE] = { frame.id, frame.data, 0 };

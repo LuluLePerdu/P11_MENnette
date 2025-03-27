@@ -14,12 +14,17 @@ using namespace std;
 #define TIMEOUT_READ 50
 
 #define MSG_ID_ERROR 71
+#define MSG_DATA_ERROR 71
+#define MSG_ID_OK 72
+#define MSG_DATA_OK 72
+
 
 #define MSG_ID_AR_JOYSTICK 101
 #define MSG_ID_AR_POTENTIOMETER 102
 #define MSG_ID_AR_ACCELEROMETER 103
 #define MSG_ID_AR_BUTTON 104
 #define MSG_ID_AR_SHAKED 105
+#define MSG_ID_AR_MUON 106
 
 #define MSG_ID_PC_LED 201
 #define MSG_ID_PC_MOTOR 202
@@ -45,6 +50,7 @@ public:
     wstring getOpenCOM();
     bool begin();
     bool configureSerialPort();
+	int createSeed();
     void sendMsg(Frame frame);
     Frame readMsg();
     int readMsg(uint8_t id);
@@ -61,4 +67,5 @@ private:
     ~Communication() { this->closeSerialPort(); }
     Frame errorFrame = { MSG_ID_ERROR, 0, 0 };
     HANDLE hSerial;
+    int seed = 0;
 };

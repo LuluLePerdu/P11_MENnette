@@ -12,6 +12,7 @@ public:
     MainWindow(QWidget* parent = nullptr);
 	~MainWindow();
     static MainWindow* instance();
+	Ui::MainWindow* getUI() const;
 
 private:
     static MainWindow* w;
