@@ -115,7 +115,10 @@
     <ClCompile Include="Views\ThreadCutterView.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="ThreadCutter.cpp">
+    <ClCompile Include="ShakeIt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CryptographicSequencer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -150,6 +153,9 @@
     <ClInclude Include="Controllers\SnakeMazeController.h">
       <Filter>Controllers</Filter>
     </ClInclude>
+    <ClInclude Include="Controllers\ThreadCutterController.h">
+      <Filter>Controllers</Filter>
+    </ClInclude>
     <ClInclude Include="Views\MainMenuView.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -162,7 +168,10 @@
     <ClInclude Include="Communication.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadCutter.h">
+    <ClInclude Include="ShakeIt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CryptographicSequencer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,9 +10,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 MainWindow::~MainWindow()
 {}
 
+
+
 MainWindow* MainWindow::instance() {
     if (w == NULL) { w = new MainWindow(); }
     return w;
+}
+
+Ui::MainWindow* MainWindow::getUI() const
+{
+	return const_cast<Ui::MainWindow*>(&ui);
 }
 
 void MainWindow::on_btnHome_clicked() {
