@@ -8,7 +8,13 @@ class SimonSays : public QWidget
 {
 public:
 	SimonSays();
+	void run(int button);
+	bool getCompleted();
 	
 private:
-
+	MainWindow* w = MainWindow::instance();
+	void simonSequence();
+	void blinkSequence(int index);
+	int seqArray[10];
+	bool completed = false;
 };
