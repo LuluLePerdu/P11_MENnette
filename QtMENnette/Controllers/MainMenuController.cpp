@@ -3,7 +3,7 @@
 #include "SnakeMazeController.h"
 #include "ShakeItController.h"
 #include "SimonSaysController.h"
-#include "ThreadCutterController.h"
+//#include "ThreadCutterController.h"
 #include <conio.h>
 #include <iostream>
 #include <chrono>
@@ -43,9 +43,9 @@ void MainMenuController::run() {
                     shakeItController.run();
 				}
                 if (model.getSelectedOption() == 4) {
-                    ThreadCutterView threadView;
-                    ThreadCutterController threadController(threadView);
-                    threadController.run();
+                    //ThreadCutterView threadView;
+                    //ThreadCutterController threadController(threadView);
+                    //threadController.run();
                 }
                 if (model.getSelectedOption() == 5) {
                     SimonSaysView simonView;

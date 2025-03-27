@@ -121,6 +121,7 @@
     <ClCompile Include="Views\SimonSaysView.cpp" />
     <ClCompile Include="Views\SnakeMazeView.cpp" />
     <ClCompile Include="Views\ThreadCutterView.cpp" />
+    <ClInclude Include="Communication.h" />
     <ClInclude Include="Controllers\MainMenuController.h" />
     <QtMoc Include="Controllers\ShakeItController.h" />
     <ClInclude Include="Controllers\SimonSaysController.h" />
@@ -132,7 +133,7 @@
     <QtMoc Include="Views\ShakeItView.h" />
     <ClInclude Include="Views\SimonSaysView.h" />
     <ClInclude Include="Views\SnakeMazeView.h" />
-    <ClInclude Include="Views\ThreadCutterView.h" />
+    <QtMoc Include="Views\ThreadCutterView.h" />
     <QtRcc Include="MainWindow.qrc" />
     <QtUic Include="MainWindow.ui" />
     <QtMoc Include="MainWindow.h" />

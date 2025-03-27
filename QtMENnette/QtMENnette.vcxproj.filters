@@ -159,8 +159,8 @@
     <ClInclude Include="Views\SnakeMazeView.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Views\ThreadCutterView.h">
-      <Filter>Views</Filter>
+    <ClInclude Include="Communication.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +177,9 @@
     </QtMoc>
     <QtMoc Include="Models\ShakeItModel.h">
       <Filter>Models</Filter>
+    </QtMoc>
+    <QtMoc Include="Views\ThreadCutterView.h">
+      <Filter>Views</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>
