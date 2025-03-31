@@ -2,13 +2,14 @@
 #include <iostream>
 using namespace std;
 
-ThreadCutter::ThreadCutter(QLabel* labInstruction, QLabel* labResults) {
+ThreadCutter::ThreadCutter(/*QLabel* labInstruction, QLabel* labResults*/) {
     srand(time(0));
     for (int i = 0; i < 4; i++) {
         ledArray[i] = rand() % 2;
     }
     ledSetup();
     labResult->setVisible(false);
+    render();
 }
 
 void ThreadCutter::run(int button) {
@@ -60,10 +61,14 @@ bool ThreadCutter::checkButton(int button) {
 }
 
 void ThreadCutter::render() {
-    labInstruc->setText(QString::fromLatin1("Si la DEL rouge et 2 autres DELs sont allumées, appuyez sur le bouton rouge."
-        "\n\nSinon, si la DEL rouge et la DEL bleue sont allumées mais aucune autre, appuyez sur le bouton bleu pendant 3 secondes."
-        "\n\nSinon, si les 4 DELs sont allumées, appuyez sur le bouton bleu."
+    labInstruc->setText(QString::fromLatin1(
+        "Si la DEL verte et 2 autres DELs sont allumées, appuyez sur le bouton vert."
+        "\n\nSinon, si la DEL verte et la DEL rouge sont allumées mais aucune autre, appuyez sur le bouton rouge."
+        "\n\nSinon, si les 4 DELs sont allumées, appuyez sur le bouton rouge."
         "\n\nSinon, si les 4 DELs sont éteintes, appuyez sur le bouton la plus à droite."
+        "\n\nSinon, si la DEL bleue et la DEL jaune sont allumées mais aucune autre, appuyez sur le bouton jaune."
+        "\n\nSinon, si uniquement la DEL rouge est allumée, appuyez sur le bouton le plus à gauche."
+        "\n\nSinon, si aucune des autres conditions n'est remplie mais que 2 DELs sont allumées, appuyez sur le bouton rouge."
         "\n\nSinon, appuyez sur le deuxième bouton à partir de la gauche."));
 }
 

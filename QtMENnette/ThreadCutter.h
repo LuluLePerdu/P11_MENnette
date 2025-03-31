@@ -12,7 +12,7 @@
 class ThreadCutter : public QWidget
 {
 public:
-	ThreadCutter(QLabel* labInstruction, QLabel* labResults);
+	ThreadCutter(/*QLabel* labInstruction, QLabel* labResults*/);
 	void run(int button);
 	bool getCompleted();
 
