@@ -107,6 +107,7 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Controllers\GameController.cpp" />
     <ClCompile Include="Controllers\MainMenuController.cpp" />
     <ClCompile Include="Controllers\ShakeItController.cpp" />
@@ -116,8 +117,9 @@
     <ClCompile Include="CryptographicSequencer.cpp" />
     <ClCompile Include="ShakeIt.cpp" />
     <ClCompile Include="SimonSays.cpp" />
+    <ClCompile Include="SnakeMakeWidget..cpp" />
+    <ClCompile Include="SnakeMaze.cpp" />
     <ClCompile Include="ThreadCutter.cpp" />
-    <ClCompile Include="Utils\Clock.cpp" />
     <ClCompile Include="Utils\Communication.cpp" />
     <ClCompile Include="Views\GameView.cpp" />
     <ClCompile Include="Views\MainMenuView.cpp" />
@@ -125,6 +127,7 @@
     <ClCompile Include="Views\SimonSaysView.cpp" />
     <ClCompile Include="Views\SnakeMazeView.cpp" />
     <ClCompile Include="Views\ThreadCutterView.cpp" />
+    <ClInclude Include="Clock.h" />
     <ClInclude Include="Communication.h" />
     <ClInclude Include="Controllers\MainMenuController.h" />
     <ClInclude Include="Controllers\ShakeItController.h" />
@@ -134,6 +137,8 @@
     <QtMoc Include="CryptographicSequencer.h" />
     <ClInclude Include="ShakeIt.h" />
     <ClInclude Include="SimonSays.h" />
+    <ClInclude Include="SnakeMaze.h" />
+    <QtMoc Include="SnakeMazeWidget.h" />
     <ClInclude Include="ThreadCutter.h" />
     <ClInclude Include="Utils\Color.h" />
     <ClInclude Include="Utils\common.hpp" />

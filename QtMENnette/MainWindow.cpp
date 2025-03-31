@@ -1,13 +1,12 @@
 //#include "stdafx.h"
 #include "MainWindow.h"
 
-
-
-
-
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
     ui.setupUi(this);
+
+	snakeWidget = new SnakeMazeWidget();
+	ui.stackedWidget->addWidget(snakeWidget);
 }
 
 MainWindow::~MainWindow()
@@ -32,7 +31,7 @@ void MainWindow::on_btnHome_clicked() {
 }
 
 void MainWindow::on_btnSnake_clicked() {
-	ui.stackedWidget->setCurrentIndex(1);
+	ui.stackedWidget->setCurrentIndex(1); 
 	ui.labDebug->setText("Snake");
 }
 
