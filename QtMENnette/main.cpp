@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <QDebug>
 #include <QtWidgets/QApplication>
 #include <qtimer.h>

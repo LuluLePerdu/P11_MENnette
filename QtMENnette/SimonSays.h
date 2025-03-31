@@ -4,6 +4,7 @@
 #include "MainWindow.h"
 #include "Communication.h"
 
+using namespace std;
 class SimonSays : public QWidget
 {
 public:
