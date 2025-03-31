@@ -7,7 +7,7 @@
 #include <thread>
 #include <chrono>
 
-using namespace std;
+//using namespace std;
 
 #define BAUD 9600 
 #define MSG_SIZE 3
@@ -47,7 +47,7 @@ public:
     Communication(Communication const&) = delete;
     void operator=(Communication const&) = delete;
 
-    wstring getOpenCOM();
+    std::wstring getOpenCOM();
     bool begin();
     bool configureSerialPort();
 	int createSeed();

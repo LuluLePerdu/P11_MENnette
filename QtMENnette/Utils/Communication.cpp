@@ -1,13 +1,13 @@
 #include "Communication.h"
 
-wstring Communication::getOpenCOM() {
+std::wstring Communication::getOpenCOM() {
     wchar_t comName[10];
 
     for (int i = 1; i <= 256; i++) {
         _snwprintf_s(comName, 10, L"\\\\.\\COM%d", i); // Use _snwprintf for compatibility
         HANDLE hPort = CreateFileW(comName, GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, 0, 0);
         if (hPort != INVALID_HANDLE_VALUE) {
-            wstringstream ws;
+            std::wstringstream ws;
             // stringstream ws;
             ws << L"COM" << i; // int to widstring
             CloseHandle(hPort);
@@ -21,22 +21,22 @@ wstring Communication::getOpenCOM() {
 //Initialisation de la communication
 bool Communication::begin() {
 
-    wstring com = getOpenCOM();
+    std::wstring com = getOpenCOM();
     if (com.empty()) {
-        cerr << "ERROR-PC: No COM ports available" << endl;
+        std::cerr << "ERROR-PC: No COM ports available" << std::endl;
         return false;
     }
     hSerial = CreateFileW(com.c_str(), GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
     if (hSerial == INVALID_HANDLE_VALUE) {
-        cerr << " ERROR-PC: Error opening serial port" << endl;
+        std::cerr << " ERROR-PC: Error opening serial port" << std::endl;
         return false;
     }
     PurgeComm(hSerial, PURGE_RXCLEAR | PURGE_TXCLEAR); // vide le buffer du serial
-    this_thread::sleep_for(chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
 
     if (!configureSerialPort()) {
-        cerr << "ERROR-PC: Error configuring serial port" << endl;
+        std::cerr << "ERROR-PC: Error configuring serial port" << std::endl;
         CloseHandle(hSerial);
         return false;
     }
@@ -49,7 +49,7 @@ bool Communication::configureSerialPort() {
     DCB dcbSerialParams = { 0 };
     dcbSerialParams.DCBlength = sizeof(dcbSerialParams);
     if (!GetCommState(hSerial, &dcbSerialParams)) {
-        cerr << "ERROR-PC: Error getting serial port state" << endl;
+        std::cerr << "ERROR-PC: Error getting serial port state" << std::endl;
         return false;
     }
     //parametres du port
@@ -59,7 +59,7 @@ bool Communication::configureSerialPort() {
     dcbSerialParams.StopBits = ONESTOPBIT;
     dcbSerialParams.Parity = NOPARITY;
     if (!SetCommState(hSerial, &dcbSerialParams)) {
-        cerr << "ERROR-PC: Error setting serial port state" << endl;
+        std::cerr << "ERROR-PC: Error setting serial port state" << std::endl;
         return false;
     }
 
@@ -70,7 +70,7 @@ bool Communication::configureSerialPort() {
     timeouts.WriteTotalTimeoutConstant = 50;
     timeouts.WriteTotalTimeoutMultiplier = 10;
     if (!SetCommTimeouts(hSerial, &timeouts)) {
-        cerr << "ERROR-PC: Error setting serial port timeouts" << endl;
+        std::cerr << "ERROR-PC: Error setting serial port timeouts" << std::endl;
         return false;
     }
     return true;

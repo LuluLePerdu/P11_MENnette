@@ -202,8 +202,8 @@ QPushButton:hover{
       <rect>
        <x>200</x>
        <y>100</y>
-       <width>300</width>
-       <height>32</height>
+       <width>301</width>
+       <height>91</height>
       </rect>
      </property>
      <property name="text">
