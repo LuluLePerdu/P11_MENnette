@@ -8,7 +8,6 @@
 #include "CryptographicSequencer.h"
 #include "qthread.h"
 
-
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -30,8 +29,4 @@ private slots:
 	void on_btnSimon_clicked();
 	void on_btnAccel_clicked();
 	void on_btnPoten_clicked();
-
-
 };
-
-
