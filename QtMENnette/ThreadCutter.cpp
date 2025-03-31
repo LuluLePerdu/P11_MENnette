@@ -3,6 +3,10 @@
 using namespace std;
 
 ThreadCutter::ThreadCutter(/*QLabel* labInstruction, QLabel* labResults*/) {
+    w = MainWindow::instance();
+    labInstruc = w->getUI()->labInstruc;
+    labResult = w->getUI()->labResult;
+    
     srand(time(0));
     for (int i = 0; i < 4; i++) {
         ledArray[i] = rand() % 2;

@@ -6,7 +6,6 @@
 #include "SnakeMazeWidget.h"
 
 #include "CryptographicSequencer.h"
-#include "ThreadCutter.h"
 #include "qthread.h"
 
 
