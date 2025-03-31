@@ -3,6 +3,10 @@
 //#include <QtWidgets/QWidget>
 #include <QtWidgets/qmainwindow.h>
 #include "ui_MainWindow.h"
+#include "SnakeMazeWidget.h"
+
+#include "CryptographicSequencer.h"
+#include "qthread.h"
 
 
 class MainWindow : public QMainWindow {
@@ -17,6 +21,7 @@ public:
 private:
     static MainWindow* w;
     Ui::MainWindow ui;
+	SnakeMazeWidget* snakeWidget;
 
 private slots:
 	void on_btnHome_clicked();

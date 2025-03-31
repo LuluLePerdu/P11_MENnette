@@ -9,12 +9,12 @@ std::wstring Communication::getOpenCOM() {
         if (hPort != INVALID_HANDLE_VALUE) {
             std::wstringstream ws;
             // stringstream ws;
-            ws << L"COM" << i; // int to widstring
+            ws << L"COM" << i; 
             CloseHandle(hPort);
             return ws.str(); // wstringstream to wstring
         }
     }
-    return L"";
+    return L"ERROR";
 
 }
 
@@ -22,7 +22,7 @@ std::wstring Communication::getOpenCOM() {
 bool Communication::begin() {
 
     std::wstring com = getOpenCOM();
-    if (com.empty()) {
+    if (com == L"ERROR") {
         std::cerr << "ERROR-PC: No COM ports available" << std::endl;
         return false;
     }
@@ -94,10 +94,10 @@ int Communication::createSeed() {
 
 void Communication::sendMsg(Frame frame) {
     // Creation de message
-    uint8_t msg[MSG_SIZE] = { frame.id, frame.data, 0 };
+    unsigned char msg[MSG_SIZE] = { frame.id, frame.data, 0 };
 
     // Checksum via XOR de tous les bytes
-    uint8_t checksum = 0;
+    unsigned char checksum = 0;
     for (int i = 0; i < MSG_SIZE - 1; i++) {
         checksum ^= msg[i];
     }
@@ -116,7 +116,7 @@ void Communication::sendMsg(Frame frame) {
 // ! Utiliser plutot la version avec un ID si possible!
 // -Zakary
 Frame Communication::readMsg() {
-    uint8_t msg[MSG_SIZE] = { 0 };
+    unsigned char msg[MSG_SIZE] = { 0 };
     DWORD bytesRead;
     DWORD startTime = GetTickCount();
 
@@ -137,7 +137,7 @@ Frame Communication::readMsg() {
     }
 
     // Validate the checksum
-    uint8_t checksum = 0;
+    unsigned char checksum = 0;
     for (int i = 0; i < MSG_SIZE - 1; i++) {
         checksum ^= msg[i];
     }
@@ -153,8 +153,8 @@ Frame Communication::readMsg() {
 //              Retourne -1 si le message est invalide
 // ! P.S: Utiliser cette fonction plutot que la version sans ID; Plus stable et fiable!
 // Je recommande de faire un Communication::clear() apres la lecture, ca evite les problemes de backlogs dans le buffer
-int Communication::readMsg(uint8_t id) {
-    uint8_t msg[MSG_SIZE] = { 0 };
+int Communication::readMsg(unsigned char id) {
+    unsigned char msg[MSG_SIZE] = { 0 };
     DWORD bytesRead;
     DWORD startTime = GetTickCount();
 
@@ -175,7 +175,7 @@ int Communication::readMsg(uint8_t id) {
         return -1;
     }
 
-    uint8_t checksum = 0;
+    unsigned char checksum = 0;
     for (int i = 0; i < MSG_SIZE - 1; i++) {
         checksum ^= msg[i];
     }
@@ -207,15 +207,15 @@ void Communication::clear() {
     PurgeComm(hSerial, PURGE_RXCLEAR | PURGE_TXCLEAR);
 }
 
-uint8_t Communication::convertBoolsToByte(bool p_sw[8]) {
-    uint8_t b = 0;
+unsigned char Communication::convertBoolsToByte(bool p_sw[8]) {
+    unsigned char b = 0;
     for (int i = 0; i < 8; i++) {
         b |= (p_sw[i] << i); // Met le bit i à 1 si p_sw[i] est vrai
     }
     return b;
 }
 
-void Communication::byteToBoolArray(uint8_t b, bool arr[8]) {
+void Communication::byteToBoolArray(unsigned char b, bool arr[8]) {
     for (int i = 0; i < 8; i++) {
         arr[i] = (b >> i) & 1; // Met arr[i] à vrai si le bit i de b est à 1
     }

@@ -14,7 +14,7 @@
 #define TIMEOUT_READ 50
 
 #define MSG_ID_ERROR 71
-#define MSG_DATA_ERROR 71
+#define MSG_DATA_ERROR 0
 #define MSG_ID_OK 72
 #define MSG_DATA_OK 72
 
@@ -33,9 +33,9 @@
 #define MSG_ID_FROM_MISC 242
 
 struct Frame {
-    uint8_t id;
-    uint8_t data;
-    uint8_t checksum;
+    unsigned char id;
+    unsigned char data;
+    unsigned char checksum;
 };
 
 class Communication {
@@ -53,13 +53,13 @@ public:
 	int createSeed();
     void sendMsg(Frame frame);
     Frame readMsg();
-    int readMsg(uint8_t id);
+    int readMsg(unsigned char id);
     HANDLE getSerialPort();
     void setSerialPort(HANDLE hSerial);
     void closeSerialPort();
     void clear();
-    uint8_t convertBoolsToByte(bool p_sw[8]);
-    void byteToBoolArray(uint8_t b, bool arr[8]);
+    unsigned char convertBoolsToByte(bool p_sw[8]);
+    void byteToBoolArray(unsigned char b, bool arr[8]);
     int seed = 0;
 
 

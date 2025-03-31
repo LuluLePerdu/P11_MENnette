@@ -1,7 +1,7 @@
 #pragma once
 #include "MainMenuController.h"
 #include "SnakeMazeController.h"
-#include "ShakeItController.h"
+//#include "ShakeItController.h"
 #include "SimonSaysController.h"
 //#include "ThreadCutterController.h"
 #include <conio.h>
@@ -38,9 +38,9 @@ void MainMenuController::run() {
 					return;
 				}
 				if (model.getSelectedOption() == 3) {
-					ShakeItView shakeItView;
+					/*ShakeItView shakeItView;
 					ShakeItController shakeItController(shakeItView);
-                    shakeItController.run();
+                    shakeItController.run();*/
 				}
                 if (model.getSelectedOption() == 4) {
                     //ThreadCutterView threadView;

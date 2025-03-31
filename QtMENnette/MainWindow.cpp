@@ -2,12 +2,12 @@
 #include "MainWindow.h"
 #include "ThreadCutter.h"
 
-
-
-
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
     ui.setupUi(this);
+
+	snakeWidget = new SnakeMazeWidget();
+	ui.stackedWidget->addWidget(snakeWidget);
 }
 
 MainWindow::~MainWindow()
@@ -28,11 +28,11 @@ Ui::MainWindow* MainWindow::getUI() const
 void MainWindow::on_btnHome_clicked() {
 	ui.stackedWidget->setCurrentIndex(0);
 	ui.labDebug->setText("Home");
-	
+	OutputDebugString(L"Home\n");
 }
 
 void MainWindow::on_btnSnake_clicked() {
-	ui.stackedWidget->setCurrentIndex(1);
+	ui.stackedWidget->setCurrentIndex(1); 
 	ui.labDebug->setText("Snake");
 }
 
@@ -55,4 +55,6 @@ void MainWindow::on_btnAccel_clicked() {
 void MainWindow::on_btnPoten_clicked() {
 	ui.stackedWidget->setCurrentIndex(5);
 	ui.labDebug->setText("Poten");
+	
+
 }
