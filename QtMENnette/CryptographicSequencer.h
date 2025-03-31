@@ -9,18 +9,25 @@
 #include <qwidget.h>
 #include <qlabel.h>
 
+
+#include <qerrormessage.h>
+
 #include "Communication.h"
 #include "MainWindow.h"
 
 
-class CryptographicSequencer : public QWidget
+class CryptographicSequencer : public QObject
 {
+	Q_OBJECT
+
 public:
 	CryptographicSequencer();
 	~CryptographicSequencer();
-	bool playPot();
+
+public slots:
+	bool playPot(QLabel* labPotSequence);
 
 private:
-	QLabel* labPotSequence = MainWindow::instance()->getUI()->labPotSequence;
+	//QLabel* labPotSequence;
 };
 

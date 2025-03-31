@@ -121,6 +121,12 @@
     <ClCompile Include="CryptographicSequencer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SimonSays.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadCutter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Models\GameModel.h">
@@ -171,8 +177,20 @@
     <ClInclude Include="ShakeIt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CryptographicSequencer.h">
+    <ClInclude Include="SimonSays.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadCutter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ShakeItView.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Controllers\ShakeItController.h">
+      <Filter>Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\ShakeItModel.h">
+      <Filter>Models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -181,17 +199,11 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Views\ShakeItView.h">
-      <Filter>Views</Filter>
-    </QtMoc>
-    <QtMoc Include="Controllers\ShakeItController.h">
-      <Filter>Controllers</Filter>
-    </QtMoc>
-    <QtMoc Include="Models\ShakeItModel.h">
-      <Filter>Models</Filter>
-    </QtMoc>
     <QtMoc Include="Views\ThreadCutterView.h">
       <Filter>Views</Filter>
+    </QtMoc>
+    <QtMoc Include="CryptographicSequencer.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

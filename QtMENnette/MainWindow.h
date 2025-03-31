@@ -4,6 +4,9 @@
 #include <QtWidgets/qmainwindow.h>
 #include "ui_MainWindow.h"
 
+#include "CryptographicSequencer.h"
+#include "qthread.h"
+
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
