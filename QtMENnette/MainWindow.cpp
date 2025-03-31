@@ -1,6 +1,5 @@
 //#include "stdafx.h"
 #include "MainWindow.h"
-#include "ThreadCutter.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
