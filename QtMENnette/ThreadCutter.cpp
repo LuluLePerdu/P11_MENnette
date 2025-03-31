@@ -44,8 +44,8 @@ void ThreadCutter::run(int button) {
 
     if (completed) {
         //cout << endl << "Module desamorce." << endl;
-        labResult->setText("Module désamorcé");
-        labResult->setVisible(true);
+        //labResult->setText("Module désamorcé");
+        //labResult->setVisible(true);
     }
     else {
         //cout << endl << "Mauvais bouton!" << endl;
@@ -56,6 +56,7 @@ void ThreadCutter::run(int button) {
 
 bool ThreadCutter::checkButton(int button) {
     if (button == correctLed) completed = true;
+	return completed;
 }
 
 void ThreadCutter::render() {

@@ -1,16 +1,19 @@
 #pragma once
 #include <iostream>
 #include <random>
-#include <algorithm>
-#include "Communication.h"
-#include <thread>
 #include <chrono>
+#include <thread>
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
+#include <qwidget.h>
+#include <qlabel.h>
 
-using namespace std;
+#include "Communication.h"
+#include "MainWindow.h"
 
 
-
-class CryptographicSequencer
+class CryptographicSequencer : public QWidget
 {
 public:
 	CryptographicSequencer();
@@ -18,13 +21,6 @@ public:
 	bool playPot();
 
 private:
-
+	QLabel* labPotSequence = MainWindow::instance()->getUI()->labPotSequence;
 };
 
-CryptographicSequencer::CryptographicSequencer()
-{
-}
-
-CryptographicSequencer::~CryptographicSequencer()
-{
-}

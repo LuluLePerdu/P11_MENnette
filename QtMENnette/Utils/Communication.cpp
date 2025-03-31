@@ -78,7 +78,7 @@ bool Communication::configureSerialPort() {
 
 int Communication::createSeed() {
 	time_t initTime = time(nullptr);
-    int a;
+    int a = 0;
 	while (a == 0) {
 		a = readMsg(MSG_ID_FROM_MISC);
 		clear();

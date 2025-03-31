@@ -1,24 +1,21 @@
 #include "CryptographicSequencer.h"
 
-
 bool CryptographicSequencer::playPot() {
-    system("cls");
     Communication& comm = Communication::getInstance();
-    char characters[] = "!@±/£$¢%¤?¬&¦*()=+#|\\*-[]^¨<>}{`;:,.'";
+    char characters[] = "!@/\\$%?&*()=+#|\\*-[]^<>}{`;:,.'";
     char digits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-    int target = (rand() % 255);
-    int seed = time(0);
-    default_random_engine randomEngine(seed);
-    // cout << "Target : " << target << endl;
+    int target = (std::rand() % 255);
+    int seed = std::time(0);
+    std::default_random_engine randomEngine(comm.seed);
+    // std::cout << "Target : " << target << std::endl;
     char code[10];
     for (int i = 0; i < 10; i++) {
-        code[i] = digits[rand() % 9];
+        code[i] = digits[std::rand() % 9];
     }
 
     float usrInput = -1;
     int joyInput = -1;
     bool isOver = false;
-    float distance;
     char outputCode[10];
     comm.clear();
     while (!isOver) {
@@ -35,31 +32,35 @@ bool CryptographicSequencer::playPot() {
         comm.clear();
 
         if (usrInput >= 0) {
-            int distance = 10 * abs(target - usrInput) / 128;
+            int distance = 10 * std::abs(target - usrInput) / 128;
             if (distance > 10) distance = 10;
 
             if (joyInput != -1) {
-                cout << "FIN";
+                //std::cout << "FIN";
                 comm.clear();
                 isOver = true;
             }
             else {
                 for (int i = 0; i < 10; i++) {
-                    outputCode[i] = characters[rand() % 44];
+                    outputCode[i] = characters[std::rand() % 38];
                 }
                 for (int i = 0; i < 10 - distance; i++) {
                     outputCode[i] = code[i];
                 }
-                for (int i = 0; i < 10; i++) {
-                    cout << outputCode[i];
-                }
-                cout << " Distance : " << distance;
-                cout << "\r";
+                labPotSequence->setText(outputCode);
             }
         }
 
-        this_thread::sleep_for(std::chrono::milliseconds(33));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(33));
     }
 
     return true;
+}
+
+CryptographicSequencer::CryptographicSequencer()
+{
+}
+
+CryptographicSequencer::~CryptographicSequencer()
+{
 }

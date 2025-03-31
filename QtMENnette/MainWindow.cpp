@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "MainWindow.h"
-#include "ThreadCutterController.h"
+
+
+
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
@@ -36,8 +38,8 @@ void MainWindow::on_btnSnake_clicked() {
 void MainWindow::on_btnLED_clicked() {
 	ui.stackedWidget->setCurrentIndex(3);
 	ui.labDebug->setText("LED");
-	ThreadCutterView tcv(ui.labInstruc, ui.labResult);
-	tcv.render();
+	//ThreadCutterView tcv(ui.labInstruc, ui.labResult);
+	//tcv.render();
 }
 
 void MainWindow::on_btnSimon_clicked() {

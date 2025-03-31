@@ -60,6 +60,7 @@ public:
     void clear();
     uint8_t convertBoolsToByte(bool p_sw[8]);
     void byteToBoolArray(uint8_t b, bool arr[8]);
+    int seed = 0;
 
 
 private:
@@ -67,5 +68,4 @@ private:
     ~Communication() { this->closeSerialPort(); }
     Frame errorFrame = { MSG_ID_ERROR, 0, 0 };
     HANDLE hSerial;
-    int seed = 0;
 };

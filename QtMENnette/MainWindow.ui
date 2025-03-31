@@ -197,7 +197,7 @@ QPushButton:hover{
    </widget>
    <widget class="QWidget" name="pgeSimon"/>
    <widget class="QWidget" name="pgePoten">
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="labPotSequence">
      <property name="geometry">
       <rect>
        <x>200</x>
