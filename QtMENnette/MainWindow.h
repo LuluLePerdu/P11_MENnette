@@ -6,6 +6,7 @@
 #include "SnakeMazeWidget.h"
 
 #include "CryptographicSequencer.h"
+#include "ThreadCutter.h"
 #include "qthread.h"
 
 class MainWindow : public QMainWindow {

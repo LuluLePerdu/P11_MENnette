@@ -47,8 +47,7 @@ void MainWindow::on_btnSnake_clicked() {
 void MainWindow::on_btnLED_clicked() {
 	ui.stackedWidget->setCurrentIndex(3);
 	ui.labDebug->setText("LED");
-	//ThreadCutterView tcv(ui.labInstruc, ui.labResult);
-	//tcv.render();
+	ThreadCutter tc;
 }
 
 void MainWindow::on_btnSimon_clicked() {
