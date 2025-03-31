@@ -7,10 +7,15 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
 	snakeWidget = new SnakeMazeWidget();
 	ui.stackedWidget->addWidget(snakeWidget);
+
+	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
+
 }
 
 MainWindow::~MainWindow()
-{}
+{
+	delete snakeWidget;
+}
 
 
 
@@ -31,7 +36,11 @@ void MainWindow::on_btnHome_clicked() {
 }
 
 void MainWindow::on_btnSnake_clicked() {
-	ui.stackedWidget->setCurrentIndex(1); 
+
+	ui.stackedWidget->setCurrentWidget(snakeWidget);
+
+	//ui.stackedWidget->setCurrentIndex(1); 
+
 	ui.labDebug->setText("Snake");
 }
 
