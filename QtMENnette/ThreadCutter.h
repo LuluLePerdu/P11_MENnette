@@ -4,6 +4,11 @@
 #include "MainWindow.h"
 #include "Communication.h"
 
+#define GREEN 0
+#define BLUE 1
+#define RED 2
+#define YELLOW 3
+
 class ThreadCutter : public QWidget
 {
 public:

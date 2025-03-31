@@ -72,6 +72,7 @@ bool ThreadCutter::getCompleted() {
 }
 
 void ThreadCutter::ledSetup() {
+    /* old code (fonctionne mais moins complet et clair)
     if (ledArray[0] && ledArray[1] + ledArray[2] + ledArray[3] == 2)
     {
         correctLed = 1;
@@ -85,5 +86,25 @@ void ThreadCutter::ledSetup() {
     }
     else {
         correctLed = 2;
+    }
+    */
+    if ((ledArray[GREEN] && ledArray[BLUE] + ledArray[RED] + ledArray[YELLOW] == 2)
+        || (!ledArray[GREEN] && !ledArray[BLUE] && ledArray[RED] && !ledArray[YELLOW]))
+    {
+        correctLed = GREEN;
+    }
+    else if ((ledArray[GREEN] && ledArray[RED] && !ledArray[BLUE] && !ledArray[YELLOW])
+        || (ledArray[GREEN] && ledArray[BLUE] && ledArray[RED] && ledArray[YELLOW])) {
+        correctLed = RED;
+    }
+    else if ((!ledArray[GREEN] && !ledArray[BLUE] && !ledArray[RED] && !ledArray[YELLOW])
+        || (ledArray[BLUE] && ledArray[YELLOW] && !ledArray[GREEN] && !ledArray[RED])) {
+        correctLed = YELLOW;
+    }
+    else if (ledArray[GREEN] + ledArray[BLUE] + ledArray[RED] + ledArray[YELLOW] == 2) {
+        correctLed = RED;
+    }
+    else {
+        correctLed = BLUE;
     }
 }
