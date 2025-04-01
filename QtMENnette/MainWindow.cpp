@@ -4,7 +4,7 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
 	ui.setupUi(this);
-	snakeWidget = new SnakeMazeWidget();
+	snakeWidget = new SnakeMazeWidget(21, 21, 35, this); //À remplacer les valeurs par des variables via la config
 	ui.stackedWidget->addWidget(snakeWidget);
 
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);

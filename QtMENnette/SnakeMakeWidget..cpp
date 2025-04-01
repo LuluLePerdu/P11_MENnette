@@ -9,10 +9,11 @@
 #include <QPushButton>
 
 
-SnakeMazeWidget::SnakeMazeWidget(QWidget* parent) :
+SnakeMazeWidget::SnakeMazeWidget(int mazeWidth, int mazeHeight, int gameDuration, QWidget* parent) :
     QWidget(parent),
     gameTimer(new QTimer(this)),
-    animationTimer(new QTimer(this))
+    animationTimer(new QTimer(this)),
+    logic(mazeWidth, mazeHeight, gameDuration)
 {
     logic.initialize();
     setFocusPolicy(Qt::StrongFocus);
@@ -64,11 +65,11 @@ void SnakeMazeWidget::paintEvent(QPaintEvent* event)
         painter.drawLine(0, y, width(), y);
     }
 
-    const char(&maze)[SnakeMaze::HEIGHT][SnakeMaze::WIDTH] = logic.getMaze();
+    const char** maze = logic.getMaze();
 
     // Labyrinthe
-    for (int y = 0; y < SnakeMaze::HEIGHT; y++) {
-        for (int x = 0; x < SnakeMaze::WIDTH; x++) {
+    for (int y = 0; y < logic.HEIGHT; y++) {
+        for (int x = 0; x < logic.WIDTH; x++) {
             QRectF rect(x * cellSize, y * cellSize + hudHeight, cellSize, cellSize);
 
             if (maze[y][x] == SnakeMaze::WALL) {
@@ -279,8 +280,8 @@ void SnakeMazeWidget::updateGame() {
 
 void SnakeMazeWidget::showResultDialog()
 {
-    int timeUsed = 60 - logic.getTimeLeft();
-    int overtime = (timeUsed > 60) ? (timeUsed - 60) : 0;
+    int timeUsed = logic.getGameDuration() - logic.getTimeLeft();
+    int overtime = (timeUsed > logic.getGameDuration()) ? (timeUsed - logic.getGameDuration()) : 0;
 
     QString message;
     if (overtime == 0) {

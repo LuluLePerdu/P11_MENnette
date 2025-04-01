@@ -10,6 +10,11 @@ class SnakeMazeWidget : public QWidget
 {
     Q_OBJECT
 public:
+    explicit SnakeMazeWidget(int mazeWidth = 21,
+        int mazeHeight = 21,
+        int gameDuration = 60,
+        QWidget* parent = nullptr);
+
     explicit SnakeMazeWidget(QWidget* parent = nullptr);
     void startGame();
     void stopGame();
