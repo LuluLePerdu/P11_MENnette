@@ -8,8 +8,6 @@ public:
     MainMenuController(MainMenuView& view);
 
     void run();
-	void startSnakeGame();
-    void reset();
 
 private:
     MainMenuModel model;

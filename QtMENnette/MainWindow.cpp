@@ -3,25 +3,31 @@
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
-    ui.setupUi(this);
-
-	snakeWidget = new SnakeMazeWidget();
+	ui.setupUi(this);
+	snakeWidget = new SnakeMazeWidget(21, 21, 35, this); //À remplacer les valeurs par des variables via la config
 	ui.stackedWidget->addWidget(snakeWidget);
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
 
-	csWidget = new CryptoSequencerWidget();
-	ui.stackedWidget->addWidget(csWidget);
-	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
+	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
+	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
+		ui.stackedWidget->setCurrentIndex(0);
+		});
 
+	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
+		ui.stackedWidget->setCurrentIndex(0);
+		snakeWidget->stopGame();
+		});
 
+	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) {
+		totalPenaltyTime += penalty;
+		//updateGlobalTimerDisplay();
+		});
 }
 
 MainWindow::~MainWindow()
 {
 	delete snakeWidget;
 }
-
-
 
 MainWindow* MainWindow::instance() {
     if (w == NULL) { w = new MainWindow(); }
@@ -40,12 +46,9 @@ void MainWindow::on_btnHome_clicked() {
 }
 
 void MainWindow::on_btnSnake_clicked() {
-
 	ui.stackedWidget->setCurrentWidget(snakeWidget);
-
-	//ui.stackedWidget->setCurrentIndex(1); 
-
 	ui.labDebug->setText("Snake");
+	snakeWidget->startGame();
 }
 
 void MainWindow::on_btnLED_clicked() {

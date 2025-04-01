@@ -21,7 +21,7 @@ private:
     static MainWindow* w;
     Ui::MainWindow ui;
 	SnakeMazeWidget* snakeWidget;
-	CryptoSequencerWidget* csWidget;
+	int totalPenaltyTime = 0;
 
 private slots:
 	void on_btnHome_clicked();

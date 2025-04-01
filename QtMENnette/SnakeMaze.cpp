@@ -3,20 +3,62 @@
 #include <cstdlib>
 #include <ctime>
 
-SnakeMaze::SnakeMaze() : score(0) {}
-
-void SnakeMaze::initialize()
+SnakeMaze::SnakeMaze(int width, int height, int duration) :
+    WIDTH(width), HEIGHT(height), gameDuration(duration),
+    timerStarted(false), hasMoved(false)
 {
+    allocateMaze();
+}
+
+SnakeMaze::~SnakeMaze() {
+    deallocateMaze();
+}
+
+void SnakeMaze::allocateMaze() {
+    maze = new char* [HEIGHT];
+    for (int y = 0; y < HEIGHT; y++) {
+        maze[y] = new char[WIDTH];
+    }
+}
+
+void SnakeMaze::deallocateMaze() {
+    for (int y = 0; y < HEIGHT; y++) {
+        delete[] maze[y];
+    }
+    delete[] maze;
+}
+
+void SnakeMaze::initialize() {
+    if (maze != nullptr) {
+        deallocateMaze();
+    }
+
+    allocateMaze();
+
     srand(static_cast<unsigned int>(time(0)));
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
             maze[y][x] = WALL;
         }
     }
+
     buildRandomMaze(1, 1);
-    maze[1][1] = PLAYER;
+    playerX = playerY = 1;
+    directionX = directionY = 0;
+    maze[playerY][playerX] = PLAYER;
     placeObjective();
-    timeLeft = 60;
+    ingame = true;
+    victory = false;
+    timerStarted = false;
+    startTime = QDateTime::currentMSecsSinceEpoch();
+    timeLeft = gameDuration;
+}
+
+void SnakeMaze::startTimer() {
+    if (!timerStarted) {
+        startTime = QDateTime::currentMSecsSinceEpoch();
+        timerStarted = true;
+    }
 }
 
 void SnakeMaze::buildRandomMaze(int startX, int startY) {
@@ -62,7 +104,6 @@ void SnakeMaze::movePlayer()
     }
 
     if (maze[newY][newX] == OBJECTIVE) {
-        score++;
         ingame = false;
         victory = true;
         return;
@@ -78,6 +119,11 @@ void SnakeMaze::changeDirection(int dx, int dy)
 {
     directionX = dx;
     directionY = dy;
+
+    if (!timerStarted && (dx != 0 || dy != 0)) {
+        startTimer();
+        hasMoved = true;
+    }
 }
 
 void SnakeMaze::placeObjective()
@@ -100,19 +146,17 @@ bool SnakeMaze::victoryEOG() const
     return victory;
 }
 
-const char(&SnakeMaze::getMaze() const)[HEIGHT][WIDTH]{
-    return maze;
+const char** SnakeMaze::getMaze() const {
+    return const_cast<const char**>(maze);
 }
 
 void SnakeMaze::updateTimer() {
-    double elapsed = timerClock.getElapsedTime();
-    timeLeft = 60 - static_cast<int>(elapsed);
+    if (timerStarted) {
+        qint64 now = QDateTime::currentMSecsSinceEpoch();
+        timeLeft = gameDuration - (now - startTime) / 1000;
+    }
 }
 
 int SnakeMaze::getTimeLeft() const {
     return timeLeft;
-}
-
-int SnakeMaze::getScore() const {
-    return score;
 }
