@@ -14,8 +14,14 @@ void SnakeMaze::initialize()
         }
     }
     buildRandomMaze(1, 1);
-    maze[1][1] = PLAYER;
+    playerX = playerY = 1;
+    directionX = directionY = 0;
+    maze[playerY][playerX] = PLAYER;
     placeObjective();
+    ingame = true;
+    victory = false;
+    score = 0;
+    startTime = QDateTime::currentMSecsSinceEpoch();
     timeLeft = 60;
 }
 
@@ -105,8 +111,8 @@ const char(&SnakeMaze::getMaze() const)[HEIGHT][WIDTH]{
 }
 
 void SnakeMaze::updateTimer() {
-    double elapsed = timerClock.getElapsedTime();
-    timeLeft = 60 - static_cast<int>(elapsed);
+    qint64 now = QDateTime::currentMSecsSinceEpoch();
+    timeLeft = 60 - (now - startTime) / 1000;
 }
 
 int SnakeMaze::getTimeLeft() const {

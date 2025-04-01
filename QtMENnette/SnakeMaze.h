@@ -1,52 +1,41 @@
 #pragma once
+#include <QTime>
+#include <QDateTime>
 
-#include <iostream>
-#include <stack>
-#include <cstdlib>
-#include <ctime>
-#include <chrono>
-#include <windows.h>
-#include <vector>
-#include "Clock.h"
-
-using namespace std;
-
-const int WIDTH = 21;
-const int HEIGHT = 21;
-const char WALL = '#';
-const char PLAYER = 'O';
-const char EMPTY = ' ';
-const char OBJECTIVE = 'X';
-
-class SnakeMaze
-{
+class SnakeMaze {
 public:
-    SnakeMaze();
+    static const int WIDTH = 21;
+    static const int HEIGHT = 21;
+    static const char WALL = '#';
+    static const char EMPTY = ' ';
+    static const char PLAYER = 'P';
+    static const char OBJECTIVE = 'O';
 
+    SnakeMaze();
     void initialize();
-    void buildRandomMaze(int startX, int startY);
     void movePlayer();
     void changeDirection(int dx, int dy);
     void placeObjective();
-    void updateTimer();
-
     bool inGame() const;
     bool victoryEOG() const;
-
     const char(&getMaze() const)[HEIGHT][WIDTH];
+    void updateTimer();
     int getTimeLeft() const;
     int getScore() const;
+    int getPlayerX() const { return playerX; }
+    int getPlayerY() const { return playerY; }
+    int getDirectionX() const { return directionX; }
+    int getDirectionY() const { return directionY; }
 
 private:
-    int playerX = 1;
-    int playerY = 1;
-    int directionX = 0;
-    int directionY = 0;
-    bool ingame = true;
-    bool victory = false;
+    void buildRandomMaze(int startX, int startY);
 
-    int score;
     char maze[HEIGHT][WIDTH];
-    int timeLeft = 60;
-	Clock timerClock;
+    int playerX, playerY;
+    int directionX, directionY;
+    int score;
+    bool ingame;
+    bool victory;
+    int timeLeft;
+    qint64 startTime;
 };

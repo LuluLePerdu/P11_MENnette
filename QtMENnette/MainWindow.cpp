@@ -9,15 +9,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 	ui.stackedWidget->addWidget(snakeWidget);
 
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-
 }
 
 MainWindow::~MainWindow()
 {
 	delete snakeWidget;
 }
-
-
 
 MainWindow* MainWindow::instance() {
     if (w == NULL) { w = new MainWindow(); }
