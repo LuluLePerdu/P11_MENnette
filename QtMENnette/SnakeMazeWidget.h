@@ -15,7 +15,6 @@ public:
         int gameDuration = 60,
         QWidget* parent = nullptr);
 
-    explicit SnakeMazeWidget(QWidget* parent = nullptr);
     void startGame();
     void stopGame();
     ~SnakeMazeWidget();
