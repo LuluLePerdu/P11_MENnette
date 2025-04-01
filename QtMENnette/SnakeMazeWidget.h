@@ -12,10 +12,12 @@ class SnakeMazeWidget : public QWidget
 public:
     explicit SnakeMazeWidget(QWidget* parent = nullptr);
     void startGame();
+    void stopGame();
     ~SnakeMazeWidget();
 
 signals:
     void returnToMenuRequested();
+    void timePenalty(int seconds);
 
 protected:
     void paintEvent(QPaintEvent* event) override;
@@ -32,7 +34,9 @@ private:
     QTimer* animationTimer;
     const int cellSize = 20;
     const int hudHeight = 40;
-
+    bool isOvertime = false;
+    float pulseScale = 1.0f;
+    bool pulseGrowing = true;
     bool isAnimating = false;
     QPointF prevPlayerPos;
     QTime animationStartTime;

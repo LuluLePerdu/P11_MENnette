@@ -11,6 +11,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
 		});
+
+	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
+		ui.stackedWidget->setCurrentIndex(0);
+		snakeWidget->stopGame();
+		});
+
+	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) {
+		totalPenaltyTime += penalty;
+		//updateGlobalTimerDisplay();
+		});
 }
 
 MainWindow::~MainWindow()
