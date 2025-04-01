@@ -112,12 +112,11 @@
     <ClCompile Include="Controllers\MainMenuController.cpp" />
     <ClCompile Include="Controllers\ShakeItController.cpp" />
     <ClCompile Include="Controllers\SimonSaysController.cpp" />
-    <ClCompile Include="Controllers\SnakeMazeController.cpp" />
     <ClCompile Include="Controllers\ThreadCutterController.cpp" />
     <ClCompile Include="CryptographicSequencer.cpp" />
     <ClCompile Include="ShakeIt.cpp" />
     <ClCompile Include="SimonSays.cpp" />
-    <ClCompile Include="SnakeMakeWidget..cpp" />
+    <ClCompile Include="SnakeMakeWidget.cpp" />
     <ClCompile Include="SnakeMaze.cpp" />
     <ClCompile Include="ThreadCutter.cpp" />
     <ClCompile Include="Utils\Communication.cpp" />
@@ -125,14 +124,12 @@
     <ClCompile Include="Views\MainMenuView.cpp" />
     <ClCompile Include="Views\ShakeItView.cpp" />
     <ClCompile Include="Views\SimonSaysView.cpp" />
-    <ClCompile Include="Views\SnakeMazeView.cpp" />
     <ClCompile Include="Views\ThreadCutterView.cpp" />
     <ClInclude Include="Clock.h" />
     <ClInclude Include="Communication.h" />
     <ClInclude Include="Controllers\MainMenuController.h" />
     <ClInclude Include="Controllers\ShakeItController.h" />
     <ClInclude Include="Controllers\SimonSaysController.h" />
-    <ClInclude Include="Controllers\SnakeMazeController.h" />
     <ClInclude Include="Controllers\ThreadCutterController.h" />
     <QtMoc Include="CryptographicSequencer.h" />
     <ClInclude Include="ShakeIt.h" />
@@ -145,7 +142,6 @@
     <ClInclude Include="Views\MainMenuView.h" />
     <ClInclude Include="Views\ShakeItView.h" />
     <ClInclude Include="Views\SimonSaysView.h" />
-    <ClInclude Include="Views\SnakeMazeView.h" />
     <QtMoc Include="Views\ThreadCutterView.h" />
     <QtRcc Include="MainWindow.qrc" />
     <QtUic Include="MainWindow.ui" />
@@ -153,7 +149,6 @@
     <ClCompile Include="Models\MainMenuModel.cpp" />
     <ClCompile Include="Models\ShakeItModel.cpp" />
     <ClCompile Include="Models\SimonSaysModel.cpp" />
-    <ClCompile Include="Models\SnakeMazeModel.cpp" />
     <ClCompile Include="Models\ThreadCutterModel.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="main.cpp" />
@@ -161,7 +156,6 @@
     <ClInclude Include="Models\MainMenuModel.h" />
     <ClInclude Include="Models\ShakeItModel.h" />
     <ClInclude Include="Models\SimonSaysModel.h" />
-    <ClInclude Include="Models\SnakeMazeModel.h" />
     <ClInclude Include="Models\ThreadCutterModel.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">

@@ -1,6 +1,5 @@
 #pragma once
 #include "MainMenuController.h"
-#include "SnakeMazeController.h"
 //#include "ShakeItController.h"
 #include "SimonSaysController.h"
 //#include "ThreadCutterController.h"
@@ -32,7 +31,6 @@ void MainMenuController::run() {
             }
             else if (key == '\r') {
 				if (model.getSelectedOption() == 0) {
-				    startSnakeGame();
 				}
 				if (model.getSelectedOption() == 2) {
 					return;
@@ -58,11 +56,4 @@ void MainMenuController::run() {
         this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 
-}
-
-void MainMenuController::startSnakeGame() {
-    SnakeMazeView snakeView;
-    SnakeMazeController snakeController(snakeView);
-
-    snakeController.run();
 }
