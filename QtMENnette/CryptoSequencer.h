@@ -15,19 +15,24 @@
 #include "Communication.h"
 #include "MainWindow.h"
 
+#define CODE_LENGTH 10
 
-class CryptographicSequencer : public QObject
+
+class CryptoSequencer : public QObject
 {
 	Q_OBJECT
 
 public:
-	CryptographicSequencer();
-	~CryptographicSequencer();
+	CryptoSequencer();
+	~CryptoSequencer();
+
+	void initialize();
+	string updateSequence();
 
 public slots:
 	bool playPot(QLabel* labPotSequence);
 
 private:
-	//QLabel* labPotSequence;
+	int target;
 };
 

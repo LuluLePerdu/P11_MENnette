@@ -7,8 +7,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
 	snakeWidget = new SnakeMazeWidget();
 	ui.stackedWidget->addWidget(snakeWidget);
-
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
+
+	csWidget = new CryptoSequencerWidget();
+	ui.stackedWidget->addWidget(csWidget);
+	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
+
 
 }
 
@@ -60,7 +64,9 @@ void MainWindow::on_btnAccel_clicked() {
 }
 
 void MainWindow::on_btnPoten_clicked() {
-	ui.stackedWidget->setCurrentIndex(5);
+
+	//ui.stackedWidget->setCurrentIndex(5);
+	ui.stackedWidget->setCurrentWidget(csWidget);
 	ui.labDebug->setText("Poten");
 	
 

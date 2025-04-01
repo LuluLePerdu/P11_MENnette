@@ -6,7 +6,7 @@
 
 #include "MainWindow.h"
 #include "SimonSays.h"
-#include "CryptographicSequencer.h"
+#include "CryptoSequencer.h"
 
 
 
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	MainWindow* w = MainWindow::instance();
 
 
-	CryptographicSequencer* cs = new CryptographicSequencer();
+	CryptoSequencer* cs = new CryptoSequencer();
 	QObject::connect(w->getUI()->btnPoten, &QPushButton::clicked, [cs, w]() {
 		cs->playPot(w->getUI()->labPotSequence);
 		});

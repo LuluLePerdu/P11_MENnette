@@ -5,7 +5,7 @@
 #include "ui_MainWindow.h"
 #include "SnakeMazeWidget.h"
 
-#include "CryptographicSequencer.h"
+#include "CryptoSequencerWidget.h"
 #include "qthread.h"
 
 class MainWindow : public QMainWindow {
@@ -21,6 +21,7 @@ private:
     static MainWindow* w;
     Ui::MainWindow ui;
 	SnakeMazeWidget* snakeWidget;
+	CryptoSequencerWidget* csWidget;
 
 private slots:
 	void on_btnHome_clicked();

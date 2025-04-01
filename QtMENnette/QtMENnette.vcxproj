@@ -114,7 +114,14 @@
     <ClCompile Include="Controllers\SimonSaysController.cpp" />
     <ClCompile Include="Controllers\SnakeMazeController.cpp" />
     <ClCompile Include="Controllers\ThreadCutterController.cpp" />
-    <ClCompile Include="CryptographicSequencer.cpp" />
+    <ClCompile Include="CryptoSequencer.cpp" />
+    <ClCompile Include="CryptoSequencerWidget.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
+    <QtMoc Include="CryptoSequencerWidget.h" />
     <ClCompile Include="ShakeIt.cpp" />
     <ClCompile Include="SimonSays.cpp" />
     <ClCompile Include="SnakeMakeWidget..cpp" />
@@ -134,7 +141,7 @@
     <ClInclude Include="Controllers\SimonSaysController.h" />
     <ClInclude Include="Controllers\SnakeMazeController.h" />
     <ClInclude Include="Controllers\ThreadCutterController.h" />
-    <QtMoc Include="CryptographicSequencer.h" />
+    <QtMoc Include="CryptoSequencer.h" />
     <ClInclude Include="ShakeIt.h" />
     <ClInclude Include="SimonSays.h" />
     <ClInclude Include="SnakeMaze.h" />

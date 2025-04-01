@@ -115,13 +115,25 @@
     <ClCompile Include="ShakeIt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CryptographicSequencer.cpp">
+    <ClCompile Include="CryptoSequencer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SimonSays.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ThreadCutter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SnakeMakeWidget..cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SnakeMaze.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CryptoSequencerWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -189,6 +201,12 @@
     <ClInclude Include="Models\ShakeItModel.h">
       <Filter>Models</Filter>
     </ClInclude>
+    <ClInclude Include="Clock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SnakeMaze.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Utils\Information.txt">
@@ -199,7 +217,13 @@
     <QtMoc Include="Views\ThreadCutterView.h">
       <Filter>Views</Filter>
     </QtMoc>
-    <QtMoc Include="CryptographicSequencer.h">
+    <QtMoc Include="CryptoSequencer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="SnakeMazeWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="CryptoSequencerWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
