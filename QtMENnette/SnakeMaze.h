@@ -29,11 +29,12 @@ public:
 
 private:
     void buildRandomMaze(int startX, int startY);
-
+	void startTimer();
+    bool timerStarted;
     char maze[HEIGHT][WIDTH];
     int playerX, playerY;
     int directionX, directionY;
-    int score;
+    int hasMoved;
     bool ingame;
     bool victory;
     int timeLeft;

@@ -11,6 +11,7 @@ class SnakeMazeWidget : public QWidget
     Q_OBJECT
 public:
     explicit SnakeMazeWidget(QWidget* parent = nullptr);
+    void startGame();
     ~SnakeMazeWidget();
 
 signals:

@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 
-SnakeMaze::SnakeMaze() : score(0) {}
+SnakeMaze::SnakeMaze() : timerStarted(false), hasMoved(false) {}
 
 void SnakeMaze::initialize()
 {
@@ -20,9 +20,16 @@ void SnakeMaze::initialize()
     placeObjective();
     ingame = true;
     victory = false;
-    score = 0;
+    timerStarted = false;
     startTime = QDateTime::currentMSecsSinceEpoch();
     timeLeft = 60;
+}
+
+void SnakeMaze::startTimer() {
+    if (!timerStarted) {
+        startTime = QDateTime::currentMSecsSinceEpoch();
+        timerStarted = true;
+    }
 }
 
 void SnakeMaze::buildRandomMaze(int startX, int startY) {
@@ -68,7 +75,6 @@ void SnakeMaze::movePlayer()
     }
 
     if (maze[newY][newX] == OBJECTIVE) {
-        score++;
         ingame = false;
         victory = true;
         return;
@@ -84,6 +90,11 @@ void SnakeMaze::changeDirection(int dx, int dy)
 {
     directionX = dx;
     directionY = dy;
+
+    if (!timerStarted && (dx != 0 || dy != 0)) {
+        startTimer();
+        hasMoved = true;
+    }
 }
 
 void SnakeMaze::placeObjective()
@@ -111,14 +122,12 @@ const char(&SnakeMaze::getMaze() const)[HEIGHT][WIDTH]{
 }
 
 void SnakeMaze::updateTimer() {
-    qint64 now = QDateTime::currentMSecsSinceEpoch();
-    timeLeft = 60 - (now - startTime) / 1000;
+    if (timerStarted) {
+        qint64 now = QDateTime::currentMSecsSinceEpoch();
+        timeLeft = 60 - (now - startTime) / 1000;
+    }
 }
 
 int SnakeMaze::getTimeLeft() const {
     return timeLeft;
-}
-
-int SnakeMaze::getScore() const {
-    return score;
 }

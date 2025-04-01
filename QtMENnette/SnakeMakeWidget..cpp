@@ -31,6 +31,14 @@ SnakeMazeWidget::~SnakeMazeWidget()
 {
 }
 
+void SnakeMazeWidget::startGame() 
+{
+    logic.initialize();
+    gameTimer->start(16);
+    animationTimer->start(16);
+    update();
+}
+
 void SnakeMazeWidget::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
@@ -180,30 +188,28 @@ void SnakeMazeWidget::paintEvent(QPaintEvent* event)
     painter.drawLine(0, hudHeight, width(), hudHeight);
 }
 
-void SnakeMazeWidget::keyPressEvent(QKeyEvent* event)
+void SnakeMazeWidget::keyPressEvent(QKeyEvent* event) 
 {
-    if (!isAnimating) { 
+    if (!isAnimating) {
         switch (event->key()) {
         case Qt::Key_Up:
-                logic.changeDirection(0, -1);
+            logic.changeDirection(0, -1);
             break;
         case Qt::Key_Down:
-                logic.changeDirection(0, 1);
+            logic.changeDirection(0, 1);
             break;
         case Qt::Key_Left:
-                logic.changeDirection(-1, 0);
+            logic.changeDirection(-1, 0);
             break;
         case Qt::Key_Right:
-                logic.changeDirection(1, 0);
+            logic.changeDirection(1, 0);
             break;
         default:
             QWidget::keyPressEvent(event);
             return;
         }
-
-        if (!isAnimating) {
-            updateGame();
-        }
+        
+        updateGame();
     }
 }
 
@@ -213,6 +219,13 @@ void SnakeMazeWidget::updateGame()
 
     static QTime lastMoveTime = QTime::currentTime();
     int moveDelay = 120;
+
+    if (logic.getTimeLeft() <= -1) {
+        gameTimer->stop();
+        animationTimer->stop();
+        showResultDialog();
+        return;
+    }
 
     if (QTime::currentTime().msecsTo(lastMoveTime) < -moveDelay) {
         if (!isAnimating) {
@@ -240,23 +253,33 @@ void SnakeMazeWidget::updateGame()
     }
 }
 
-void SnakeMazeWidget::showResultDialog()
-{
+void SnakeMazeWidget::showResultDialog() {
     int timeUsed = 60 - logic.getTimeLeft();
-    QString message = "Bombe désamorcée en " + QString::number(timeUsed) + " secondes!";
+    QString message;
+
+    if (timeUsed <= 60) {
+        message = "Bombe désamorcée en " + QString::number(timeUsed) + " secondes!";
+    }
+    else {
+        message = "Temps écoulé! Vous avez pris " + QString::number(timeUsed) + " secondes.";
+    }
 
     QMessageBox msgBox;
-    msgBox.setWindowTitle("Mission accomplie");
+    msgBox.setWindowTitle(timeUsed <= 60 ? "Mission accomplie" : "Échec");
     msgBox.setText(message);
-    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setIcon(timeUsed <= 60 ? QMessageBox::Information : QMessageBox::Warning);
 
     QPushButton* menuButton = msgBox.addButton("Retour au menu", QMessageBox::AcceptRole);
+    QPushButton* restartButton = msgBox.addButton("Recommencer", QMessageBox::ActionRole);
     QPushButton* quitButton = msgBox.addButton("Quitter", QMessageBox::RejectRole);
 
     msgBox.exec();
 
     if (msgBox.clickedButton() == menuButton) {
         emit returnToMenuRequested();
+    }
+    else if (msgBox.clickedButton() == restartButton) {
+        startGame();
     }
     else {
         qApp->quit();
