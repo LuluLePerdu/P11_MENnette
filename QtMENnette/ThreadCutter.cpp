@@ -2,13 +2,12 @@
 #include <iostream>
 using namespace std;
 
-ThreadCutter::ThreadCutter(/*QLabel* labInstruction, QLabel* labResults*/) {
+ThreadCutter::ThreadCutter() {
     srand(time(0));
     for (int i = 0; i < 4; i++) {
         ledArray[i] = rand() % 2;
     }
     ledSetup();
-    // labResult->setVisible(false);
     render();
 }
 
@@ -23,6 +22,9 @@ void ThreadCutter::run() {
     {
         msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
         comm.clear();
+        if (msgInput == -2) {
+            return;
+        }
     } while (msgInput == -1);
 
     switch (msgInput)
@@ -41,17 +43,6 @@ void ThreadCutter::run() {
         break;
     default:
         break;
-    }
-
-    if (completed) {
-        //cout << endl << "Module desamorce." << endl;
-        //labResult->setText("Module désamorcé");
-        //labResult->setVisible(true);
-    }
-    else {
-        //cout << endl << "Mauvais bouton!" << endl;
-        //labResult->setText("Mauvais bouton!");
-        //labResult->setVisible(true);
     }
 }
 
