@@ -6,7 +6,7 @@ CryptoSequencerWidget::CryptoSequencerWidget(QWidget* parent) :
     label(new QLabel(this)),
     logic(new CryptoSequencer())
 {
-    //logic->initialize(); 
+    logic->initialize(); 
 
     connect(gameTimer, &QTimer::timeout, this, &CryptoSequencerWidget::updateGame);
     gameTimer->start(100);

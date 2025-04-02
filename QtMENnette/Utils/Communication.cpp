@@ -1,10 +1,10 @@
 #include "Communication.h"
 
 std::wstring Communication::getOpenCOM() {
-    wchar_t comName[10];
+    wchar_t comName[12];
 
     for (int i = 1; i <= 256; i++) {
-        _snwprintf_s(comName, 10, L"\\\\.\\COM%d", i); // Use _snwprintf for compatibility
+        _snwprintf_s(comName, 10, L"\\\\.\\COM%d", i); 
         HANDLE hPort = CreateFileW(comName, GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, 0, 0);
         if (hPort != INVALID_HANDLE_VALUE) {
             std::wstringstream ws;
