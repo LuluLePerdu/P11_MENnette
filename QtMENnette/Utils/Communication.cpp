@@ -26,6 +26,7 @@ bool Communication::begin() {
         std::cerr << "ERROR-PC: No COM ports available" << std::endl;
         return false;
     }
+	
     hSerial = CreateFileW(com.c_str(), GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
     if (hSerial == INVALID_HANDLE_VALUE) {
         std::cerr << " ERROR-PC: Error opening serial port" << std::endl;
@@ -40,6 +41,7 @@ bool Communication::begin() {
         CloseHandle(hSerial);
         return false;
     }
+    connected = true;
     return true;
 }
 
@@ -93,6 +95,9 @@ int Communication::createSeed() {
 
 
 void Communication::sendMsg(Frame frame) {
+	if (!connected) {
+		return;
+	}
     // Creation de message
     unsigned char msg[MSG_SIZE] = { frame.id, frame.data, 0 };
 
@@ -116,6 +121,10 @@ void Communication::sendMsg(Frame frame) {
 // ! Utiliser plutot la version avec un ID si possible!
 // -Zakary
 Frame Communication::readMsg() {
+	if (!connected) {
+        Frame frame = { MSG_ID_ERROR, MSG_DATA_NOT_CONNECTED, 0 };
+        return frame;
+	}
     unsigned char msg[MSG_SIZE] = { 0 };
     DWORD bytesRead;
     DWORD startTime = GetTickCount();
@@ -154,6 +163,10 @@ Frame Communication::readMsg() {
 // ! P.S: Utiliser cette fonction plutot que la version sans ID; Plus stable et fiable!
 // Je recommande de faire un Communication::clear() apres la lecture, ca evite les problemes de backlogs dans le buffer
 int Communication::readMsg(unsigned char id) {
+
+	if (!connected) {
+		return -2;
+	}
     unsigned char msg[MSG_SIZE] = { 0 };
     DWORD bytesRead;
     DWORD startTime = GetTickCount();

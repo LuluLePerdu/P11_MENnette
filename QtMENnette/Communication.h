@@ -14,7 +14,8 @@
 #define TIMEOUT_READ 50
 
 #define MSG_ID_ERROR 71
-#define MSG_DATA_ERROR 0
+#define MSG_DATA_ERROR -1
+#define MSG_DATA_NOT_CONNECTED -2
 #define MSG_ID_OK 72
 #define MSG_DATA_OK 72
 
@@ -68,4 +69,5 @@ private:
     ~Communication() { this->closeSerialPort(); }
     Frame errorFrame = { MSG_ID_ERROR, 0, 0 };
     HANDLE hSerial;
+	bool connected = false;
 };
