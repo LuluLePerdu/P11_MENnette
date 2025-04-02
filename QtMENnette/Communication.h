@@ -60,7 +60,7 @@ public:
     void clear();
     unsigned char convertBoolsToByte(bool p_sw[8]);
     void byteToBoolArray(unsigned char b, bool arr[8]);
-    int seed = 0;
+    int seed = 98212321;
 
 
 private:

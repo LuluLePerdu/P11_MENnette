@@ -1,12 +1,22 @@
 #include "CryptoSequencer.h"
 
+CryptoSequencer::CryptoSequencer()
+{
+    
+
+}
+
+CryptoSequencer::~CryptoSequencer()
+{
+}
+
 void CryptoSequencer::initialize() {
     Communication& comm = Communication::getInstance();
     std::default_random_engine randomEngine(comm.seed);
     target = (std::rand() % 255);
 }
 
-string CryptoSequencer::updateSequence() {
+std::string CryptoSequencer::updateSequence() {
 	Communication& comm = Communication::getInstance();
     char characters[32] = "!@/\\$%?&*()=+#|\\*-[]^<>}{`;:,.'";
     char digits[10] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
@@ -48,7 +58,7 @@ string CryptoSequencer::updateSequence() {
 }
 
 
-
+/*
 bool CryptoSequencer::playPot(QLabel* labPotSequence) {
 	initialize();
 
@@ -64,10 +74,10 @@ bool CryptoSequencer::playPot(QLabel* labPotSequence) {
     int joyInput = -1;
     bool isOver = false;
     char outputCode[10];
-    /*comm.clear();
+    comm.clear();
     QErrorMessage msg;
     msg.showMessage("AAAAAAAAAA");
-	msg.exec();*/
+	msg.exec();
     while (!isOver) {
 		
         //int joyInput = comm.readMsg(MSG_ID_AR_JOYSTICK);
@@ -106,15 +116,7 @@ bool CryptoSequencer::playPot(QLabel* labPotSequence) {
     }
 
     return true;
-}
+}*/
 
 
-CryptoSequencer::CryptoSequencer()
-{
-	this->initialize();
 
-}
-
-CryptoSequencer::~CryptoSequencer()
-{
-}

@@ -1,10 +1,14 @@
 #pragma once
 #include <QWidget>
 #include <QTimer>
-#include <QKeyEvent>
-#include <QPainter>
 #include <QLabel>
+
 #include "CryptoSequencer.h"
+#include "SnakeMaze.h"
+
+#include <QErrorMessage>
+
+class CryptoSequencer;
 
 
 class CryptoSequencerWidget : public QWidget
@@ -16,13 +20,11 @@ public:
     ~CryptoSequencerWidget();
 
 protected:
-    //void paintEvent(QPaintEvent* event) override;
-    //void keyPressEvent(QKeyEvent* event) override;
     void updateGame();
 
 private:
-    CryptoSequencer logic;
     QTimer* gameTimer;
     QLabel* label;
-
+    CryptoSequencer* logic;
+	//SnakeMaze* snakeMaze;
 };

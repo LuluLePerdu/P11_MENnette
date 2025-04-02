@@ -8,6 +8,8 @@
 #include "CryptoSequencerWidget.h"
 #include "qthread.h"
 
+class CryptoSequencerWidget;
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -21,6 +23,7 @@ private:
     static MainWindow* w;
     Ui::MainWindow ui;
 	SnakeMazeWidget* snakeWidget;
+	CryptoSequencerWidget* cryptoWidget;
 	int totalPenaltyTime = 0;
 
 private slots:

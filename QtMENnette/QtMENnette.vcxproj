@@ -138,7 +138,7 @@
     <ClInclude Include="Controllers\ShakeItController.h" />
     <ClInclude Include="Controllers\SimonSaysController.h" />
     <ClInclude Include="Controllers\ThreadCutterController.h" />
-    <QtMoc Include="CryptoSequencer.h" />
+    <ClInclude Include="CryptoSequencer.h" />
     <ClInclude Include="ShakeIt.h" />
     <ClInclude Include="SimonSays.h" />
     <ClInclude Include="SnakeMaze.h" />

@@ -21,10 +21,6 @@ int main(int argc, char *argv[])
 	MainWindow* w = MainWindow::instance();
 
 
-	CryptoSequencer* cs = new CryptoSequencer();
-	QObject::connect(w->getUI()->btnPoten, &QPushButton::clicked, [cs, w]() {
-		cs->playPot(w->getUI()->labPotSequence);
-		});
 
 	//loop qui repart a chaque 33ms
 	QTimer timer;
@@ -35,7 +31,5 @@ int main(int argc, char *argv[])
 
 	// ! Pas touche
     w->show();
-	//shakeItView.show();  // Assurez-vous que ShakeItView est aussi affichée
-	//shakeItView.setFocus();
     return a.exec();
 }

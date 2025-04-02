@@ -22,6 +22,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 		totalPenaltyTime += penalty;
 		//updateGlobalTimerDisplay();
 		});
+
+	cryptoWidget = new CryptoSequencerWidget(this);
+	ui.stackedWidget->addWidget(cryptoWidget);
+	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
 }
 
 MainWindow::~MainWindow()
@@ -42,7 +46,6 @@ Ui::MainWindow* MainWindow::getUI() const
 void MainWindow::on_btnHome_clicked() {
 	ui.stackedWidget->setCurrentIndex(0);
 	ui.labDebug->setText("Home");
-	OutputDebugString(L"Home\n");
 }
 
 void MainWindow::on_btnSnake_clicked() {
@@ -68,8 +71,8 @@ void MainWindow::on_btnAccel_clicked() {
 
 void MainWindow::on_btnPoten_clicked() {
 
-	//ui.stackedWidget->setCurrentIndex(5);
-	ui.stackedWidget->setCurrentWidget(csWidget);
+	ui.stackedWidget->setCurrentIndex(5);
+	ui.stackedWidget->setCurrentWidget(cryptoWidget);
 	ui.labDebug->setText("Poten");
 	
 
