@@ -1,7 +1,7 @@
 //#include "stdafx.h"
 #include "MainWindow.h"
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(nullptr)
 {
 	ui.setupUi(this);
 
@@ -34,6 +34,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 		//updateGlobalTimerDisplay();
 		});
 
+	threadWidget = new ThreadCutterWidget(this);
+	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
+
 	cryptoWidget = new CryptoSequencerWidget(this);
 	ui.stackedWidget->addWidget(cryptoWidget);
 	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
@@ -42,6 +45,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 MainWindow::~MainWindow()
 {
 	delete snakeWidget;
+	delete threadWidget;
 }
 
 MainWindow* MainWindow::instance() {
@@ -68,6 +72,7 @@ void MainWindow::on_btnSnake_clicked() {
 void MainWindow::on_btnLED_clicked() {
 	ui.stackedWidget->setCurrentIndex(3);
 	ui.labDebug->setText("LED");
+	threadWidget->startGame();
 }
 
 void MainWindow::on_btnSimon_clicked() {
@@ -87,4 +92,15 @@ void MainWindow::on_btnPoten_clicked() {
 	ui.labDebug->setText("Poten");
 	
 
+}
+
+void MainWindow::ledSetText(bool result) {
+	
+	if (result) {
+		ui.labResult->setText(QString::fromLatin1("Module désamorcé !"));
+	}
+	else {
+		ui.labResult->setText(QString::fromLatin1("Mauvais bouton !"));
+	}
+	
 }

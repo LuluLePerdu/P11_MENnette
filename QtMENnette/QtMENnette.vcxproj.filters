@@ -133,6 +133,18 @@
     <ClCompile Include="SnakeMaze.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ThreadCutterWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SnakeMakeWidget..cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SnakeMaze.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="CryptoSequencerWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -224,6 +236,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="CryptoSequencerWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="SnakeMazeWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ThreadCutterWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
