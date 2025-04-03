@@ -25,5 +25,6 @@ public:
 
 private:
 	int target;
+	char code[CODE_LENGTH];
 };
 

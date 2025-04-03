@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>839</width>
-    <height>531</height>
+    <width>1217</width>
+    <height>678</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,12 +18,12 @@
     <rect>
      <x>140</x>
      <y>9</y>
-     <width>691</width>
-     <height>501</height>
+     <width>1071</width>
+     <height>661</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="pgeMain">
     <widget class="QPushButton" name="btnSnake">

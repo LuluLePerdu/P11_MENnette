@@ -20,16 +20,14 @@ int main(int argc, char *argv[])
 
 	MainWindow* w = MainWindow::instance();
 
-
-
-	//loop qui repart a chaque 33ms
+	int yo = 360;
 	QTimer timer;
 	QObject::connect(&timer, &QTimer::timeout, [&]() {
-		
+		w->getUI()->lcdClock->display(yo--);
 		}); 
-	timer.start(33);
+	timer.start(1000);
 
 	// ! Pas touche
-    w->show();
+	w->showFullScreen();
     return a.exec();
 }
