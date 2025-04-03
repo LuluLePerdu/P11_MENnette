@@ -30,6 +30,8 @@ private:
 	ThreadCutterWidget* threadWidget;
 	int totalPenaltyTime = 0;
 
+	QTimer* debugTimer;
+
 private slots:
 	void on_btnHome_clicked();
 	void on_btnSnake_clicked();
@@ -37,6 +39,7 @@ private slots:
 	void on_btnSimon_clicked();
 	void on_btnAccel_clicked();
 	void on_btnPoten_clicked();
+	void on_btnDebug_clicked();
 
 	void ledSetText(bool outcome);
 };

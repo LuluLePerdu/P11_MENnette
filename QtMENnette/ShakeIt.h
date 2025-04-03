@@ -2,6 +2,7 @@
 #include <qwidget.h>
 #include <qprogressbar.h>
 #include "MainWindow.h"
+#include "Communication.h"
 
 class ShakeIt : public QWidget
 {
@@ -9,14 +10,9 @@ public:
 	ShakeIt();
 	~ShakeIt();
 
+	void initialize();
+	int update();
+
 private:
-	QProgressBar* prbBargraph = MainWindow::instance()->getUI()->prbBargraph;
+	int target;
 };
-
-ShakeIt::ShakeIt()
-{
-}
-
-ShakeIt::~ShakeIt()
-{
-}

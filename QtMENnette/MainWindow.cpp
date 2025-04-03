@@ -1,7 +1,7 @@
 //#include "stdafx.h"
 #include "MainWindow.h"
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(nullptr)
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(nullptr), debugTimer(new QTimer(this))
 {
 	ui.setupUi(this);
 
@@ -40,6 +40,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	cryptoWidget = new CryptoSequencerWidget(this);
 	ui.stackedWidget->addWidget(cryptoWidget);
 	//connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -92,6 +95,23 @@ void MainWindow::on_btnPoten_clicked() {
 	ui.labDebug->setText("Poten");
 	
 
+}
+
+void MainWindow::on_btnDebug_clicked() {
+	ui.stackedWidget->setCurrentIndex(6);
+	//ui.labDebug->setText("Debug");
+	Communication& comm = Communication::getInstance();
+	
+	//while (true) {
+	int msg = comm.readMsg(MSG_ID_AR_ACCELEROMETER);
+	ui.labDebug->setText(QString::number(msg));
+	QObject::connect(debugTimer, &QTimer::timeout, this, [&]() {
+		int msg = comm.readMsg(MSG_ID_AR_ACCELEROMETER);
+		ui.labDebug->setText(QString::number(msg));
+
+		});
+	debugTimer->start(100); 
+	
 }
 
 void MainWindow::ledSetText(bool result) {

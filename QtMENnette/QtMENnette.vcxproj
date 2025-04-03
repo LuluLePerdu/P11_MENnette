@@ -122,6 +122,7 @@
     </ClCompile>
     <QtMoc Include="CryptoSequencerWidget.h" />
     <ClCompile Include="ShakeIt.cpp" />
+    <ClCompile Include="ShakeItWidget.cpp" />
     <ClCompile Include="SimonSays.cpp" />
     <ClCompile Include="SnakeMakeWidget.cpp" />
     <ClCompile Include="SnakeMaze.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Controllers\ThreadCutterController.h" />
     <ClInclude Include="CryptoSequencer.h" />
     <ClInclude Include="ShakeIt.h" />
+    <ClInclude Include="ShakeItWidget.h" />
     <ClInclude Include="SimonSays.h" />
     <ClInclude Include="SnakeMaze.h" />
     <QtMoc Include="SnakeMazeWidget.h" />
