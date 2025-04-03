@@ -34,9 +34,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		//updateGlobalTimerDisplay();
 		});
 
-	/*threadWidget = new ThreadCutterWidget(this);
-	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);*/
-
 	cryptoWidget = new CryptoSequencerWidget(this);
 	ui.stackedWidget->addWidget(cryptoWidget);
 	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
@@ -89,6 +86,8 @@ void MainWindow::on_btnSnake_clicked() {
 }
 
 void MainWindow::on_btnLED_clicked() {
+	threadWidget = new ThreadCutterWidget(this);
+	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
 	ui.stackedWidget->setCurrentIndex(3);
 	ui.labDebug->setText("LED");
 	threadWidget->startGame();
