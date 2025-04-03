@@ -126,6 +126,7 @@
     <ClCompile Include="SnakeMakeWidget.cpp" />
     <ClCompile Include="SnakeMaze.cpp" />
     <ClCompile Include="ThreadCutter.cpp" />
+    <ClCompile Include="ThreadCutterWidget.cpp" />
     <ClCompile Include="Utils\Communication.cpp" />
     <ClCompile Include="Views\GameView.cpp" />
     <ClCompile Include="Views\MainMenuView.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="SnakeMaze.h" />
     <QtMoc Include="SnakeMazeWidget.h" />
     <ClInclude Include="ThreadCutter.h" />
+    <QtMoc Include="ThreadCutterWidget.h" />
     <ClInclude Include="Utils\Color.h" />
     <ClInclude Include="Utils\common.hpp" />
     <ClInclude Include="Views\MainMenuView.h" />

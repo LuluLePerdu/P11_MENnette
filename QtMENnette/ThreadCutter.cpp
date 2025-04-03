@@ -2,21 +2,16 @@
 #include <iostream>
 using namespace std;
 
-ThreadCutter::ThreadCutter(/*QLabel* labInstruction, QLabel* labResults*/) {
-    w = MainWindow::instance();
-    labInstruc = w->getUI()->labInstruc;
-    labResult = w->getUI()->labResult;
-    
+ThreadCutter::ThreadCutter() {
     srand(time(0));
     for (int i = 0; i < 4; i++) {
         ledArray[i] = rand() % 2;
     }
     ledSetup();
-    labResult->setVisible(false);
     render();
 }
 
-void ThreadCutter::run(int button) {
+void ThreadCutter::run() {
     bool ledArray[8];
     Communication& comm = Communication::getInstance();
 
@@ -27,6 +22,9 @@ void ThreadCutter::run(int button) {
     {
         msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
         comm.clear();
+        if (msgInput == -2) {
+            return;
+        }
     } while (msgInput == -1);
 
     switch (msgInput)
@@ -46,17 +44,6 @@ void ThreadCutter::run(int button) {
     default:
         break;
     }
-
-    if (completed) {
-        //cout << endl << "Module desamorce." << endl;
-        //labResult->setText("Module désamorcé");
-        //labResult->setVisible(true);
-    }
-    else {
-        //cout << endl << "Mauvais bouton!" << endl;
-        labResult->setText("Mauvais bouton!");
-        labResult->setVisible(true);
-    }
 }
 
 bool ThreadCutter::checkButton(int button) {
@@ -65,6 +52,7 @@ bool ThreadCutter::checkButton(int button) {
 }
 
 void ThreadCutter::render() {
+    /*
     labInstruc->setText(QString::fromLatin1(
         "Si la DEL verte et 2 autres DELs sont allumées, appuyez sur le bouton vert."
         "\n\nSinon, si la DEL verte et la DEL rouge sont allumées mais aucune autre, appuyez sur le bouton rouge."
@@ -74,6 +62,7 @@ void ThreadCutter::render() {
         "\n\nSinon, si uniquement la DEL rouge est allumée, appuyez sur le bouton le plus à gauche."
         "\n\nSinon, si aucune des autres conditions n'est remplie mais que 2 DELs sont allumées, appuyez sur le bouton rouge."
         "\n\nSinon, appuyez sur le deuxième bouton à partir de la gauche."));
+    */
 }
 
 bool ThreadCutter::getCompleted() {

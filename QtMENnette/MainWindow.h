@@ -4,9 +4,12 @@
 #include <QtWidgets/qmainwindow.h>
 #include "ui_MainWindow.h"
 #include "SnakeMazeWidget.h"
+#include "ThreadCutterWidget.h"
 
 #include "CryptoSequencerWidget.h"
 #include "qthread.h"
+#include "qlabel.h"
+#include "qsignalmapper.h"
 
 class CryptoSequencerWidget;
 
@@ -24,6 +27,7 @@ private:
     Ui::MainWindow ui;
 	SnakeMazeWidget* snakeWidget;
 	CryptoSequencerWidget* cryptoWidget;
+	ThreadCutterWidget* threadWidget;
 	int totalPenaltyTime = 0;
 
 private slots:
@@ -33,4 +37,6 @@ private slots:
 	void on_btnSimon_clicked();
 	void on_btnAccel_clicked();
 	void on_btnPoten_clicked();
+
+	void ledSetText(bool outcome);
 };
