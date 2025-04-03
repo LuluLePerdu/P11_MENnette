@@ -9,7 +9,7 @@
 
 //using namespace std;
 
-#define BAUD 9600 
+#define BAUD 115200
 #define MSG_SIZE 3
 #define TIMEOUT_READ 50
 
@@ -54,7 +54,7 @@ public:
 	int createSeed();
     void sendMsg(Frame frame);
     Frame readMsg();
-    int readMsg(unsigned char id);
+    int readMsg(int id);
     HANDLE getSerialPort();
     void setSerialPort(HANDLE hSerial);
     void closeSerialPort();

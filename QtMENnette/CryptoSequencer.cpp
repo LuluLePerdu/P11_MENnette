@@ -25,7 +25,8 @@ std::string CryptoSequencer::updateSequence() {
 	Communication& comm = Communication::getInstance();
     char characters[32] = "!@/\\$%?&*()=+#|\\*-[]^<>}{`;:,.'";
 
-    char outputCode[CODE_LENGTH+1];
+    //char outputCode[CODE_LENGTH+1];
+    std::string outputCode(CODE_LENGTH, ' ');
     for (int i = 0; i < 10; i++) {
         outputCode[i] = characters[std::rand() % 32];
     }
@@ -60,6 +61,7 @@ std::string CryptoSequencer::updateSequence() {
         }
     }
 	outputCode[CODE_LENGTH] = '\0';
+	
 	return outputCode;
 }
 

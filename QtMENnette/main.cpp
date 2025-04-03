@@ -20,12 +20,12 @@ int main(int argc, char *argv[])
 
 	MainWindow* w = MainWindow::instance();
 
-	int yo = 360;
+	/*int yo = 360;
 	QTimer timer;
 	QObject::connect(&timer, &QTimer::timeout, [&]() {
 		w->getUI()->lcdClock->display(yo--);
 		}); 
-	timer.start(1000);
+	timer.start(1000);*/
 
 	// ! Pas touche
 	w->showFullScreen();
