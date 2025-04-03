@@ -34,12 +34,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		//updateGlobalTimerDisplay();
 		});
 
-	threadWidget = new ThreadCutterWidget(this);
-	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
+	/*threadWidget = new ThreadCutterWidget(this);
+	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);*/
 
 	cryptoWidget = new CryptoSequencerWidget(this);
 	ui.stackedWidget->addWidget(cryptoWidget);
-	//connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
+	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
 
 	initLCD(3, 0);
 
@@ -121,7 +121,11 @@ void MainWindow::on_btnDebug_clicked() {
 	int msg = comm.readMsg(MSG_ID_AR_ACCELEROMETER);
 	ui.labDebug->setText(QString::number(msg));
 	QObject::connect(debugTimer, &QTimer::timeout, this, [&]() {
+
 		int msg = comm.readMsg(MSG_ID_AR_ACCELEROMETER);
+		comm.clear();
+		//Frame frame = comm.readMsg();
+		//int a = frame.data;
 		ui.labDebug->setText(QString::number(msg));
 
 		});

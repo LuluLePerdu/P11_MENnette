@@ -21,13 +21,13 @@ std::wstring Communication::getOpenCOM() {
 //Initialisation de la communication
 bool Communication::begin() {
 
-    std::wstring com = getOpenCOM();
+    /*std::wstring com = getOpenCOM();
     if (com == L"ERROR") {
         std::cerr << "ERROR-PC: No COM ports available" << std::endl;
         return false;
-    }
-	
-    hSerial = CreateFileW(com.c_str(), GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+    }*/
+	//com.c_str()
+    hSerial = CreateFileW(L"COM4", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
     if (hSerial == INVALID_HANDLE_VALUE) {
         std::cerr << " ERROR-PC: Error opening serial port" << std::endl;
         return false;
@@ -162,7 +162,7 @@ Frame Communication::readMsg() {
 //              Retourne -1 si le message est invalide
 // ! P.S: Utiliser cette fonction plutot que la version sans ID; Plus stable et fiable!
 // Je recommande de faire un Communication::clear() apres la lecture, ca evite les problemes de backlogs dans le buffer
-int Communication::readMsg(unsigned char id) {
+int Communication::readMsg(int id) {
 
 	if (!connected) {
 		return -2;
@@ -175,9 +175,9 @@ int Communication::readMsg(unsigned char id) {
     while (true) {
         if (!ReadFile(hSerial, &msg[0], 1, &bytesRead, NULL) || bytesRead < 1) {
             if (GetTickCount() - startTime > TIMEOUT_READ) {
-                return -1;
+                return -10;
             }
-            return -1;
+            return -11;
         }
         if (msg[0] == id) {
             break;
@@ -185,7 +185,7 @@ int Communication::readMsg(unsigned char id) {
     }
     // Lecture 
     if (!ReadFile(hSerial, &msg[1], MSG_SIZE - 1, &bytesRead, NULL) || bytesRead < MSG_SIZE - 1) {
-        return -1;
+        return -12;
     }
 
     unsigned char checksum = 0;
@@ -193,7 +193,7 @@ int Communication::readMsg(unsigned char id) {
         checksum ^= msg[i];
     }
     if (checksum != msg[MSG_SIZE - 1]) {
-        return -1;
+        return -13;
     }
 
     /*for (int i = 0; i < MSG_SIZE; i++) {
