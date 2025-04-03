@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	ui.stackedWidget->addWidget(cryptoWidget);
 	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
 
-	initLCD();
+	//initLCD();
 
 }
 

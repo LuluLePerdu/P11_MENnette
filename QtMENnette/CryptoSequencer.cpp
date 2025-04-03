@@ -48,19 +48,27 @@ std::string CryptoSequencer::updateSequence() {
     if (usrInput >= 0) { //si pas de mannette mettre a >=-2
         //usrInput = 100;
         //joyInput = -1;
-        int distance = CODE_LENGTH * std::abs(target - usrInput) / 128;
+        int distance = static_cast<int>(CODE_LENGTH * std::abs(target - usrInput) / range);
         if (distance > CODE_LENGTH) distance = CODE_LENGTH;
 
-        if (joyInput != -1) {
-            //isOver = true;
+        
+       
+        for (int i = 0; i < CODE_LENGTH - distance; i++) {
+            outputCode[i] = code[i];
         }
-        else {
-            for (int i = 0; i < CODE_LENGTH - distance; i++) {
-                outputCode[i] = code[i];
-            }
+		lastInput = usrInput;
+    }
+    else {
+        int distance = static_cast<int>(CODE_LENGTH * std::abs(target - lastInput) / range);
+        if (distance > CODE_LENGTH) distance = CODE_LENGTH;
+
+
+
+        for (int i = 0; i < CODE_LENGTH - distance; i++) {
+            outputCode[i] = code[i];
         }
     }
-	outputCode[CODE_LENGTH] = '\0';
+    //outputCode = std::to_string(usrInput);
 	
 	return outputCode;
 }

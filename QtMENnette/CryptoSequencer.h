@@ -26,5 +26,7 @@ public:
 private:
 	int target;
 	char code[CODE_LENGTH];
+	int lastInput=0;
+	int range = 50;
 };
 
