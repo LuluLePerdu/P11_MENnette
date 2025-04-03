@@ -91,3 +91,9 @@ void SimonSays::blinkSequence(int index) {
 
     Sleep(500);
 }
+
+void SimonSays::getSequence(int* arr) {
+	for (int i = 0; i < 10; i++) {
+		arr[i] = this->seqArray[i];
+	}
+}

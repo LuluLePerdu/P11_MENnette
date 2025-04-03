@@ -1,21 +1,21 @@
 #pragma once
-#include <QWidget>
-#include <qlabel.h>
-#include "MainWindow.h"
 #include "Communication.h"
 
 using namespace std;
-class SimonSays : public QWidget
+class SimonSays
 {
 public:
 	SimonSays();
 	void run(int button);
 	bool getCompleted();
+	void getSequence(int* arr);
 	
 private:
-	MainWindow* w = MainWindow::instance();
+	//MainWindow* w = MainWindow::instance();
 	void simonSequence();
 	void blinkSequence(int index);
+	int m_length = 10;
 	int seqArray[10];
 	bool completed = false;
+
 };

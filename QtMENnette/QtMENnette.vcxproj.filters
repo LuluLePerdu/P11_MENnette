@@ -67,9 +67,6 @@
     <ClCompile Include="Models\SimonSaysModel.cpp">
       <Filter>Models</Filter>
     </ClCompile>
-    <ClCompile Include="Models\SnakeMazeModel.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
     <ClCompile Include="Models\ThreadCutterModel.cpp">
       <Filter>Models</Filter>
     </ClCompile>
@@ -88,9 +85,6 @@
     <ClCompile Include="Controllers\SimonSaysController.cpp">
       <Filter>Controllers</Filter>
     </ClCompile>
-    <ClCompile Include="Controllers\SnakeMazeController.cpp">
-      <Filter>Controllers</Filter>
-    </ClCompile>
     <ClCompile Include="Controllers\ThreadCutterController.cpp">
       <Filter>Controllers</Filter>
     </ClCompile>
@@ -104,9 +98,6 @@
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\SimonSaysView.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\SnakeMazeView.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\ThreadCutterView.cpp">
@@ -127,9 +118,6 @@
     <ClCompile Include="Clock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SnakeMakeWidget..cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SnakeMaze.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -148,6 +136,15 @@
     <ClCompile Include="CryptoSequencerWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShakeItWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SnakeMakeWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonSaysWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Models\GameModel.h">
@@ -157,9 +154,6 @@
       <Filter>Models</Filter>
     </ClInclude>
     <ClInclude Include="Models\SimonSaysModel.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\SnakeMazeModel.h">
       <Filter>Models</Filter>
     </ClInclude>
     <ClInclude Include="Models\ThreadCutterModel.h">
@@ -177,9 +171,6 @@
     <ClInclude Include="Controllers\SimonSaysController.h">
       <Filter>Controllers</Filter>
     </ClInclude>
-    <ClInclude Include="Controllers\SnakeMazeController.h">
-      <Filter>Controllers</Filter>
-    </ClInclude>
     <ClInclude Include="Controllers\ThreadCutterController.h">
       <Filter>Controllers</Filter>
     </ClInclude>
@@ -187,9 +178,6 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\SimonSaysView.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\SnakeMazeView.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Communication.h">
@@ -219,6 +207,12 @@
     <ClInclude Include="SnakeMaze.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CryptoSequencer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShakeItWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Utils\Information.txt">
@@ -228,9 +222,6 @@
   <ItemGroup>
     <QtMoc Include="Views\ThreadCutterView.h">
       <Filter>Views</Filter>
-    </QtMoc>
-    <QtMoc Include="CryptoSequencer.h">
-      <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="SnakeMazeWidget.h">
       <Filter>Header Files</Filter>
@@ -242,6 +233,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ThreadCutterWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="SimonSaysWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

@@ -34,12 +34,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		//updateGlobalTimerDisplay();
 		});
 
-	/*threadWidget = new ThreadCutterWidget(this);
-	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);*/
+	threadWidget = new ThreadCutterWidget(this);
+	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
 
 	cryptoWidget = new CryptoSequencerWidget(this);
 	ui.stackedWidget->addWidget(cryptoWidget);
 	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
+
+	simonWidget = new SimonSaysWidget(this);
+	ui.stackedWidget->addWidget(simonWidget);
+	connect(ui.btnSimon, &QPushButton::clicked, this, &MainWindow::on_btnSimon_clicked);
 
 	//initLCD();
 
@@ -95,6 +99,7 @@ void MainWindow::on_btnLED_clicked() {
 }
 
 void MainWindow::on_btnSimon_clicked() {
+	ui.stackedWidget->setCurrentWidget(simonWidget);
 	ui.stackedWidget->setCurrentIndex(4);
 	ui.labDebug->setText("Simon");
 }
