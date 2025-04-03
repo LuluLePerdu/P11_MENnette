@@ -41,9 +41,10 @@ private:
 	QTime countdown;
 	bool blink;
 	QColor initTimerColor;
+	QThread* thread;
 	QPalette initTimerPalette;
 
-	void initLCD();
+	void initLCD(int minutes, int seconds);
 
 private slots:
 	void on_btnHome_clicked();

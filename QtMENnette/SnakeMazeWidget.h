@@ -47,6 +47,7 @@ private:
     const int cellSize = 20;
     const int hudHeight = 40;
 
+
     struct {
         QPointF startPos;
         QPointF endPos;

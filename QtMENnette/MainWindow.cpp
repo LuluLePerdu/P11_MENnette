@@ -15,10 +15,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		"}"
 	);
 
-	snakeWidget = new SnakeMazeWidget(21, 21, 35, this); //À remplacer les valeurs par des variables via la config
-	ui.stackedWidget->addWidget(snakeWidget);
-	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
+	
 
+	threadWidget = new ThreadCutterWidget(this);
+	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
 	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
@@ -34,18 +34,11 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		//updateGlobalTimerDisplay();
 		});
 
-	threadWidget = new ThreadCutterWidget(this);
-	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
-
 	cryptoWidget = new CryptoSequencerWidget(this);
 	ui.stackedWidget->addWidget(cryptoWidget);
 	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
 
-	simonWidget = new SimonSaysWidget(this);
-	ui.stackedWidget->addWidget(simonWidget);
-	connect(ui.btnSimon, &QPushButton::clicked, this, &MainWindow::on_btnSimon_clicked);
-
-	//initLCD();
+	initLCD(3, 0);
 
 }
 
@@ -65,9 +58,9 @@ Ui::MainWindow* MainWindow::getUI() const
 	return const_cast<Ui::MainWindow*>(&ui);
 }
 
-void MainWindow::initLCD() {
+void MainWindow::initLCD(int minutes, int seconds) {
 	timer = new QTimer(this);
-	countdown = QTime(0, 1, 0);
+	countdown = QTime(0, minutes, seconds);
 
 	initTimerColor = QColor(50, 255, 50);
 	initTimerPalette = ui.lcdClock->palette();
@@ -87,12 +80,33 @@ void MainWindow::on_btnHome_clicked() {
 }
 
 void MainWindow::on_btnSnake_clicked() {
+	snakeWidget = new SnakeMazeWidget(21, 21, 10, this); //ï¿½ remplacer les valeurs par des variables via la config
+
+	ui.stackedWidget->addWidget(snakeWidget);
+	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
+
+	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
+	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
+		ui.stackedWidget->setCurrentIndex(0);
+		});
+
+	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
+		ui.stackedWidget->setCurrentIndex(0);
+		snakeWidget->stopGame();
+		});
+
+	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) {
+		totalPenaltyTime += penalty;
+		});
+
 	ui.stackedWidget->setCurrentWidget(snakeWidget);
 	ui.labDebug->setText("Snake");
 	snakeWidget->startGame();
 }
 
 void MainWindow::on_btnLED_clicked() {
+	threadWidget = new ThreadCutterWidget(this);
+	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
 	ui.stackedWidget->setCurrentIndex(3);
 	ui.labDebug->setText("LED");
 	threadWidget->startGame();
@@ -114,6 +128,7 @@ void MainWindow::on_btnPoten_clicked() {
 	ui.stackedWidget->setCurrentIndex(5);
 	ui.stackedWidget->setCurrentWidget(cryptoWidget);
 	ui.labDebug->setText("Poten");
+	totalPenaltyTime += 10;
 }
 
 void MainWindow::on_btnDebug_clicked() {
@@ -140,7 +155,7 @@ void MainWindow::on_btnDebug_clicked() {
 void MainWindow::ledSetText(bool result) {
 	
 	if (result) {
-		ui.labResult->setText(QString::fromLatin1("Module désamorcé !"));
+		ui.labResult->setText(QString::fromLatin1("Module dï¿½samorcï¿½ !"));
 	}
 	else {
 		ui.labResult->setText(QString::fromLatin1("Mauvais bouton !"));
@@ -159,7 +174,10 @@ void MainWindow::updateTimer() {
 		blink = !blink;
 		timerColor = (blink) ? QColor(255, 50, 50) : QColor(150, 0, 0);
 		paletteBlink.setColor(paletteBlink.WindowText, timerColor);
+		paletteBlink.setColor(paletteBlink.Light, timerColor);
+		//paletteBlink.setColor(paletteBlink.WindowText, timerColor);
 		ui.lcdClock->setPalette(paletteBlink);
+	
 	}
 
 	if ((timeLeft.minute() <= 0 && timeLeft.second() <= 0) || timeLeft.minute() >= 55) {
