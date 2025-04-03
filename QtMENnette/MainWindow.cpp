@@ -61,8 +61,6 @@ Ui::MainWindow* MainWindow::getUI() const
 	return const_cast<Ui::MainWindow*>(&ui);
 }
 
-void MainWindow::initLCD() {
-
 void MainWindow::initLCD(int minutes, int seconds) {
 	timer = new QTimer(this);
 	countdown = QTime(0, minutes, seconds);
