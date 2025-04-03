@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	ui.stackedWidget->addWidget(cryptoWidget);
 	//connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
 
-	initLCD();
+	initLCD(3, 0);
 
 }
 
@@ -61,9 +61,9 @@ Ui::MainWindow* MainWindow::getUI() const
 	return const_cast<Ui::MainWindow*>(&ui);
 }
 
-void MainWindow::initLCD() {
+void MainWindow::initLCD(int minutes, int seconds) {
 	timer = new QTimer(this);
-	countdown = QTime(0, 1, 0);
+	countdown = QTime(0, minutes, seconds);
 
 	initTimerColor = QColor(50, 255, 50);
 	initTimerPalette = ui.lcdClock->palette();
@@ -109,6 +109,7 @@ void MainWindow::on_btnPoten_clicked() {
 	ui.stackedWidget->setCurrentIndex(5);
 	ui.stackedWidget->setCurrentWidget(cryptoWidget);
 	ui.labDebug->setText("Poten");
+	totalPenaltyTime += 10;
 }
 
 void MainWindow::on_btnDebug_clicked() {
