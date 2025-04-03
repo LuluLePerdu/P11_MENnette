@@ -1,48 +1,33 @@
 #include "SnakeMazeWidget.h"
-#include <QPainter>
-#include <QKeyEvent>
-#include <QTimer>
-#include <QLinearGradient>
-#include <QPainterPath>
-#include <cstdlib>
-#include <QMessageBox>
-#include <QPushButton>
 
-
-SnakeMazeWidget::SnakeMazeWidget(int mazeWidth, int mazeHeight, int gameDuration, QWidget* parent) :
-    QWidget(parent),
-    gameTimer(new QTimer(this)),
-    animationTimer(new QTimer(this)),
-    logic(mazeWidth, mazeHeight, gameDuration)
+SnakeMazeWidget::SnakeMazeWidget(int mazeWidth, int mazeHeight, int gameDuration, QWidget* parent)
+    : QWidget(parent),
+    logic(mazeWidth, mazeHeight, gameDuration),
+    gameTimer(new QTimer(this))
 {
-    logic.initialize();
     setFocusPolicy(Qt::StrongFocus);
     setFixedSize(logic.WIDTH * cellSize, logic.HEIGHT * cellSize + hudHeight);
 
-    connect(gameTimer, &QTimer::timeout, this, &SnakeMazeWidget::updateGame);
-    gameTimer->start(16); 
-
-    connect(animationTimer, &QTimer::timeout, this, [this]() {
+    connect(gameTimer, &QTimer::timeout, this, [this]() {
+        updateGame();
+        handleInputs();
         update();
         });
-    animationTimer->start(16);
 }
 
-SnakeMazeWidget::~SnakeMazeWidget()
-{
-}
+SnakeMazeWidget::~SnakeMazeWidget() {}
 
-void SnakeMazeWidget::startGame() 
+void SnakeMazeWidget::startGame()
 {
     logic.initialize();
+    renderPos = QPointF(logic.getPlayerX(), logic.getPlayerY());
+    currentAnimation.active = false;
     gameTimer->start(16);
-    animationTimer->start(16);
-    update();
 }
 
-void SnakeMazeWidget::stopGame() {
+void SnakeMazeWidget::stopGame()
+{
     gameTimer->stop();
-    animationTimer->stop();
     logic.initialize();
 }
 
@@ -51,9 +36,10 @@ void SnakeMazeWidget::paintEvent(QPaintEvent* event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    const int mazeWidth = logic.WIDTH * cellSize;
-    const int mazeHeight = logic.HEIGHT * cellSize;
-    const int totalHeight = mazeHeight + hudHeight;
+    const int mazePixelWidth = logic.WIDTH * cellSize;
+    const int mazePixelHeight = logic.HEIGHT * cellSize;
+    const int marginX = (width() - mazePixelWidth) / 2;
+    const int marginY = (height() - mazePixelHeight - hudHeight) / 2 + hudHeight;
 
     QLinearGradient bgGradient(0, 0, width(), height());
     bgGradient.setColorAt(0, QColor(40, 40, 45));
@@ -70,7 +56,9 @@ void SnakeMazeWidget::paintEvent(QPaintEvent* event)
     // Labyrinthe
     for (int y = 0; y < logic.HEIGHT; y++) {
         for (int x = 0; x < logic.WIDTH; x++) {
-            QRectF rect(x * cellSize, y * cellSize + hudHeight, cellSize, cellSize);
+            QRectF rect(x * cellSize + marginX,
+                y * cellSize + marginY,
+                cellSize, cellSize);
 
             if (maze[y][x] == SnakeMaze::WALL) {
                 QLinearGradient wallGrad(rect.topLeft(), rect.bottomRight());
@@ -87,20 +75,14 @@ void SnakeMazeWidget::paintEvent(QPaintEvent* event)
                     painter.drawEllipse(rect.center(), 2, 2);
                 }
             }
-            else if (maze[y][x] == SnakeMaze::PLAYER) {
-                QPointF renderPos;
-                if (isAnimating) {
-                    float progress = qMin(animationStartTime.msecsTo(QTime::currentTime()) / (animationDuration * 1000), 1.0f);
-                    progress = 1 - pow(1 - progress, 3);
-                    renderPos = prevPlayerPos * (1 - progress) + QPointF(logic.getPlayerX(), logic.getPlayerY()) * progress;
-                }
-                else {
-                    renderPos = QPointF(logic.getPlayerX(), logic.getPlayerY());
-                }
+            else if (maze[y][x] == SnakeMaze::PLAYER ||
+                (currentAnimation.active &&
+                    QPointF(x, y) == currentAnimation.startPos)) {
 
-                QPointF pixelPos(renderPos.x() * cellSize, renderPos.y() * cellSize + hudHeight);
+                QPointF pixelPos(renderPos.x() * cellSize + marginX,
+                    renderPos.y() * cellSize + marginY);
 
-                // Arthur, le désamorceur de bombes
+                // Dessin d'Arthur
                 painter.setPen(Qt::NoPen);
                 painter.setBrush(QColor(200, 200, 200));
                 painter.drawEllipse(pixelPos.x() + cellSize / 4, pixelPos.y(), cellSize / 2, cellSize / 2);
@@ -166,14 +148,14 @@ void SnakeMazeWidget::paintEvent(QPaintEvent* event)
     painter.fillRect(0, 0, width(), hudHeight, hudGradient);
 
     int timeLeft = logic.getTimeLeft();
-    bool blinkOn = (QDateTime::currentMSecsSinceEpoch() % 1000) < 500; 
+    bool blinkOn = (QDateTime::currentMSecsSinceEpoch() % 1000) < 500;
 
     QColor timerColor;
     if (timeLeft > 15) {
         timerColor = QColor(50, 255, 50);
     }
     else {
-        timerColor = blinkOn ? QColor(255, 50, 50) : QColor(150, 0, 0); 
+        timerColor = blinkOn ? QColor(255, 50, 50) : QColor(150, 0, 0);
     }
 
     if (timeLeft <= 15) {
@@ -195,80 +177,101 @@ void SnakeMazeWidget::paintEvent(QPaintEvent* event)
     painter.drawLine(0, hudHeight, width(), hudHeight);
 }
 
-void SnakeMazeWidget::keyPressEvent(QKeyEvent* event) 
+void SnakeMazeWidget::keyPressEvent(QKeyEvent* event)
 {
-    if (!isAnimating) {
-        switch (event->key()) {
-        case Qt::Key_Up:
-            logic.changeDirection(0, -1);
-            break;
-        case Qt::Key_Down:
-            logic.changeDirection(0, 1);
-            break;
-        case Qt::Key_Left:
-            logic.changeDirection(-1, 0);
-            break;
-        case Qt::Key_Right:
-            logic.changeDirection(1, 0);
-            break;
-        default:
-            QWidget::keyPressEvent(event);
-            return;
-        }
-        
-        updateGame();
+    if (currentAnimation.active) return;
+
+    QPointF prevPos(logic.getPlayerX(), logic.getPlayerY());
+
+    switch (event->key()) {
+    case Qt::Key_Left:  logic.changeDirection(-1, 0); break;
+    case Qt::Key_Right: logic.changeDirection(1, 0);  break;
+    case Qt::Key_Up:    logic.changeDirection(0, -1); break;
+    case Qt::Key_Down:  logic.changeDirection(0, 1);  break;
+    default: return;
+    }
+
+    logic.movePlayer();
+    startAnimation(prevPos);
+}
+
+void SnakeMazeWidget::startAnimation(const QPointF& prevPos)
+{
+    QPointF newPos(logic.getPlayerX(), logic.getPlayerY());
+    if (prevPos != newPos) {
+        currentAnimation.startPos = prevPos;
+        currentAnimation.endPos = newPos;
+        currentAnimation.startTime = QTime::currentTime();
+        currentAnimation.active = true;
+        renderPos = prevPos;
     }
 }
 
-void SnakeMazeWidget::updateGame() {
+void SnakeMazeWidget::handleInputs()
+{
+    if (currentAnimation.active) return;
+
+    Communication& comm = Communication::getInstance();
+    uint8_t joystickValue = comm.readMsg(MSG_ID_AR_JOYSTICK);
+    comm.clear();
+
+    if (joystickValue != -1 && joystickValue != lastJoystickValue) {
+        lastJoystickValue = joystickValue;
+        QPointF prevPos(logic.getPlayerX(), logic.getPlayerY());
+
+        switch (joystickValue) {
+            case 4: logic.changeDirection(-1, 0); break; // Gauche
+            case 8: logic.changeDirection(1, 0);  break; // Droite
+            case 2: logic.changeDirection(0, -1); break; // Haut
+            case 1: logic.changeDirection(0, 1);  break; // Bas
+            default: return;
+        }
+
+        logic.movePlayer();
+        startAnimation(prevPos);
+    }
+}
+
+void SnakeMazeWidget::updateGame()
+{
     logic.updateTimer();
+
+    if (currentAnimation.active) {
+        float elapsed = currentAnimation.startTime.msecsTo(QTime::currentTime()) / 1000.0f;
+        float progress = qMin(elapsed / animationDuration, 1.0f);
+
+        float easedProgress = progress < 0.5
+            ? 2 * progress * progress
+            : 1 - pow(-2 * progress + 2, 2) / 2;
+
+        renderPos = currentAnimation.startPos + (currentAnimation.endPos - currentAnimation.startPos) * easedProgress;
+
+        if (progress >= 1.0f) {
+            currentAnimation.active = false;
+            renderPos = currentAnimation.endPos;
+        }
+    }
+
+    if (!logic.inGame()) {
+        showResultDialog();
+    }
 
     static bool blinkState = false;
     static int blinkCounter = 0;
     bool isOvertime = logic.getTimeLeft() < 0;
 
     if (isOvertime) {
-        if (blinkCounter++ % 10 == 0) {
-            blinkState = !blinkState;
-        }
+        if (blinkCounter++ % 10 == 0) blinkState = !blinkState;
 
         static float pulseScale = 1.0f;
         static bool growing = true;
-        if (growing) {
-            pulseScale += 0.01f;
-            if (pulseScale >= 1.1f) growing = false;
-        }
-        else {
-            pulseScale -= 0.01f;
-            if (pulseScale <= 1.0f) growing = true;
-        }
+        pulseScale += growing ? 0.02f : -0.02f;
+        if (pulseScale >= 1.15f) growing = false;
+        else if (pulseScale <= 1.0f) growing = true;
     }
     else {
         blinkState = false;
         blinkCounter = 0;
-    }
-
-    static QTime lastMoveTime = QTime::currentTime();
-    int moveDelay = 120;
-
-    if (QTime::currentTime().msecsTo(lastMoveTime) < -moveDelay) 
-    {
-        if (!isAnimating) {
-            prevPlayerPos = QPointF(logic.getPlayerX(), logic.getPlayerY());
-            logic.movePlayer();
-
-            QPointF newPos(logic.getPlayerX(), logic.getPlayerY());
-            if (prevPlayerPos != newPos) {
-                isAnimating = true;
-                animationStartTime = QTime::currentTime();
-                lastMoveTime = QTime::currentTime();
-            }
-        }
-        else {
-            if (animationStartTime.msecsTo(QTime::currentTime()) >= animationDuration * 1000) {
-                isAnimating = false;
-            }
-        }
     }
 
     if (!logic.inGame()) {
@@ -280,28 +283,19 @@ void SnakeMazeWidget::updateGame() {
 
 void SnakeMazeWidget::showResultDialog()
 {
-    int timeUsed = logic.getGameDuration() - logic.getTimeLeft();
-    int overtime = (timeUsed > logic.getGameDuration()) ? (timeUsed - logic.getGameDuration()) : 0;
-
-    QString message;
-    if (overtime == 0) {
-        message = "Bombe désamorcée en " + QString::number(timeUsed) + " secondes!";
-    }
-    else {
-        message = "Temps dépassé de " + QString::number(overtime) + " secondes!";
-        emit timePenalty(overtime);
-    }
-
     gameTimer->stop();
-    animationTimer->stop();
+
+    int timeUsed = logic.getGameDuration() - logic.getTimeLeft();
+    bool victory = timeUsed <= logic.getGameDuration();
 
     QMessageBox msgBox;
-    msgBox.setWindowTitle(overtime == 0 ? "Mission accomplie" : "Échec");
-    msgBox.setText(message);
-    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setWindowTitle(victory ? "Mission accomplie" : "Échec");
+    msgBox.setText(victory
+        ? QString("Bombe désamorcée en %1 secondes!").arg(timeUsed)
+        : QString("Temps dépassé de %1 secondes!").arg(timeUsed - logic.getGameDuration()));
 
     QPushButton* retryButton = msgBox.addButton("Recommencer", QMessageBox::ActionRole);
-    QPushButton* menuButton = msgBox.addButton("Menu", QMessageBox::AcceptRole);
+    QPushButton* menuButton = msgBox.addButton("Retour au menu", QMessageBox::AcceptRole);
 
     msgBox.exec();
 
