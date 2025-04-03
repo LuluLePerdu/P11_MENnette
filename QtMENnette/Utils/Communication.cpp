@@ -177,7 +177,7 @@ int Communication::readMsg(unsigned char id) {
             if (GetTickCount() - startTime > TIMEOUT_READ) {
                 return -1;
             }
-            // return -1;
+            return -1;
         }
         if (msg[0] == id) {
             break;
