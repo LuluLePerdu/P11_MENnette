@@ -1,7 +1,4 @@
 #include "SnakeMaze.h"
-#include <stack>
-#include <cstdlib>
-#include <ctime>
 
 SnakeMaze::SnakeMaze(int width, int height, int duration) :
     WIDTH(width), HEIGHT(height), gameDuration(duration),
@@ -94,14 +91,13 @@ void SnakeMaze::buildRandomMaze(int startX, int startY) {
     }
 }
 
-void SnakeMaze::movePlayer()
-{
+void SnakeMaze::movePlayer() {
+    if (directionX == 0 && directionY == 0) return;
+
     int newX = playerX + directionX;
     int newY = playerY + directionY;
 
-    if (maze[newY][newX] == WALL) {
-        return;
-    }
+    if (maze[newY][newX] == WALL) return;
 
     if (maze[newY][newX] == OBJECTIVE) {
         ingame = false;

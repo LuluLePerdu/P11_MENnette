@@ -1,27 +1,34 @@
 #pragma once
 
-#include <QWidget>
-#include <QTimer>
 #include <QTime>
+#include <QTimer>
+#include <QWidget>
 #include <QPointF>
+#include <QPainter>
+#include <QKeyEvent>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QPainterPath>
+#include <QLinearGradient>
+
+#include "Communication.h"
 #include "SnakeMaze.h"
+#include <cstdlib>
 
 class SnakeMazeWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SnakeMazeWidget(int mazeWidth = 21,
-        int mazeHeight = 21,
-        int gameDuration = 60,
+    explicit SnakeMazeWidget(int mazeWidth = 21, int mazeHeight = 21, int gameDuration = 60,
         QWidget* parent = nullptr);
-
-    void startGame();
-    void stopGame();
     ~SnakeMazeWidget();
+
+    void stopGame();
+    void startGame();
 
 signals:
     void returnToMenuRequested();
-    void timePenalty(int seconds);
+    void timePenalty(int seconds);  
 
 protected:
     void paintEvent(QPaintEvent* event) override;
@@ -31,18 +38,23 @@ private slots:
     void updateGame();
 
 private:
+    void handleInputs();
     void showResultDialog();
+    void startAnimation(const QPointF& prevPos);
 
     SnakeMaze logic;
     QTimer* gameTimer;
-    QTimer* animationTimer;
     const int cellSize = 20;
     const int hudHeight = 40;
-    bool isOvertime = false;
-    float pulseScale = 1.0f;
-    bool pulseGrowing = true;
-    bool isAnimating = false;
-    QPointF prevPlayerPos;
-    QTime animationStartTime;
-    float animationDuration = 0.15f;
+
+    struct {
+        QPointF startPos;
+        QPointF endPos;
+        QTime startTime;
+        bool active = false;
+    } currentAnimation;
+
+    QPointF renderPos;
+    uint8_t lastJoystickValue = 0;
+    const float animationDuration = 0.12f;
 };

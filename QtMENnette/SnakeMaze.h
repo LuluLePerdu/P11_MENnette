@@ -1,5 +1,8 @@
 #pragma once
 #include <QTime>
+#include <stack>
+#include <ctime>
+#include <cstdlib>
 #include <QDateTime>
 
 class SnakeMaze {
@@ -15,13 +18,13 @@ public:
     ~SnakeMaze();
     void initialize();
     void movePlayer();
-    void changeDirection(int dx, int dy);
-    void placeObjective();
-    bool inGame() const;
-    bool victoryEOG() const;
-    const char** getMaze() const;
     void updateTimer();
+    bool inGame() const;
+    void placeObjective();
+    bool victoryEOG() const;
     int getTimeLeft() const;
+    const char** getMaze() const;
+    void changeDirection(int dx, int dy);
     int getPlayerX() const { return playerX; }
     int getPlayerY() const { return playerY; }
     int getDirectionX() const { return directionX; }
@@ -29,19 +32,19 @@ public:
     int getGameDuration() const { return gameDuration; }
 
 private:
-    void buildRandomMaze(int startX, int startY);
     void startTimer();
     void allocateMaze();
     void deallocateMaze();
+    void buildRandomMaze(int startX, int startY);
 
-    bool timerStarted;
     char** maze;
-    int playerX, playerY;
-    int directionX, directionY;
     int hasMoved;
     bool ingame;
     bool victory;
     int timeLeft;
     int gameDuration;
     qint64 startTime;
+    bool timerStarted;
+    int playerX, playerY;
+    int directionX, directionY;
 };
