@@ -4,7 +4,6 @@
 #include <QLabel>
 
 #include "CryptoSequencer.h"
-#include "SnakeMaze.h"
 
 #include <QErrorMessage>
 

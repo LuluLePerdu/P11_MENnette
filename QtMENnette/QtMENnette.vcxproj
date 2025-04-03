@@ -124,6 +124,7 @@
     <ClCompile Include="ShakeIt.cpp" />
     <ClCompile Include="ShakeItWidget.cpp" />
     <ClCompile Include="SimonSays.cpp" />
+    <ClCompile Include="SimonSaysWidget.cpp" />
     <ClCompile Include="SnakeMakeWidget.cpp" />
     <ClCompile Include="SnakeMaze.cpp" />
     <ClCompile Include="ThreadCutter.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="ShakeIt.h" />
     <ClInclude Include="ShakeItWidget.h" />
     <ClInclude Include="SimonSays.h" />
+    <QtMoc Include="SimonSaysWidget.h" />
     <ClInclude Include="SnakeMaze.h" />
     <QtMoc Include="SnakeMazeWidget.h" />
     <ClInclude Include="ThreadCutter.h" />

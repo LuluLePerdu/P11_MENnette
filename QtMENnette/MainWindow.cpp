@@ -129,6 +129,7 @@ void MainWindow::on_btnLED_clicked() {
 }
 
 void MainWindow::on_btnSimon_clicked() {
+	ui.stackedWidget->setCurrentWidget(simonWidget);
 	ui.stackedWidget->setCurrentIndex(4);
 	ui.labDebug->setText("Simon");
 }

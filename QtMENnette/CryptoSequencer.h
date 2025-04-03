@@ -17,6 +17,7 @@ class CryptoSequencer {
 
 public:
 	CryptoSequencer();
+	CryptoSequencer(int range);
 	~CryptoSequencer();
 
 	void initialize();
@@ -27,6 +28,6 @@ private:
 	int target;
 	char code[CODE_LENGTH];
 	int lastInput=0;
-	int range = 50;
+	int m_range = 50;
 };
 

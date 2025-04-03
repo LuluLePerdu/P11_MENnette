@@ -5,6 +5,12 @@ CryptoSequencer::CryptoSequencer()
 	this->initialize();
 }
 
+CryptoSequencer::CryptoSequencer(int range)
+{
+	m_range = range;
+    this->initialize();
+}
+
 CryptoSequencer::~CryptoSequencer()
 {
 }
@@ -31,10 +37,10 @@ std::string CryptoSequencer::updateSequence() {
         outputCode[i] = characters[std::rand() % 32];
     }
 
-    int joyInput = comm.readMsg(MSG_ID_AR_JOYSTICK);
-    if (joyInput == 4) {
+    //int joyInput = comm.readMsg(MSG_ID_AR_JOYSTICK);
+    //if (joyInput == 4) {
     //    isOver = true;
-    }
+    //}
 
     int usrInput = comm.readMsg(MSG_ID_AR_POTENTIOMETER);
     comm.clear();
@@ -48,7 +54,7 @@ std::string CryptoSequencer::updateSequence() {
     if (usrInput >= 0) { //si pas de mannette mettre a >=-2
         //usrInput = 100;
         //joyInput = -1;
-        int distance = static_cast<int>(CODE_LENGTH * std::abs(target - usrInput) / range);
+        int distance = static_cast<int>(CODE_LENGTH * std::abs(target - usrInput) / m_range);
         if (distance > CODE_LENGTH) distance = CODE_LENGTH;
 
         
@@ -59,7 +65,7 @@ std::string CryptoSequencer::updateSequence() {
 		lastInput = usrInput;
     }
     else {
-        int distance = static_cast<int>(CODE_LENGTH * std::abs(target - lastInput) / range);
+        int distance = static_cast<int>(CODE_LENGTH * std::abs(target - lastInput) / m_range);
         if (distance > CODE_LENGTH) distance = CODE_LENGTH;
 
 

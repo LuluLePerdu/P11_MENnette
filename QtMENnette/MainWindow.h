@@ -5,6 +5,7 @@
 #include "ui_MainWindow.h"
 #include "SnakeMazeWidget.h"
 #include "ThreadCutterWidget.h"
+#include "SimonSaysWidget.h"
 
 #include "CryptoSequencerWidget.h"
 #include "qthread.h"
@@ -31,6 +32,7 @@ private:
 	SnakeMazeWidget* snakeWidget;
 	CryptoSequencerWidget* cryptoWidget;
 	ThreadCutterWidget* threadWidget;
+	SimonSaysWidget* simonWidget;
 	int totalPenaltyTime = 0;
 
 	QTimer* debugTimer;
