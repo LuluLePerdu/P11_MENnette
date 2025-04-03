@@ -10,6 +10,9 @@
 #include "qthread.h"
 #include "qlabel.h"
 #include "qsignalmapper.h"
+#include <QTime>
+#include <QElapsedTimer>
+#include <QPalette>
 
 class CryptoSequencerWidget;
 
@@ -31,6 +34,14 @@ private:
 	int totalPenaltyTime = 0;
 
 	QTimer* debugTimer;
+	QElapsedTimer eTimer;
+	QTimer* timer;
+	QTime countdown;
+	bool blink;
+	QColor initTimerColor;
+	QPalette initTimerPalette;
+
+	void initLCD();
 
 private slots:
 	void on_btnHome_clicked();
@@ -41,5 +52,6 @@ private slots:
 	void on_btnPoten_clicked();
 	void on_btnDebug_clicked();
 
-	void ledSetText(bool outcome);
+	void ledSetText(bool result);
+	void updateTimer();
 };

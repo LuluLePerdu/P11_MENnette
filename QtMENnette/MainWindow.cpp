@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	ui.stackedWidget->addWidget(cryptoWidget);
 	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
 
-
+	initLCD();
 
 }
 
@@ -59,6 +59,22 @@ MainWindow* MainWindow::instance() {
 Ui::MainWindow* MainWindow::getUI() const
 {
 	return const_cast<Ui::MainWindow*>(&ui);
+}
+
+void MainWindow::initLCD() {
+	timer = new QTimer(this);
+	countdown = QTime(0, 1, 0);
+
+	initTimerColor = QColor(50, 255, 50);
+	initTimerPalette = ui.lcdClock->palette();
+	initTimerPalette.setColor(initTimerPalette.WindowText, initTimerColor);
+	ui.lcdClock->setPalette(initTimerPalette);
+
+
+	eTimer.start();
+	connect(timer, &QTimer::timeout, this, &MainWindow::updateTimer);
+	timer->start(100);
+	blink = false;
 }
 
 void MainWindow::on_btnHome_clicked() {
@@ -93,8 +109,6 @@ void MainWindow::on_btnPoten_clicked() {
 	ui.stackedWidget->setCurrentIndex(5);
 	ui.stackedWidget->setCurrentWidget(cryptoWidget);
 	ui.labDebug->setText("Poten");
-	
-
 }
 
 void MainWindow::on_btnDebug_clicked() {
@@ -126,5 +140,32 @@ void MainWindow::ledSetText(bool result) {
 	else {
 		ui.labResult->setText(QString::fromLatin1("Mauvais bouton !"));
 	}
+	
+}
+
+void MainWindow::updateTimer() {
+	int elapsedTime = eTimer.elapsed();
+	QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
+	QString formatTime = timeLeft.toString("mm:ss");
+	QPalette paletteBlink = ui.lcdClock->palette();
+	QColor timerColor;
+
+	if (timeLeft.minute() <= 0 && timeLeft.second() <= 30) {
+		blink = !blink;
+		timerColor = (blink) ? QColor(255, 50, 50) : QColor(150, 0, 0);
+		paletteBlink.setColor(paletteBlink.WindowText, timerColor);
+		ui.lcdClock->setPalette(paletteBlink);
+	}
+
+	if ((timeLeft.minute() <= 0 && timeLeft.second() <= 0) || timeLeft.minute() >= 55) {
+
+		timer->stop();
+		ui.lcdClock->display("PERDU");
+	}
+	else {
+
+		ui.lcdClock->display(formatTime);
+	}
+	
 	
 }
