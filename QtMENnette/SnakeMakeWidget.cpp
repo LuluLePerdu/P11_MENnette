@@ -209,14 +209,14 @@ void SnakeMazeWidget::startAnimation(const QPointF& prevPos)
 
 void SnakeMazeWidget::handleInputs()
 {
-    if (currentAnimation.active) return;
+    //if (currentAnimation.active) return;
 
     Communication& comm = Communication::getInstance();
     uint8_t joystickValue = comm.readMsg(MSG_ID_AR_JOYSTICK);
     comm.clear();
 
-    if (joystickValue != -1 && joystickValue != lastJoystickValue) {
-        lastJoystickValue = joystickValue;
+    if (joystickValue != -1 ) {
+       // lastJoystickValue = joystickValue;
         QPointF prevPos(logic.getPlayerX(), logic.getPlayerY());
 
         switch (joystickValue) {

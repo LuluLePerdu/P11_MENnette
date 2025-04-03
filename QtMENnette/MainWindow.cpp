@@ -19,12 +19,29 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 
 	threadWidget = new ThreadCutterWidget(this);
 	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
+	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
+	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
+		ui.stackedWidget->setCurrentIndex(0);
+		});
+
+	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
+		ui.stackedWidget->setCurrentIndex(0);
+		snakeWidget->stopGame();
+		});
+
+	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) {
+		totalPenaltyTime += penalty;
+		//updateGlobalTimerDisplay();
+		});
+
+	/*threadWidget = new ThreadCutterWidget(this);
+	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);*/
 
 	cryptoWidget = new CryptoSequencerWidget(this);
 	ui.stackedWidget->addWidget(cryptoWidget);
-	//connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
+	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
 
-	initLCD();
+	initLCD(3, 0);
 
 }
 
@@ -46,8 +63,9 @@ Ui::MainWindow* MainWindow::getUI() const
 
 void MainWindow::initLCD() {
 
+void MainWindow::initLCD(int minutes, int seconds) {
 	timer = new QTimer(this);
-	countdown = QTime(0, 1, 0);
+	countdown = QTime(0, minutes, seconds);
 
 	initTimerColor = QColor(50, 255, 50);
 	initTimerPalette = ui.lcdClock->palette();
@@ -67,7 +85,7 @@ void MainWindow::on_btnHome_clicked() {
 }
 
 void MainWindow::on_btnSnake_clicked() {
-	snakeWidget = new SnakeMazeWidget(21, 21, 10, this); //À remplacer les valeurs par des variables via la config
+	snakeWidget = new SnakeMazeWidget(21, 21, 10, this); //ï¿½ remplacer les valeurs par des variables via la config
 
 	ui.stackedWidget->addWidget(snakeWidget);
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
@@ -112,6 +130,7 @@ void MainWindow::on_btnPoten_clicked() {
 	ui.stackedWidget->setCurrentIndex(5);
 	ui.stackedWidget->setCurrentWidget(cryptoWidget);
 	ui.labDebug->setText("Poten");
+	totalPenaltyTime += 10;
 }
 
 void MainWindow::on_btnDebug_clicked() {
@@ -123,7 +142,11 @@ void MainWindow::on_btnDebug_clicked() {
 	int msg = comm.readMsg(MSG_ID_AR_ACCELEROMETER);
 	ui.labDebug->setText(QString::number(msg));
 	QObject::connect(debugTimer, &QTimer::timeout, this, [&]() {
+
 		int msg = comm.readMsg(MSG_ID_AR_ACCELEROMETER);
+		comm.clear();
+		//Frame frame = comm.readMsg();
+		//int a = frame.data;
 		ui.labDebug->setText(QString::number(msg));
 
 		});
@@ -134,7 +157,7 @@ void MainWindow::on_btnDebug_clicked() {
 void MainWindow::ledSetText(bool result) {
 	
 	if (result) {
-		ui.labResult->setText(QString::fromLatin1("Module désamorcé !"));
+		ui.labResult->setText(QString::fromLatin1("Module dï¿½samorcï¿½ !"));
 	}
 	else {
 		ui.labResult->setText(QString::fromLatin1("Mauvais bouton !"));
