@@ -39,6 +39,7 @@ private:
 	QTime countdown;
 	bool blink;
 	QColor initTimerColor;
+	QThread* thread;
 	QPalette initTimerPalette;
 
 	void initLCD();

@@ -304,5 +304,6 @@ void SnakeMazeWidget::showResultDialog()
     }
     else {
         emit returnToMenuRequested();
+        emit timePenalty(timeUsed - logic.getGameDuration());
     }
 }
