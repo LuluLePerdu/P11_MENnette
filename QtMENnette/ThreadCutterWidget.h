@@ -12,7 +12,9 @@ public:
 
 signals:
 	void outcomeSubmitted(bool outcome);
+	void timePenalty(int seconds);
 
 private:
 	ThreadCutter logic;
+	int timeOnLoss = 20;
 };

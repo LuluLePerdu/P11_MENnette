@@ -58,8 +58,6 @@ Ui::MainWindow* MainWindow::getUI() const
 	return const_cast<Ui::MainWindow*>(&ui);
 }
 
-void MainWindow::initLCD() {
-
 void MainWindow::initLCD(int minutes, int seconds) {
 	timer = new QTimer(this);
 	countdown = QTime(0, minutes, seconds);
@@ -109,6 +107,22 @@ void MainWindow::on_btnSnake_clicked() {
 void MainWindow::on_btnLED_clicked() {
 	threadWidget = new ThreadCutterWidget(this);
 	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
+
+	connect(threadWidget, &ThreadCutterWidget::timePenalty, this, [this](int penalty) {
+		totalPenaltyTime += penalty;
+		});
+	ui.labResult->setVisible(false);
+
+	ui.labInstruc->setText(QString::fromLatin1(
+		"Si la DEL verte et 2 autres DELs sont allumées, appuyez sur le bouton vert."
+		"\n\nSinon, si la DEL verte et la DEL rouge sont allumées mais aucune autre, appuyez sur le bouton rouge."
+		"\n\nSinon, si les 4 DELs sont allumées, appuyez sur le bouton rouge."
+		"\n\nSinon, si les 4 DELs sont éteintes, appuyez sur le bouton la plus à droite."
+		"\n\nSinon, si la DEL bleue et la DEL jaune sont allumées mais aucune autre, appuyez sur le bouton jaune."
+		"\n\nSinon, si uniquement la DEL rouge est allumée, appuyez sur le bouton le plus à gauche."
+		"\n\nSinon, si aucune des autres conditions n'est remplie mais que 2 DELs sont allumées, appuyez sur le bouton rouge."
+		"\n\nSinon, appuyez sur le deuxième bouton à partir de la gauche."));
+
 	ui.stackedWidget->setCurrentIndex(3);
 	ui.labDebug->setText("LED");
 	threadWidget->startGame();
@@ -161,7 +175,7 @@ void MainWindow::ledSetText(bool result) {
 	else {
 		ui.labResult->setText(QString::fromLatin1("Mauvais bouton !"));
 	}
-	
+	ui.labResult->setVisible(true);
 }
 
 void MainWindow::updateTimer() {
