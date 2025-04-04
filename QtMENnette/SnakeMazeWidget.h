@@ -12,6 +12,7 @@
 #include <QLinearGradient>
 
 #include "Communication.h"
+#include "ConfigurationWidget.h"
 #include "SnakeMaze.h"
 #include <cstdlib>
 
@@ -19,7 +20,7 @@ class SnakeMazeWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SnakeMazeWidget(int mazeWidth = 21, int mazeHeight = 21, int gameDuration = 60,
+	explicit SnakeMazeWidget(int mazeWidth = 21, int mazeHeight = 21, int gameDuration = 60, ConfigurationWidget::Difficulty difficulty = ConfigurationWidget::NORMAL,
         QWidget* parent = nullptr);
     ~SnakeMazeWidget();
 
@@ -44,8 +45,8 @@ private:
 
     SnakeMaze logic;
     QTimer* gameTimer;
-    const int cellSize = 20;
-    const int hudHeight = 40;
+    int cellSize = 20;
+    int hudHeight = 40;
 
 
     struct {
@@ -57,5 +58,5 @@ private:
 
     QPointF renderPos;
     uint8_t lastJoystickValue = 0;
-    const float animationDuration = 0.12f;
+    float animationDuration;
 };

@@ -142,6 +142,9 @@
     <ClCompile Include="SimonSaysWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ConfigurationWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Models\GameModel.h">
@@ -233,6 +236,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="SimonSaysWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ConfigurationWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

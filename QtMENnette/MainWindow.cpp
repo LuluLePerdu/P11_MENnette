@@ -15,7 +15,15 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		"}"
 	);
 
-	
+	configWidget = new ConfigurationWidget(this);
+	ui.stackedWidget->addWidget(configWidget);
+	connect(ui.btnConfiguration, &QPushButton::clicked, this, &MainWindow::showConfiguration);
+	connect(configWidget, &ConfigurationWidget::settingsApplied, this, [this]() {
+		ui.stackedWidget->setCurrentIndex(0);
+		});
+
+	threadWidget = new ThreadCutterWidget(this);
+	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
 	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
@@ -57,6 +65,12 @@ Ui::MainWindow* MainWindow::getUI() const
 	return const_cast<Ui::MainWindow*>(&ui);
 }
 
+void MainWindow::showConfiguration()
+{
+	ui.stackedWidget->setCurrentWidget(configWidget);
+	ui.labDebug->setText("Configuration");
+}
+
 void MainWindow::initLCD(int minutes, int seconds) {
 	timer = new QTimer(this);
 	countdown = QTime(0, minutes, seconds);
@@ -79,7 +93,14 @@ void MainWindow::on_btnHome_clicked() {
 }
 
 void MainWindow::on_btnSnake_clicked() {
-	snakeWidget = new SnakeMazeWidget(21, 21, 10, this); //� remplacer les valeurs par des variables via la config
+
+	snakeWidget = new SnakeMazeWidget(
+		configWidget->getMazeWidth(),
+		configWidget->getMazeHeight(),
+		configWidget->getMazeTime(),
+		configWidget->getDifficulty(),
+		this
+	);
 
 	ui.stackedWidget->addWidget(snakeWidget);
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
