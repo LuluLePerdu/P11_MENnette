@@ -31,13 +31,11 @@ public:
 private:
 
 	QTimer* timer;
-	QThread* thread;
 	QTime countdown;
     Ui::MainWindow ui;
 	bool blink = false;
 	QTimer* debugTimer;
 	QTimer* clockTimer;
-	QThread clockThread;
 	QElapsedTimer eTimer;
     static MainWindow* w;
 	QColor initTimerColor;

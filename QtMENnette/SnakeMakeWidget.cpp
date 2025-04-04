@@ -51,6 +51,7 @@ void SnakeMazeWidget::stopGame()
 {
     gameTimer->stop();
     logic.initialize();
+
 }
 
 void SnakeMazeWidget::paintEvent(QPaintEvent* event)

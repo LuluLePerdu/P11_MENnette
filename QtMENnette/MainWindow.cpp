@@ -1,29 +1,9 @@
 //#include "stdafx.h"
 #include "MainWindow.h"
 
-MainWindow::MainWindow(QWidget* parent)
-	: QMainWindow(parent),
-	threadWidget(nullptr),
-	debugTimer(new QTimer(this)),
-	clockTimer(new QTimer(this))
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(nullptr), debugTimer(new QTimer(this))
 {
 	ui.setupUi(this);
-
-	clockTimer->moveToThread(&clockThread);
-	connect(&clockThread, &QThread::started, [this]() {
-		clockTimer->start(100);
-		});
-	connect(clockTimer, &QTimer::timeout, this, &MainWindow::updateTimer);
-	connect(&clockThread, &QThread::finished, clockTimer, &QObject::deleteLater);
-
-	clockThread.start();
-
-	initTimerColor = QColor(50, 255, 50);
-	initTimerPalette = ui.lcdClock->palette();
-	initTimerPalette.setColor(initTimerPalette.WindowText, initTimerColor);
-	ui.lcdClock->setPalette(initTimerPalette);
-
-	eTimer.start();
 
 	this->setStyleSheet(
 		"MainWindow {"
@@ -34,10 +14,12 @@ MainWindow::MainWindow(QWidget* parent)
 		"   background-size: 50% 50%;"
 		"}"
 	);
-
 	configWidget = new ConfigurationWidget(this);
 	ui.stackedWidget->addWidget(configWidget);
+	ui.stackedWidget->setCurrentIndex(0);
+
 	connect(ui.btnConfiguration, &QPushButton::clicked, this, &MainWindow::showConfiguration);
+
 	connect(configWidget, &ConfigurationWidget::settingsApplied, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
 		});
@@ -61,9 +43,6 @@ MainWindow::~MainWindow()
 		ui.stackedWidget->removeWidget(snakeWidget);
 		delete snakeWidget;
 	}
-	delete threadWidget;
-	clockThread.quit();
-	clockThread.wait();
 }
 
 MainWindow* MainWindow::instance() {
@@ -100,6 +79,7 @@ void MainWindow::initLCD(int minutes, int seconds) {
 
 void MainWindow::on_btnHome_clicked() {
 	ui.stackedWidget->setCurrentIndex(0);
+	snakeWidget->stopGame();
 	ui.labDebug->setText("Home");
 }
 
@@ -240,31 +220,30 @@ void MainWindow::ledSetText(bool result) {
 	ui.labResult->setVisible(true);
 }
 
-void MainWindow::updateTimer()
-{
+void MainWindow::updateTimer() {
 	int elapsedTime = eTimer.elapsed();
 	QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
 	QString formatTime = timeLeft.toString("mm:ss");
-	bool shouldBlink = (timeLeft.minute() <= 0 && timeLeft.second() <= 30);
-	bool timeExpired = (timeLeft.minute() <= 0 && timeLeft.second() <= 0) || timeLeft.minute() >= 55;
+	QPalette paletteBlink = ui.lcdClock->palette();
+	QColor timerColor;
 
-	QMetaObject::invokeMethod(this, [this, formatTime, shouldBlink, timeExpired]() {
-		if (timeExpired) {
-			ui.lcdClock->display("PERDU");
-			QMessageBox::information(this, "Temps écoulé", "Le temps est écoulé !");
-			return;
-		}
+	if (timeLeft.minute() <= 0 && timeLeft.second() <= 30) {
+		blink = !blink;
+		timerColor = (blink) ? QColor(255, 50, 50) : QColor(150, 0, 0);
+		paletteBlink.setColor(paletteBlink.WindowText, timerColor);
+		paletteBlink.setColor(paletteBlink.Light, timerColor);
+		//paletteBlink.setColor(paletteBlink.WindowText, timerColor);
+		ui.lcdClock->setPalette(paletteBlink);
 
-		if (shouldBlink) {
-			blink = !blink;
-			QPalette palette = ui.lcdClock->palette();
-			QColor color = blink ? QColor(255, 50, 50) : QColor(150, 0, 0);
-			palette.setColor(palette.WindowText, color);
-			palette.setColor(palette.Light, color);
-			ui.lcdClock->setPalette(palette);
-		}
+	}
+
+	if ((timeLeft.minute() <= 0 && timeLeft.second() <= 0) || timeLeft.minute() >= 55) {
+
+		timer->stop();
+		ui.lcdClock->display("PERDU");
+	}
+	else {
 
 		ui.lcdClock->display(formatTime);
-        int elapsedTime = eTimer.elapsed();
-		}, Qt::QueuedConnection);
+	}
 }
