@@ -99,9 +99,6 @@ void ConfigurationWidget::updateUiForDifficulty()
 void ConfigurationWidget::applyBombStyle()
 {
     this->setStyleSheet(
-        "ConfigurationWidget {"
-        "   background-color: #2a2a2a;"
-        "}"
         "QGroupBox {"
         "   color: #ff5555;"
         "   font-weight: bold;"

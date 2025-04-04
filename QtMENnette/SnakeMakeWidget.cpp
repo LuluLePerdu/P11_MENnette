@@ -16,14 +16,17 @@ SnakeMazeWidget::SnakeMazeWidget(int mazeWidth, int mazeHeight, int gameDuration
     case ConfigurationWidget::NORMAL:
         cellSize = 25;
 		animationDuration = 0.2f;
+        gameTimer->setInterval(16);
         break;
     case ConfigurationWidget::HARD:
         cellSize = 20; 
 		animationDuration = 0;
+        gameTimer->setInterval(16);
         break;
     case ConfigurationWidget::CUSTOM:
 
         cellSize = 25;
+        gameTimer->setInterval(16);
         break;
     }
 
@@ -53,7 +56,8 @@ void SnakeMazeWidget::stopGame()
 void SnakeMazeWidget::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setClipRect(event->rect());
+    painter.setRenderHint(QPainter::Antialiasing, cellSize > 20);
 
     const int mazePixelWidth = logic.WIDTH * cellSize;
     const int mazePixelHeight = logic.HEIGHT * cellSize;
@@ -216,14 +220,18 @@ void SnakeMazeWidget::keyPressEvent(QKeyEvent* event)
 
 void SnakeMazeWidget::startAnimation(const QPointF& prevPos)
 {
-    QPointF newPos(logic.getPlayerX(), logic.getPlayerY());
-    if (prevPos != newPos) {
-        currentAnimation.startPos = prevPos;
-        currentAnimation.endPos = newPos;
-        currentAnimation.startTime = QTime::currentTime();
-        currentAnimation.active = true;
-        renderPos = prevPos;
+    if (animationDuration <= 0) {
+        renderPos = QPointF(logic.getPlayerX(), logic.getPlayerY());
+        update();
+        return;
     }
+
+    currentAnimation.startPos = prevPos;
+    currentAnimation.endPos = QPointF(logic.getPlayerX(), logic.getPlayerY());
+    currentAnimation.startTime = QTime::currentTime();
+    currentAnimation.active = true;
+
+    renderPos = prevPos;
 }
 
 void SnakeMazeWidget::handleInputs()
