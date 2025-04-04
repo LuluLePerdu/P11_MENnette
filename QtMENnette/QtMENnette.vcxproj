@@ -108,6 +108,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="ConfigurationWidget.cpp" />
     <ClCompile Include="Controllers\GameController.cpp" />
     <ClCompile Include="Controllers\MainMenuController.cpp" />
     <ClCompile Include="Controllers\ShakeItController.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Views\ThreadCutterView.cpp" />
     <ClInclude Include="Clock.h" />
     <ClInclude Include="Communication.h" />
+    <QtMoc Include="ConfigurationWidget.h" />
     <ClInclude Include="Controllers\MainMenuController.h" />
     <ClInclude Include="Controllers\ShakeItController.h" />
     <ClInclude Include="Controllers\SimonSaysController.h" />

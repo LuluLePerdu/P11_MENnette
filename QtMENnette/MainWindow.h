@@ -6,6 +6,7 @@
 #include "SnakeMazeWidget.h"
 #include "ThreadCutterWidget.h"
 #include "SimonSaysWidget.h"
+#include "ConfigurationWidget.h"
 
 #include "CryptoSequencerWidget.h"
 #include "qthread.h"
@@ -34,6 +35,7 @@ private:
 	CryptoSequencerWidget* cryptoWidget;
 	ThreadCutterWidget* threadWidget;
 	SimonSaysWidget* simonWidget;
+	ConfigurationWidget* configWidget;
 	int totalPenaltyTime = 0;
 
 	QTimer* debugTimer;
@@ -45,6 +47,7 @@ private:
 	QThread* thread;
 	QPalette initTimerPalette;
 
+	void showConfiguration();
 	void initLCD(int minutes, int seconds);
 
 private slots:

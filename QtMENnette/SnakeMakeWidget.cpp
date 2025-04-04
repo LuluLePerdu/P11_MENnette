@@ -1,12 +1,31 @@
 #include "SnakeMazeWidget.h"
+#include "ConfigurationWidget.h"
 
-SnakeMazeWidget::SnakeMazeWidget(int mazeWidth, int mazeHeight, int gameDuration, QWidget* parent)
+SnakeMazeWidget::SnakeMazeWidget(int mazeWidth, int mazeHeight, int gameDuration,
+    ConfigurationWidget::Difficulty difficulty,
+    QWidget* parent)
     : QWidget(parent),
     logic(mazeWidth, mazeHeight, gameDuration),
     gameTimer(new QTimer(this))
 {
-    setFocusPolicy(Qt::StrongFocus);
-    setFixedSize(logic.WIDTH * cellSize, logic.HEIGHT * cellSize + hudHeight);
+    switch (difficulty) {
+    case ConfigurationWidget::EASY:
+		cellSize = 30;
+		animationDuration = 0.3f;
+        break;
+    case ConfigurationWidget::NORMAL:
+        cellSize = 25;
+		animationDuration = 0.2f;
+        break;
+    case ConfigurationWidget::HARD:
+        cellSize = 20; 
+		animationDuration = 0;
+        break;
+    case ConfigurationWidget::CUSTOM:
+
+        cellSize = 25;
+        break;
+    }
 
     connect(gameTimer, &QTimer::timeout, this, [this]() {
         updateGame();
@@ -209,14 +228,11 @@ void SnakeMazeWidget::startAnimation(const QPointF& prevPos)
 
 void SnakeMazeWidget::handleInputs()
 {
-    //if (currentAnimation.active) return;
-
     Communication& comm = Communication::getInstance();
     uint8_t joystickValue = comm.readMsg(MSG_ID_AR_JOYSTICK);
     comm.clear();
 
     if (joystickValue != -1 ) {
-       // lastJoystickValue = joystickValue;
         QPointF prevPos(logic.getPlayerX(), logic.getPlayerY());
 
         switch (joystickValue) {
