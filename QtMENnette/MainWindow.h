@@ -1,12 +1,12 @@
 #pragma once
 
-//#include <QtWidgets/QWidget>
 #include <QtWidgets/qmainwindow.h>
 #include "ui_MainWindow.h"
 #include "SnakeMazeWidget.h"
 #include "ThreadCutterWidget.h"
 #include "SimonSaysWidget.h"
 #include "ConfigurationWidget.h"
+#include "ClockWorker.h"
 
 #include "CryptoSequencerWidget.h"
 #include "qthread.h"
@@ -23,29 +23,31 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget* parent = nullptr);
 	~MainWindow();
-    static MainWindow* instance();
+    MainWindow(QWidget* parent = nullptr);
 	Ui::MainWindow* getUI() const;
+    static MainWindow* instance();
 
 private:
-    static MainWindow* w;
-    Ui::MainWindow ui;
-	SnakeMazeWidget* snakeWidget;
-	CryptoSequencerWidget* cryptoWidget;
-	ThreadCutterWidget* threadWidget;
-	SimonSaysWidget* simonWidget;
-	ConfigurationWidget* configWidget;
-	int totalPenaltyTime = 0;
 
-	QTimer* debugTimer;
-	QElapsedTimer eTimer;
 	QTimer* timer;
-	QTime countdown;
-	bool blink;
-	QColor initTimerColor;
 	QThread* thread;
+	QTime countdown;
+    Ui::MainWindow ui;
+	bool blink = false;
+	QTimer* debugTimer;
+	QTimer* clockTimer;
+	QThread clockThread;
+	QElapsedTimer eTimer;
+    static MainWindow* w;
+	QColor initTimerColor;
+	int totalPenaltyTime = 0;
 	QPalette initTimerPalette;
+	SnakeMazeWidget* snakeWidget;
+	SimonSaysWidget* simonWidget;
+	ThreadCutterWidget* threadWidget;
+	ConfigurationWidget* configWidget;
+	CryptoSequencerWidget* cryptoWidget;
 
 	void showConfiguration();
 	void initLCD(int minutes, int seconds);
@@ -59,6 +61,6 @@ private slots:
 	void on_btnPoten_clicked();
 	void on_btnDebug_clicked();
 
-	void ledSetText(bool result);
 	void updateTimer();
+	void ledSetText(bool result);
 };

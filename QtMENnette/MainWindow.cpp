@@ -1,9 +1,29 @@
 //#include "stdafx.h"
 #include "MainWindow.h"
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(nullptr), debugTimer(new QTimer(this))
+MainWindow::MainWindow(QWidget* parent)
+	: QMainWindow(parent),
+	threadWidget(nullptr),
+	debugTimer(new QTimer(this)),
+	clockTimer(new QTimer(this))
 {
 	ui.setupUi(this);
+
+	clockTimer->moveToThread(&clockThread);
+	connect(&clockThread, &QThread::started, [this]() {
+		clockTimer->start(100);
+		});
+	connect(clockTimer, &QTimer::timeout, this, &MainWindow::updateTimer);
+	connect(&clockThread, &QThread::finished, clockTimer, &QObject::deleteLater);
+
+	clockThread.start();
+
+	initTimerColor = QColor(50, 255, 50);
+	initTimerPalette = ui.lcdClock->palette();
+	initTimerPalette.setColor(initTimerPalette.WindowText, initTimerColor);
+	ui.lcdClock->setPalette(initTimerPalette);
+
+	eTimer.start();
 
 	this->setStyleSheet(
 		"MainWindow {"
@@ -23,23 +43,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		});
 
 	threadWidget = new ThreadCutterWidget(this);
-	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
+	//connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
+
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
-		ui.stackedWidget->setCurrentIndex(0);
-		});
 
-	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
-		ui.stackedWidget->setCurrentIndex(0);
-		snakeWidget->stopGame();
-		});
-
-	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) {
-		totalPenaltyTime += penalty;
-		//updateGlobalTimerDisplay();
-		});
-
-	
 	//connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
 
 	initLCD(3, 0);
@@ -50,8 +57,13 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 
 MainWindow::~MainWindow()
 {
-	delete snakeWidget;
+	if (snakeWidget) {
+		ui.stackedWidget->removeWidget(snakeWidget);
+		delete snakeWidget;
+	}
 	delete threadWidget;
+	clockThread.quit();
+	clockThread.wait();
 }
 
 MainWindow* MainWindow::instance() {
@@ -91,38 +103,6 @@ void MainWindow::on_btnHome_clicked() {
 	ui.labDebug->setText("Home");
 }
 
-void MainWindow::on_btnSnake_clicked() {
-
-	snakeWidget = new SnakeMazeWidget(
-		configWidget->getMazeWidth(),
-		configWidget->getMazeHeight(),
-		configWidget->getMazeTime(),
-		configWidget->getDifficulty(),
-		this
-	);
-
-	ui.stackedWidget->addWidget(snakeWidget);
-	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-
-	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
-		ui.stackedWidget->setCurrentIndex(0);
-		});
-
-	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
-		ui.stackedWidget->setCurrentIndex(0);
-		snakeWidget->stopGame();
-		});
-
-	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) {
-		totalPenaltyTime += penalty;
-		});
-
-	ui.stackedWidget->setCurrentWidget(snakeWidget);
-	ui.labDebug->setText("Snake");
-	snakeWidget->startGame();
-}
-
 void MainWindow::on_btnLED_released() {
 	threadWidget = new ThreadCutterWidget(this);
 
@@ -135,6 +115,31 @@ void MainWindow::on_btnLED_released() {
 	ui.stackedWidget->setCurrentWidget(threadWidget);
 	ui.labDebug->setText("LED");
 
+}
+
+void MainWindow::on_btnSnake_clicked() {
+	if (!snakeWidget) {
+		snakeWidget = new SnakeMazeWidget(
+			configWidget->getMazeWidth(),
+			configWidget->getMazeHeight(),
+			configWidget->getMazeTime(),
+			configWidget->getDifficulty(),
+			this
+		);
+
+		ui.stackedWidget->addWidget(snakeWidget);
+
+		connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
+			ui.stackedWidget->setCurrentIndex(0);
+			snakeWidget->stopGame();
+			});
+
+		connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) {
+			totalPenaltyTime += penalty;
+			});
+	}
+	ui.stackedWidget->setCurrentWidget(snakeWidget);
+	snakeWidget->startGame();
 }
 
 void MainWindow::on_btnSimon_clicked() {
@@ -235,32 +240,31 @@ void MainWindow::ledSetText(bool result) {
 	ui.labResult->setVisible(true);
 }
 
-void MainWindow::updateTimer() {
+void MainWindow::updateTimer()
+{
 	int elapsedTime = eTimer.elapsed();
 	QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
 	QString formatTime = timeLeft.toString("mm:ss");
-	QPalette paletteBlink = ui.lcdClock->palette();
-	QColor timerColor;
+	bool shouldBlink = (timeLeft.minute() <= 0 && timeLeft.second() <= 30);
+	bool timeExpired = (timeLeft.minute() <= 0 && timeLeft.second() <= 0) || timeLeft.minute() >= 55;
 
-	if (timeLeft.minute() <= 0 && timeLeft.second() <= 30) {
-		blink = !blink;
-		timerColor = (blink) ? QColor(255, 50, 50) : QColor(150, 0, 0);
-		paletteBlink.setColor(paletteBlink.WindowText, timerColor);
-		paletteBlink.setColor(paletteBlink.Light, timerColor);
-		//paletteBlink.setColor(paletteBlink.WindowText, timerColor);
-		ui.lcdClock->setPalette(paletteBlink);
-	
-	}
+	QMetaObject::invokeMethod(this, [this, formatTime, shouldBlink, timeExpired]() {
+		if (timeExpired) {
+			ui.lcdClock->display("PERDU");
+			QMessageBox::information(this, "Temps écoulé", "Le temps est écoulé !");
+			return;
+		}
 
-	if ((timeLeft.minute() <= 0 && timeLeft.second() <= 0) || timeLeft.minute() >= 55) {
-
-		timer->stop();
-		ui.lcdClock->display("PERDU");
-	}
-	else {
+		if (shouldBlink) {
+			blink = !blink;
+			QPalette palette = ui.lcdClock->palette();
+			QColor color = blink ? QColor(255, 50, 50) : QColor(150, 0, 0);
+			palette.setColor(palette.WindowText, color);
+			palette.setColor(palette.Light, color);
+			ui.lcdClock->setPalette(palette);
+		}
 
 		ui.lcdClock->display(formatTime);
-	}
-	
-	
+        int elapsedTime = eTimer.elapsed();
+		}, Qt::QueuedConnection);
 }
