@@ -70,11 +70,6 @@ void SnakeMazeWidget::paintEvent(QPaintEvent* event)
     bgGradient.setColorAt(1, QColor(15, 15, 20));
     painter.fillRect(rect(), bgGradient);
 
-    painter.setPen(QPen(QColor(80, 0, 0, 60), 1.5));
-    for (int y = 0; y < height(); y += 25) {
-        painter.drawLine(0, y, width(), y);
-    }
-
     const char** maze = logic.getMaze();
 
     // Labyrinthe
