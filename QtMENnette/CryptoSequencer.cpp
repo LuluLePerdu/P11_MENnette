@@ -1,4 +1,5 @@
 #include "CryptoSequencer.h"
+#include <qmessagebox.h>
 
 CryptoSequencer::CryptoSequencer()
 {
@@ -19,11 +20,11 @@ void CryptoSequencer::initialize() {
     Communication& comm = Communication::getInstance();
     std::default_random_engine randomEngine(comm.seed);
     target = (std::rand() % 255);
-    char digits[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+    char digits[10] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}; //'A', 'B', 'C', 'D', 'E', 'F'
 
     for (int i = 0; i < CODE_LENGTH; i++) {
 
-        code[i] = digits[std::rand() % 16];
+        code[i] = digits[std::rand() % 10];
     }
 }
 
@@ -44,6 +45,7 @@ std::string CryptoSequencer::updateSequence() {
 
 
     int usrInput = comm.readMsg(MSG_ID_AR_POTENTIOMETER);
+    int keyInput = comm.readMsg(MSG_ID_AR_KEYPAD);
     comm.clear();
 
     bool isOver = false;
@@ -74,17 +76,29 @@ std::string CryptoSequencer::updateSequence() {
         for (int i = 0; i < CODE_LENGTH - distance; i++) {
             outputCode[i] = code[i];
         }
-        
     }
+    
     //outputCode = std::to_string(usrInput);
-	
+    
+    if (keyInput >= 0){
+		QMessageBox msg;
+		msg.setWindowTitle(QString("KEYPAD"));
+		msg.setText(QString::number(keyInput));
+		msg.show();
+        if (checkCode(keyInput)) {
+            
+			return "CODE OK";
+        }
+        return to_string(keyInput);
+    }
+    
+
 	return outputCode;
 }
 
-bool CryptoSequencer::checkCode() {
-	Communication& comm = Communication::getInstance();
-    int keyInput = comm.readMsg(MSG_ID_AR_KEYPAD);
-    comm.clear();
+bool CryptoSequencer::checkCode(int keyInput) {
+	
+
 	receivedCode[receivedCodeLength] = keyInput;
     receivedCodeLength++;
     if (receivedCodeLength >= CODE_LENGTH) {

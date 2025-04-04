@@ -22,7 +22,7 @@ public:
 
 	void initialize();
 	std::string updateSequence();
-	bool checkCode();
+	bool checkCode(int keyInput);
 	
 
 

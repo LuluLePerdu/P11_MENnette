@@ -34,9 +34,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		//updateGlobalTimerDisplay();
 		});
 
-	cryptoWidget = new CryptoSequencerWidget(this);
-	ui.stackedWidget->addWidget(cryptoWidget);
-	connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
+	
+	//connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
 
 	initLCD(3, 0);
 
@@ -144,10 +143,10 @@ void MainWindow::on_btnAccel_clicked() {
 }
 
 void MainWindow::on_btnPoten_clicked() {
-
-	
-
 	ui.stackedWidget->setCurrentIndex(5);
+	
+	cryptoWidget = new CryptoSequencerWidget(this);
+	ui.stackedWidget->addWidget(cryptoWidget);
 	ui.stackedWidget->setCurrentWidget(cryptoWidget);
 	ui.labDebug->setText("Poten");
 	totalPenaltyTime += 10;
@@ -162,7 +161,7 @@ void MainWindow::on_btnDebug_clicked() {
 	Communication& comm = Communication::getInstance();
 	std::mt19937 mt(Communication::getInstance().seed);
 
-	int numPopups = 0;
+	int numPopups = 5;
 	QScreen* screen = QGuiApplication::primaryScreen();
 	QRect screenGeometry = screen->geometry();
 	int screenWidth = screenGeometry.width();
@@ -212,11 +211,10 @@ void MainWindow::on_btnDebug_clicked() {
 	}
 
 	QPixmap jp(":/MainWindow/jp.jpg");
+	QPixmap jpScaled = jp.scaled(400, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 	QMessageBox* msgJP = new QMessageBox();
 	msgJP->setWindowTitle(QString("JP"));
-	msgJP->setIconPixmap(jp);
-	msgJP->setFixedWidth(100);
-	msgJP->setFixedHeight(100);
+	msgJP->setIconPixmap(jpScaled);
 	msgJP->show();
 	
 }
