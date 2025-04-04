@@ -164,6 +164,29 @@ QPushButton:hover{
       <string>idk</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="btnConfiguration">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>110</y>
+       <width>101</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(55,55,55, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
+border-style: outset;
+border-radius: 25px;
+}
+QPushButton:hover{
+	background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(96, 96, 106, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
+}</string>
+     </property>
+     <property name="text">
+      <string>Configuration</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="pgeSnake"/>
    <widget class="QWidget" name="pgeAccel"/>

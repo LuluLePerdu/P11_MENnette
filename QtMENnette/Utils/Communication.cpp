@@ -21,13 +21,13 @@ std::wstring Communication::getOpenCOM() {
 //Initialisation de la communication
 bool Communication::begin() {
 
-    /*std::wstring com = getOpenCOM();
+    std::wstring com = getOpenCOM();
     if (com == L"ERROR") {
         std::cerr << "ERROR-PC: No COM ports available" << std::endl;
         return false;
-    }*/
+    }
 	//com.c_str()
-    hSerial = CreateFileW(L"COM4", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+    hSerial = CreateFileW(com.c_str(), GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
     if (hSerial == INVALID_HANDLE_VALUE) {
         std::cerr << " ERROR-PC: Error opening serial port" << std::endl;
         return false;

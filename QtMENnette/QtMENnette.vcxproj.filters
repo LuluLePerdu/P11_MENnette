@@ -127,9 +127,6 @@
     <ClCompile Include="Clock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SnakeMakeWidget..cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SnakeMaze.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -143,6 +140,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SimonSaysWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigurationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -189,9 +189,6 @@
     <ClInclude Include="SimonSays.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadCutter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Views\ShakeItView.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -211,6 +208,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShakeItWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadCutter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -236,6 +236,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="SimonSaysWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ConfigurationWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
