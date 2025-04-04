@@ -19,11 +19,11 @@ void CryptoSequencer::initialize() {
     Communication& comm = Communication::getInstance();
     std::default_random_engine randomEngine(comm.seed);
     target = (std::rand() % 255);
-    char digits[10] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+    char digits[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     for (int i = 0; i < CODE_LENGTH; i++) {
 
-        code[i] = digits[std::rand() % 10];
+        code[i] = digits[std::rand() % 16];
     }
 }
 
@@ -41,6 +41,7 @@ std::string CryptoSequencer::updateSequence() {
     //if (joyInput == 4) {
     //    isOver = true;
     //}
+
 
     int usrInput = comm.readMsg(MSG_ID_AR_POTENTIOMETER);
     comm.clear();
@@ -73,10 +74,30 @@ std::string CryptoSequencer::updateSequence() {
         for (int i = 0; i < CODE_LENGTH - distance; i++) {
             outputCode[i] = code[i];
         }
+        
     }
     //outputCode = std::to_string(usrInput);
 	
 	return outputCode;
+}
+
+bool CryptoSequencer::checkCode() {
+	Communication& comm = Communication::getInstance();
+    int keyInput = comm.readMsg(MSG_ID_AR_KEYPAD);
+    comm.clear();
+	receivedCode[receivedCodeLength] = keyInput;
+    receivedCodeLength++;
+    if (receivedCodeLength >= CODE_LENGTH) {
+		receivedCodeLength--;
+        for (int i = 0; i < CODE_LENGTH; i++) {
+            if (receivedCode[i] != code[i]) {
+                //std::cout << "Mauvaise sequence!" << std::endl;
+                receivedCodeLength = 0;
+                return false;
+            }
+        }
+		return true;
+    }
 }
 
 

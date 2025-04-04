@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/MainWindow">
         <file>Background.png</file>
+        <file>jp.jpg</file>
     </qresource>
 </RCC>

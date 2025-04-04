@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 
 	initLCD(3, 0);
 
+	Communication& comm = Communication::getInstance();
+	srand(comm.seed);
 }
 
 MainWindow::~MainWindow()
@@ -129,8 +131,10 @@ void MainWindow::on_btnLED_clicked() {
 }
 
 void MainWindow::on_btnSimon_clicked() {
-	ui.stackedWidget->setCurrentWidget(simonWidget);
+	simonWidget = new SimonSaysWidget(this);
+	ui.stackedWidget->addWidget(simonWidget);
 	ui.stackedWidget->setCurrentIndex(4);
+	ui.stackedWidget->setCurrentWidget(simonWidget);
 	ui.labDebug->setText("Simon");
 }
 
@@ -141,30 +145,79 @@ void MainWindow::on_btnAccel_clicked() {
 
 void MainWindow::on_btnPoten_clicked() {
 
+	
+
 	ui.stackedWidget->setCurrentIndex(5);
 	ui.stackedWidget->setCurrentWidget(cryptoWidget);
 	ui.labDebug->setText("Poten");
 	totalPenaltyTime += 10;
+	
+
 }
 
 void MainWindow::on_btnDebug_clicked() {
 	ui.stackedWidget->setCurrentIndex(6);
-	//ui.labDebug->setText("Debug");
+
+
 	Communication& comm = Communication::getInstance();
-	
-	//while (true) {
-	int msg = comm.readMsg(MSG_ID_AR_ACCELEROMETER);
-	ui.labDebug->setText(QString::number(msg));
-	QObject::connect(debugTimer, &QTimer::timeout, this, [&]() {
+	std::mt19937 mt(Communication::getInstance().seed);
 
-		int msg = comm.readMsg(MSG_ID_AR_ACCELEROMETER);
-		comm.clear();
-		//Frame frame = comm.readMsg();
-		//int a = frame.data;
-		ui.labDebug->setText(QString::number(msg));
+	int numPopups = 0;
+	QScreen* screen = QGuiApplication::primaryScreen();
+	QRect screenGeometry = screen->geometry();
+	int screenWidth = screenGeometry.width();
+	int screenHeight = screenGeometry.height();
 
-		});
-	debugTimer->start(100); 
+	std::uniform_int_distribution<int> xDist(0, screenWidth - 400);
+	std::uniform_int_distribution<int> yDist(0, screenHeight - 200);
+	std::uniform_int_distribution<int> fontSizeDist(10, 45);
+
+	QStringList messages = {
+		"SECOEU LA MANETTE MAINTENANT!!!",
+		"AAAAAAAAAAAAAAAAAAA\nAAAAAAA\nA L'AIDE AAAAAAAAAAAA",
+		"VITE!! VITE!! VITE!!",
+		"SHAKE! SHAKE! SHAKE!",
+		"URGENCE: SECOUEZ!"
+	};
+	std::uniform_int_distribution<int> msgDist(0, messages.size() - 1);
+
+	QStringList fonts = {
+		"Comic Sans MS",
+		"Impact",
+		"Arial Black",
+		"Verdana",
+		"Times New Roman",
+		"Cascadia Code"
+	};
+	std::uniform_int_distribution<int> fontDist(0, fonts.size() - 1);
+
+	for (int i = 0; i < numPopups; i++) {
+		QMessageBox* msg = new QMessageBox();
+		msg->setWindowTitle(QString("MESSAGE IMPORTANT"));
+
+		msg->setText(messages[msgDist(mt)]);
+
+		QFont randomFont(fonts[fontDist(mt)], fontSizeDist(mt));
+		randomFont.setBold(true);
+		msg->setFont(randomFont);
+
+		//msg->setStandardButtons(QMessageBox::NoButton);
+		//msg->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
+
+		int x = rand() % (screenWidth - 400);
+		int y = rand() % (screenHeight - 200);
+
+		msg->move(x, y);
+		msg->show();
+	}
+
+	QPixmap jp(":/MainWindow/jp.jpg");
+	QMessageBox* msgJP = new QMessageBox();
+	msgJP->setWindowTitle(QString("JP"));
+	msgJP->setIconPixmap(jp);
+	msgJP->setFixedWidth(100);
+	msgJP->setFixedHeight(100);
+	msgJP->show();
 	
 }
 

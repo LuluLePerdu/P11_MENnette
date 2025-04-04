@@ -15,6 +15,7 @@
 #include <QElapsedTimer>
 #include <QPalette>
 
+
 class CryptoSequencerWidget;
 
 class MainWindow : public QMainWindow {

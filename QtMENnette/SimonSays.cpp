@@ -1,7 +1,11 @@
 #include "SimonSays.h"
+#include <qerrormessage.h>
+#include <QMessageBox>
 
 SimonSays::SimonSays() {
-    srand(time(0));
+    Communication& comm = Communication::getInstance();
+
+    srand(comm.seed);
     simonSequence();
 }
 
@@ -12,7 +16,12 @@ void SimonSays::run(int button) {
     int usrInput;
     int tempArray[10];
     int ansArray[10];
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < m_currLength; i++) {
+        /*QMessageBox msg;
+        msg.setWindowTitle("AAAAAAAA");
+		QString str = QString::number(seqArray[i]);
+        msg.setText(str);
+        msg.exec();*/
         tempArray[i] = seqArray[i];
         //system("cls");
 
@@ -26,9 +35,9 @@ void SimonSays::run(int button) {
             //cin >> ansArray[k];
             do
             {
-                comm.clear();
                 msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
-            } while (msgInput == -1);
+                comm.clear();
+            } while (msgInput <= -1);
 
             switch (msgInput)
             {
@@ -56,6 +65,7 @@ void SimonSays::run(int button) {
             }
         }
     }
+	m_currLength++;
     //Label
     cout << endl << "Module desamorce." << endl;
 }

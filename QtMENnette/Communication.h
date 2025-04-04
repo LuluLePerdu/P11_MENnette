@@ -11,7 +11,7 @@
 
 #define BAUD 115200
 #define MSG_SIZE 3
-#define TIMEOUT_READ 50
+#define TIMEOUT_READ 10 //50
 
 #define MSG_ID_ERROR 71
 #define MSG_DATA_ERROR -1
@@ -19,18 +19,19 @@
 #define MSG_ID_OK 72
 #define MSG_DATA_OK 72
 
-
 #define MSG_ID_AR_JOYSTICK 101
 #define MSG_ID_AR_POTENTIOMETER 102
 #define MSG_ID_AR_ACCELEROMETER 103
 #define MSG_ID_AR_BUTTON 104
 #define MSG_ID_AR_SHAKED 105
-#define MSG_ID_AR_MUON 106
+#define MSG_ID_AR_KEYPAD 106
+#define MSG_ID_AR_MUON 107
 
 #define MSG_ID_PC_LED 201
 #define MSG_ID_PC_MOTOR 202
 #define MSG_ID_PC_LCD 203
 #define MSG_ID_PC_STATE 204
+#define MSG_ID_PC_TIMER 205
 #define MSG_ID_FROM_MISC 242
 
 struct Frame {

@@ -17,5 +17,6 @@ private:
 	int m_length = 10;
 	int seqArray[10];
 	bool completed = false;
+	int m_currLength = 0;
 
 };

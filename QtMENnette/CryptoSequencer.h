@@ -22,6 +22,8 @@ public:
 
 	void initialize();
 	std::string updateSequence();
+	bool checkCode();
+	
 
 
 private:
@@ -29,5 +31,7 @@ private:
 	char code[CODE_LENGTH];
 	int lastInput=0;
 	int m_range = 50;
+	int receivedCode[CODE_LENGTH];
+	int receivedCodeLength = 0;
 };
 

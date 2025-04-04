@@ -14,7 +14,6 @@ CryptoSequencerWidget::CryptoSequencerWidget(QWidget* parent) :
     setFixedSize(5000, 500);
 	label->setFont(QFont("Cascadia Code", 100));
     label->setText("1234567890");
-	//label->setAlignment(Qt::);
 	//label->setStyleSheet("QLabel { background-color : black; }");
 
 
