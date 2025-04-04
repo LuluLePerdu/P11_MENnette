@@ -50,7 +50,7 @@ private:
 private slots:
 	void on_btnHome_clicked();
 	void on_btnSnake_clicked();
-	void on_btnLED_clicked();
+	void on_btnLED_released();
 	void on_btnSimon_clicked();
 	void on_btnAccel_clicked();
 	void on_btnPoten_clicked();

@@ -1,5 +1,7 @@
 #pragma once
 #include "Communication.h"
+#include <QTimer>
+#include <QWidget>
 
 #define GREEN 0
 #define BLUE 1
@@ -8,16 +10,20 @@
 
 class ThreadCutter
 {
+
 public:
 	ThreadCutter();
+	//~ThreadCutter();
 	void run();
-	bool getCompleted();
+	int getCompleted();
+	void render();
+	void turnOffLed();
 
 private:
-	bool checkButton(int button);
-	void render();
+	int checkButton(int button);
 	void ledSetup();
-	bool completed = false;
+	int completed = 2;
 	bool ledArray[4];
 	int correctLed;
+	QTimer* timer;
 };

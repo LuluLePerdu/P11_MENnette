@@ -16,9 +16,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	);
 
 	
-
-	threadWidget = new ThreadCutterWidget(this);
-	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
 	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
@@ -106,28 +103,18 @@ void MainWindow::on_btnSnake_clicked() {
 	snakeWidget->startGame();
 }
 
-void MainWindow::on_btnLED_clicked() {
+void MainWindow::on_btnLED_released() {
 	threadWidget = new ThreadCutterWidget(this);
-	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
 
 	connect(threadWidget, &ThreadCutterWidget::timePenalty, this, [this](int penalty) {
 		totalPenaltyTime += penalty;
 		});
-	ui.labResult->setVisible(false);
 
-	ui.labInstruc->setText(QString::fromLatin1(
-		"Si la DEL verte et 2 autres DELs sont allumées, appuyez sur le bouton vert."
-		"\n\nSinon, si la DEL verte et la DEL rouge sont allumées mais aucune autre, appuyez sur le bouton rouge."
-		"\n\nSinon, si les 4 DELs sont allumées, appuyez sur le bouton rouge."
-		"\n\nSinon, si les 4 DELs sont éteintes, appuyez sur le bouton la plus à droite."
-		"\n\nSinon, si la DEL bleue et la DEL jaune sont allumées mais aucune autre, appuyez sur le bouton jaune."
-		"\n\nSinon, si uniquement la DEL rouge est allumée, appuyez sur le bouton le plus à gauche."
-		"\n\nSinon, si aucune des autres conditions n'est remplie mais que 2 DELs sont allumées, appuyez sur le bouton rouge."
-		"\n\nSinon, appuyez sur le deuxième bouton à partir de la gauche."));
-
+	ui.stackedWidget->addWidget(threadWidget);
 	ui.stackedWidget->setCurrentIndex(3);
+	ui.stackedWidget->setCurrentWidget(threadWidget);
 	ui.labDebug->setText("LED");
-	threadWidget->startGame();
+
 }
 
 void MainWindow::on_btnSimon_clicked() {
@@ -150,9 +137,6 @@ void MainWindow::on_btnPoten_clicked() {
 	ui.stackedWidget->setCurrentIndex(5);
 	ui.stackedWidget->setCurrentWidget(cryptoWidget);
 	ui.labDebug->setText("Poten");
-	totalPenaltyTime += 10;
-	
-
 }
 
 void MainWindow::on_btnDebug_clicked() {
@@ -224,7 +208,7 @@ void MainWindow::on_btnDebug_clicked() {
 void MainWindow::ledSetText(bool result) {
 	
 	if (result) {
-		ui.labResult->setText(QString::fromLatin1("Module d�samorc� !"));
+		ui.labResult->setText(QString::fromLatin1("Module désamorcé !"));
 	}
 	else {
 		ui.labResult->setText(QString::fromLatin1("Mauvais bouton !"));

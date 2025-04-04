@@ -127,9 +127,6 @@
     <ClCompile Include="Clock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SnakeMakeWidget..cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SnakeMaze.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -189,9 +186,6 @@
     <ClInclude Include="SimonSays.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadCutter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Views\ShakeItView.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -211,6 +205,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShakeItWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadCutter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

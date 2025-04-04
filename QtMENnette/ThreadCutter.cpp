@@ -8,24 +8,24 @@ ThreadCutter::ThreadCutter() {
         ledArray[i] = rand() % 2;
     }
     ledSetup();
-    render();
 }
 
 void ThreadCutter::run() {
     bool ledArray[8];
     Communication& comm = Communication::getInstance();
 
+
     int msgInput;
     comm.clear();
+    msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
 
+    /*
     do
     {
         msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
         comm.clear();
-        if (msgInput == -2) {
-            return;
-        }
-    } while (msgInput == -1);
+    } while (msgInput < 0);
+    */
 
     switch (msgInput)
     {
@@ -42,30 +42,43 @@ void ThreadCutter::run() {
         checkButton(0);
         break;
     default:
+        completed = 2;
         break;
     }
 }
 
-bool ThreadCutter::checkButton(int button) {
-    if (button == correctLed) completed = true;
+// 0 : True, 1 : False, 2 : Pas deviné
+int ThreadCutter::checkButton(int button) {
+    if (button == correctLed) {
+        completed = 0;
+    }
+    else {
+        completed = 1;
+    }
 	return completed;
 }
 
 void ThreadCutter::render() {
-    /*
-    labInstruc->setText(QString::fromLatin1(
-        "Si la DEL verte et 2 autres DELs sont allumées, appuyez sur le bouton vert."
-        "\n\nSinon, si la DEL verte et la DEL rouge sont allumées mais aucune autre, appuyez sur le bouton rouge."
-        "\n\nSinon, si les 4 DELs sont allumées, appuyez sur le bouton rouge."
-        "\n\nSinon, si les 4 DELs sont éteintes, appuyez sur le bouton la plus à droite."
-        "\n\nSinon, si la DEL bleue et la DEL jaune sont allumées mais aucune autre, appuyez sur le bouton jaune."
-        "\n\nSinon, si uniquement la DEL rouge est allumée, appuyez sur le bouton le plus à gauche."
-        "\n\nSinon, si aucune des autres conditions n'est remplie mais que 2 DELs sont allumées, appuyez sur le bouton rouge."
-        "\n\nSinon, appuyez sur le deuxième bouton à partir de la gauche."));
-    */
+    Communication& comm = Communication::getInstance();
+    Frame msgLED;
+    msgLED.id = MSG_ID_PC_LED;
+    bool delStates[8] = { ledArray[0], ledArray[1], ledArray[2], ledArray[3], 0, 0, 0, 0 };
+    uint8_t byteMsg = comm.convertBoolsToByte(delStates);
+    msgLED.data = byteMsg;
+    comm.sendMsg(msgLED);
 }
 
-bool ThreadCutter::getCompleted() {
+void ThreadCutter::turnOffLed() {
+    Communication& comm = Communication::getInstance();
+    Frame msgLED;
+    msgLED.id = MSG_ID_PC_LED;
+    bool delStates[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+    uint8_t byteMsg = comm.convertBoolsToByte(delStates);
+    msgLED.data = byteMsg;
+    comm.sendMsg(msgLED);
+}
+
+int ThreadCutter::getCompleted() {
     return completed;
 }
 
