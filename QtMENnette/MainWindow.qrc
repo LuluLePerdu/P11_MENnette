@@ -2,5 +2,6 @@
     <qresource prefix="/MainWindow">
         <file>Background.png</file>
         <file>jp.jpg</file>
+        <file>robus2000.png</file>
     </qresource>
 </RCC>

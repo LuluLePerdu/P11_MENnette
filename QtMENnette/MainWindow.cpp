@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		});
 
 	threadWidget = new ThreadCutterWidget(this);
-	connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
+	//connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
 	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
@@ -221,6 +221,13 @@ void MainWindow::on_btnDebug_clicked() {
 	msgJP->setWindowTitle(QString("JP"));
 	msgJP->setIconPixmap(jpScaled);
 	msgJP->show();
+
+	QPixmap rob(":/MainWindow/robus2000.png");
+	QPixmap robScaled = rob.scaled(400, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+	QMessageBox* msgRob = new QMessageBox();
+	msgRob->setWindowTitle(QString("JP"));
+	msgRob->setIconPixmap(robScaled);
+	msgRob->show();
 	
 }
 
