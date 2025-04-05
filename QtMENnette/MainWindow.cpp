@@ -14,32 +14,21 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		"   background-size: 50% 50%;"
 		"}"
 	);
-
 	configWidget = new ConfigurationWidget(this);
 	ui.stackedWidget->addWidget(configWidget);
+	ui.stackedWidget->setCurrentIndex(0);
+
 	connect(ui.btnConfiguration, &QPushButton::clicked, this, &MainWindow::showConfiguration);
+
 	connect(configWidget, &ConfigurationWidget::settingsApplied, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
 		});
 
 	threadWidget = new ThreadCutterWidget(this);
 	//connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
+
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
-		ui.stackedWidget->setCurrentIndex(0);
-		});
 
-	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
-		ui.stackedWidget->setCurrentIndex(0);
-		snakeWidget->stopGame();
-		});
-
-	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) {
-		totalPenaltyTime += penalty;
-		//updateGlobalTimerDisplay();
-		});
-
-	
 	//connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
 
 	initLCD(3, 0);
@@ -50,8 +39,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 
 MainWindow::~MainWindow()
 {
-	delete snakeWidget;
-	delete threadWidget;
+	if (snakeWidget) {
+		ui.stackedWidget->removeWidget(snakeWidget);
+		delete snakeWidget;
+	}
 }
 
 MainWindow* MainWindow::instance() {
@@ -88,39 +79,8 @@ void MainWindow::initLCD(int minutes, int seconds) {
 
 void MainWindow::on_btnHome_clicked() {
 	ui.stackedWidget->setCurrentIndex(0);
+	snakeWidget->stopGame();
 	ui.labDebug->setText("Home");
-}
-
-void MainWindow::on_btnSnake_clicked() {
-
-	snakeWidget = new SnakeMazeWidget(
-		configWidget->getMazeWidth(),
-		configWidget->getMazeHeight(),
-		configWidget->getMazeTime(),
-		configWidget->getDifficulty(),
-		this
-	);
-
-	ui.stackedWidget->addWidget(snakeWidget);
-	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-
-	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
-		ui.stackedWidget->setCurrentIndex(0);
-		});
-
-	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
-		ui.stackedWidget->setCurrentIndex(0);
-		snakeWidget->stopGame();
-		});
-
-	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) {
-		totalPenaltyTime += penalty;
-		});
-
-	ui.stackedWidget->setCurrentWidget(snakeWidget);
-	ui.labDebug->setText("Snake");
-	snakeWidget->startGame();
 }
 
 void MainWindow::on_btnLED_released() {
@@ -135,6 +95,41 @@ void MainWindow::on_btnLED_released() {
 	ui.stackedWidget->setCurrentWidget(threadWidget);
 	ui.labDebug->setText("LED");
 
+}
+
+void MainWindow::on_btnSnake_clicked()
+{
+	if (snakeWidget) {
+		ui.stackedWidget->removeWidget(snakeWidget);
+		delete snakeWidget;
+		snakeWidget = nullptr;
+	}
+
+	snakeWidget = new SnakeMazeWidget(
+		configWidget->getMazeWidth(),
+		configWidget->getMazeHeight(),
+		configWidget->getMazeTime(),
+		configWidget->getDifficulty(),
+		this
+	);
+
+	ui.stackedWidget->addWidget(snakeWidget);
+
+	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
+		ui.stackedWidget->setCurrentIndex(0);
+		if (snakeWidget) {
+			snakeWidget->stopGame();
+		}
+	});
+
+	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) { totalPenaltyTime += penalty; });
+
+	snakeWidget->setFocus();
+	snakeWidget->setFocusPolicy(Qt::StrongFocus);
+
+	ui.stackedWidget->setCurrentWidget(snakeWidget);
+	ui.labDebug->setText("Snake");
+	snakeWidget->startGame();
 }
 
 void MainWindow::on_btnSimon_clicked() {
@@ -256,7 +251,7 @@ void MainWindow::updateTimer() {
 		paletteBlink.setColor(paletteBlink.Light, timerColor);
 		//paletteBlink.setColor(paletteBlink.WindowText, timerColor);
 		ui.lcdClock->setPalette(paletteBlink);
-	
+
 	}
 
 	if ((timeLeft.minute() <= 0 && timeLeft.second() <= 0) || timeLeft.minute() >= 55) {
@@ -268,6 +263,4 @@ void MainWindow::updateTimer() {
 
 		ui.lcdClock->display(formatTime);
 	}
-	
-	
 }

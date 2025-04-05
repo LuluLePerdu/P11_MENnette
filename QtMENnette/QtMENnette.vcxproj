@@ -107,7 +107,7 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="ClockWorker.cpp" />
     <ClCompile Include="ConfigurationWidget.cpp" />
     <ClCompile Include="Controllers\GameController.cpp" />
     <ClCompile Include="Controllers\MainMenuController.cpp" />
@@ -136,7 +136,7 @@
     <ClCompile Include="Views\ShakeItView.cpp" />
     <ClCompile Include="Views\SimonSaysView.cpp" />
     <ClCompile Include="Views\ThreadCutterView.cpp" />
-    <ClInclude Include="Clock.h" />
+    <QtMoc Include="ClockWorker.h" />
     <ClInclude Include="Communication.h" />
     <QtMoc Include="ConfigurationWidget.h" />
     <ClInclude Include="Controllers\MainMenuController.h" />

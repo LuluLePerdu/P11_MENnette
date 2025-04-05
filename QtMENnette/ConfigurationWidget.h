@@ -1,11 +1,11 @@
 #pragma once
 #include <QWidget>
+#include <QMap>
+#include <QGroupBox>
 #include <QComboBox>
 #include <QSpinBox>
-#include <QFormLayout>
 #include <QPushButton>
-#include <QGroupBox>
-#include <QLabel>
+#include <QFormLayout>
 
 class ConfigurationWidget : public QWidget
 {
@@ -15,10 +15,10 @@ public:
 
     explicit ConfigurationWidget(QWidget* parent = nullptr);
 
+    Difficulty getDifficulty() const;
     int getMazeWidth() const;
     int getMazeHeight() const;
     int getMazeTime() const;
-    Difficulty getDifficulty() const;
 
 signals:
     void settingsApplied();
@@ -30,15 +30,17 @@ private:
     void setupUi();
     void applyBombStyle();
     void updateDifficultySettings();
-    void updateUiForDifficulty();
+
+    QGroupBox* createGameSection(const QString& title, QWidget* content);
 
     QComboBox* difficultyCombo;
     QSpinBox* mazeWidthSpin;
     QSpinBox* mazeHeightSpin;
     QSpinBox* mazeTimeSpin;
-    QLabel* widthLabel;
-    QLabel* heightLabel;
-    QLabel* timeLabel;
+
+    QComboBox* simonSpeedCombo;
+    QSpinBox* simonLengthSpin;
+
 
     struct DifficultyPreset {
         int width;
