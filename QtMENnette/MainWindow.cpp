@@ -97,28 +97,38 @@ void MainWindow::on_btnLED_released() {
 
 }
 
-void MainWindow::on_btnSnake_clicked() {
-	if (!snakeWidget) {
-		snakeWidget = new SnakeMazeWidget(
-			configWidget->getMazeWidth(),
-			configWidget->getMazeHeight(),
-			configWidget->getMazeTime(),
-			configWidget->getDifficulty(),
-			this
-		);
-
-		ui.stackedWidget->addWidget(snakeWidget);
-
-		connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
-			ui.stackedWidget->setCurrentIndex(0);
-			snakeWidget->stopGame();
-			});
-
-		connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) {
-			totalPenaltyTime += penalty;
-			});
+void MainWindow::on_btnSnake_clicked()
+{
+	if (snakeWidget) {
+		ui.stackedWidget->removeWidget(snakeWidget);
+		delete snakeWidget;
+		snakeWidget = nullptr;
 	}
+
+	snakeWidget = new SnakeMazeWidget(
+		configWidget->getMazeWidth(),
+		configWidget->getMazeHeight(),
+		configWidget->getMazeTime(),
+		configWidget->getDifficulty(),
+		this
+	);
+
+	ui.stackedWidget->addWidget(snakeWidget);
+
+	connect(snakeWidget, &SnakeMazeWidget::returnToMenuRequested, this, [this]() {
+		ui.stackedWidget->setCurrentIndex(0);
+		if (snakeWidget) {
+			snakeWidget->stopGame();
+		}
+	});
+
+	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) { totalPenaltyTime += penalty; });
+
+	snakeWidget->setFocus();
+	snakeWidget->setFocusPolicy(Qt::StrongFocus);
+
 	ui.stackedWidget->setCurrentWidget(snakeWidget);
+	ui.labDebug->setText("Snake");
 	snakeWidget->startGame();
 }
 
