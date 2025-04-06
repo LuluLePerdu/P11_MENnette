@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 {
 	ui.setupUi(this);
 
+
 	this->setStyleSheet(
 		"MainWindow {"
 		"   background-image: url(:/MainWindow/Background.png);"
@@ -24,7 +25,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		ui.stackedWidget->setCurrentIndex(0);
 		});
 
-	threadWidget = new ThreadCutterWidget(this);
 	//connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
 
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	initLCD(3, 0);
 
 	Communication& comm = Communication::getInstance();
+	//comm.sendMsg({ 205, 100, 0 });
 	srand(comm.seed);
 }
 
@@ -79,7 +80,27 @@ void MainWindow::initLCD(int minutes, int seconds) {
 
 void MainWindow::on_btnHome_clicked() {
 	ui.stackedWidget->setCurrentIndex(0);
-	snakeWidget->stopGame();
+	if (snakeWidget) {
+		snakeWidget->stopGame();
+		ui.stackedWidget->removeWidget(snakeWidget);
+		delete snakeWidget;
+		snakeWidget = nullptr;
+	}
+	if (simonWidget) {
+		ui.stackedWidget->removeWidget(simonWidget);
+		delete simonWidget;
+		simonWidget = nullptr;
+	}
+	if (threadWidget) {
+		ui.stackedWidget->removeWidget(threadWidget);
+		delete threadWidget;
+		threadWidget = nullptr;
+	}
+	if (cryptoWidget) {
+		ui.stackedWidget->removeWidget(cryptoWidget);
+		delete cryptoWidget;
+		cryptoWidget = nullptr;
+	}
 	ui.labDebug->setText("Home");
 }
 
@@ -147,11 +168,17 @@ void MainWindow::on_btnAccel_clicked() {
 
 void MainWindow::on_btnPoten_clicked() {
 	ui.stackedWidget->setCurrentIndex(5);
-	
-	cryptoWidget = new CryptoSequencerWidget(this);
+
+	cryptoWidget = new CryptoSequencerWidget(this, configWidget->getCryptoRange());
+
+	connect(cryptoWidget, &CryptoSequencerWidget::timePenalty, this, [this](int penalty) {
+		totalPenaltyTime += penalty;
+		});
+
 	ui.stackedWidget->addWidget(cryptoWidget);
 	ui.stackedWidget->setCurrentWidget(cryptoWidget);
 	ui.labDebug->setText("Poten");
+
 }
 
 void MainWindow::on_btnDebug_clicked() {
@@ -225,6 +252,11 @@ void MainWindow::on_btnDebug_clicked() {
 	msgRob->show();
 	
 }
+
+void MainWindow::on_btnQuit_clicked() {
+	QApplication::quit();
+}
+
 
 void MainWindow::ledSetText(bool result) {
 	

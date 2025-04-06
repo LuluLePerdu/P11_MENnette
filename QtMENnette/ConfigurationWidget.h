@@ -20,6 +20,8 @@ public:
     int getMazeHeight() const;
     int getMazeTime() const;
 
+    int getCryptoRange() const;
+
 signals:
     void settingsApplied();
 
@@ -40,6 +42,8 @@ private:
 
     QComboBox* simonSpeedCombo;
     QSpinBox* simonLengthSpin;
+
+	QSpinBox* cryptoRangeSpin;
 
 
     struct DifficultyPreset {

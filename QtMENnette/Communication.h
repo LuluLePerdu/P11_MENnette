@@ -6,18 +6,24 @@
 #include <iomanip>
 #include <thread>
 #include <chrono>
+#include <vector>
 
+#include <map>
 //using namespace std;
 
-#define BAUD 115200
+#define BAUD 9600
 #define MSG_SIZE 3
-#define TIMEOUT_READ 10 //50
+#define TIMEOUT_READ 20 //50
 
 #define MSG_ID_ERROR 71
 #define MSG_DATA_ERROR -1
-#define MSG_DATA_NOT_CONNECTED -2
 #define MSG_ID_OK 72
 #define MSG_DATA_OK 72
+#define MSG_DATA_NOT_CONNECTED -2
+#define MSG_DATA_ERROR_INCOMPLETE -10
+#define MSG_DATA_ERROR_CHECKSUM -11
+#define MSG_DATA_ERROR_TIMEOUT -12
+
 
 #define MSG_ID_AR_JOYSTICK 101
 #define MSG_ID_AR_POTENTIOMETER 102
@@ -56,6 +62,7 @@ public:
     void sendMsg(Frame frame);
     Frame readMsg();
     int readMsg(int id);
+	std::map<unsigned char, unsigned char> readMultipleMsgs(const std::vector<unsigned char>& ids);
     HANDLE getSerialPort();
     void setSerialPort(HANDLE hSerial);
     void closeSerialPort();

@@ -163,44 +163,90 @@ Frame Communication::readMsg() {
 // ! P.S: Utiliser cette fonction plutot que la version sans ID; Plus stable et fiable!
 // Je recommande de faire un Communication::clear() apres la lecture, ca evite les problemes de backlogs dans le buffer
 int Communication::readMsg(int id) {
+    if (!connected) {
+        return MSG_DATA_NOT_CONNECTED;
+    }
 
-	if (!connected) {
-		return -2;
-	}
     unsigned char msg[MSG_SIZE] = { 0 };
     DWORD bytesRead;
     DWORD startTime = GetTickCount();
 
-    // Synchronize avec le debut du message MSG_ID_FROM_ARDUINO
-    while (true) {
+    while (GetTickCount() - startTime < TIMEOUT_READ) {
+		// essai de lire un byte
         if (!ReadFile(hSerial, &msg[0], 1, &bytesRead, NULL) || bytesRead < 1) {
-            if (GetTickCount() - startTime > TIMEOUT_READ) {
-                return -10;
-            }
-            return -11;
+            continue;
         }
         if (msg[0] == id) {
-            break;
+            if (!ReadFile(hSerial, &msg[1], MSG_SIZE - 1, &bytesRead, NULL) || bytesRead < MSG_SIZE - 1) {
+                return MSG_DATA_ERROR_INCOMPLETE;
+            }
+
+            //checksum
+            unsigned char checksum = 0;
+            for (int i = 0; i < MSG_SIZE - 1; i++) {
+                checksum ^= msg[i];
+            }
+            if (checksum != msg[MSG_SIZE - 1]) {
+                return MSG_DATA_ERROR_CHECKSUM;
+            }
+
+            return msg[1];
+        }
+		// si pas le ID, on lit le reste du message pour le retirer d buffer!!!!!
+        else {
+            unsigned char discard[MSG_SIZE - 1];
+            if (!ReadFile(hSerial, discard, MSG_SIZE - 1, &bytesRead, NULL) || bytesRead < MSG_SIZE - 1) {
+                //jsp ca marche
+                continue;
+            }
         }
     }
-    // Lecture 
-    if (!ReadFile(hSerial, &msg[1], MSG_SIZE - 1, &bytesRead, NULL) || bytesRead < MSG_SIZE - 1) {
-        return -12;
+
+    return MSG_DATA_ERROR_TIMEOUT;
+}
+
+std::map<unsigned char, unsigned char> Communication::readMultipleMsgs(const std::vector<unsigned char>& ids) {
+    std::map<unsigned char, unsigned char> results;
+    if (!connected) {
+        return results;
     }
 
-    unsigned char checksum = 0;
-    for (int i = 0; i < MSG_SIZE - 1; i++) {
-        checksum ^= msg[i];
-    }
-    if (checksum != msg[MSG_SIZE - 1]) {
-        return -13;
+    unsigned char msg[MSG_SIZE] = { 0 };
+    DWORD bytesRead;
+    DWORD startTime = GetTickCount();
+
+    while (GetTickCount() - startTime < TIMEOUT_READ && results.size() < ids.size()) {
+        if (!ReadFile(hSerial, &msg[0], 1, &bytesRead, NULL) || bytesRead < 1) {
+            continue;
+        }
+
+        bool isTargetId = false;
+        for (unsigned char targetId : ids) {
+            if (msg[0] == targetId) {
+                isTargetId = true;
+                break;
+            }
+        }
+
+        if (!ReadFile(hSerial, &msg[1], MSG_SIZE - 1, &bytesRead, NULL) || bytesRead < MSG_SIZE - 1) {
+            continue; 
+        }
+
+        if (isTargetId) {
+            unsigned char checksum = 0;
+            for (int i = 0; i < MSG_SIZE - 1; i++) {
+                checksum ^= msg[i];
+            }
+
+            if (checksum == msg[MSG_SIZE - 1]) {
+                if (results.find(msg[0]) == results.end()) {
+                    results[msg[0]] = msg[1];
+                }
+            }
+        }
     }
 
-    /*for (int i = 0; i < MSG_SIZE; i++) {
-        cout << (int)msg[i] << " ";
-    }
-    cout << endl;*/
-    return msg[1];
+    return results;
 }
 
 HANDLE Communication::getSerialPort() {

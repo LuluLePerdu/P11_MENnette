@@ -80,6 +80,19 @@ void ConfigurationWidget::setupUi()
 
     mainLayout->addWidget(createGameSection("THREAD CUTTER", threadContent));
 
+
+	// ===== CRYPTO SEQUENCER =====
+	QWidget* cryptoContent = new QWidget();
+	QFormLayout* cryptoLayout = new QFormLayout(cryptoContent);
+	cryptoLayout->setContentsMargins(10, 10, 10, 10);
+
+	cryptoRangeSpin = new QSpinBox();
+	cryptoRangeSpin->setRange(1, 255);
+	cryptoRangeSpin->setValue(50);
+	cryptoLayout->addRow("range:", cryptoRangeSpin);
+
+	mainLayout->addWidget(createGameSection("CRYPTO SEQUENCER", cryptoRangeSpin));
+
     QPushButton* applyButton = new QPushButton("CONFIRMER");
     applyButton->setFixedHeight(45);
     mainLayout->addWidget(applyButton);
@@ -233,3 +246,5 @@ ConfigurationWidget::Difficulty ConfigurationWidget::getDifficulty() const {
 int ConfigurationWidget::getMazeWidth() const { return mazeWidthSpin->value(); }
 int ConfigurationWidget::getMazeHeight() const { return mazeHeightSpin->value(); }
 int ConfigurationWidget::getMazeTime() const { return mazeTimeSpin->value(); }
+
+int ConfigurationWidget::getCryptoRange() const { return cryptoRangeSpin->value(); }

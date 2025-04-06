@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1336</width>
-    <height>768</height>
+    <width>1478</width>
+    <height>996</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,9 +18,15 @@
     <rect>
      <x>140</x>
      <y>9</y>
-     <width>1071</width>
-     <height>661</height>
+     <width>1261</width>
+     <height>841</height>
     </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1700</width>
+     <height>1000</height>
+    </size>
    </property>
    <property name="currentIndex">
     <number>0</number>
@@ -185,6 +191,29 @@ QPushButton:hover{
      </property>
      <property name="text">
       <string>Configuration</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnQuit">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>530</y>
+       <width>101</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(55,55,55, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
+border-style: outset;
+border-radius: 25px;
+}
+QPushButton:hover{
+	background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(96, 96, 106, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
+}</string>
+     </property>
+     <property name="text">
+      <string>Quit</string>
      </property>
     </widget>
    </widget>
