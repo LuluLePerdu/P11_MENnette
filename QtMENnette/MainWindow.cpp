@@ -1,4 +1,3 @@
-//#include "stdafx.h"
 #include "MainWindow.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(nullptr), debugTimer(new QTimer(this))
@@ -25,17 +24,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		ui.stackedWidget->setCurrentIndex(0);
 		});
 
-	//connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
-
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-
-	//connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
-
 	initLCD(3, 0);
 
 	Communication& comm = Communication::getInstance();
-	//comm.sendMsg({ 205, 100, 0 });
 	srand(comm.seed);
+	showConfiguration();
 }
 
 MainWindow::~MainWindow()
@@ -141,6 +135,7 @@ void MainWindow::on_btnSnake_clicked()
 		if (snakeWidget) {
 			snakeWidget->stopGame();
 		}
+		ui.btnSnake->setEnabled(false);
 	});
 
 	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) { totalPenaltyTime += penalty; });
@@ -169,8 +164,19 @@ void MainWindow::on_btnAccel_clicked() {
 void MainWindow::on_btnPoten_clicked() {
 	ui.stackedWidget->setCurrentIndex(5);
 
+	if (cryptoWidget) {
+		ui.stackedWidget->removeWidget(cryptoWidget);
+		delete cryptoWidget;
+		cryptoWidget = nullptr;
+	}
 	cryptoWidget = new CryptoSequencerWidget(this, configWidget->getCryptoRange());
 
+	connect(cryptoWidget, &CryptoSequencerWidget::returnToMenuRequested, this, [this]() {\
+		delete cryptoWidget;
+		cryptoWidget = nullptr;
+		ui.stackedWidget->setCurrentIndex(0);
+		ui.btnPoten->setEnabled(false);
+		});
 	connect(cryptoWidget, &CryptoSequencerWidget::timePenalty, this, [this](int penalty) {
 		totalPenaltyTime += penalty;
 		});

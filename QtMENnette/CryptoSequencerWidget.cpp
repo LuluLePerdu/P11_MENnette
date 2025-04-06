@@ -75,6 +75,7 @@ void CryptoSequencerWidget::updateGame()
 		//msg.setIcon(QMessageBox::Information);
 		//msg.setStandardButtons(QMessageBox::Ok);
 		msg.exec();
+		emit returnToMenuRequested();
 
 		return;
 	}

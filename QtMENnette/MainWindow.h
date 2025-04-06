@@ -16,7 +16,6 @@
 #include <QElapsedTimer>
 #include <QPalette>
 
-
 class CryptoSequencerWidget;
 
 class MainWindow : public QMainWindow {
@@ -29,7 +28,6 @@ public:
     static MainWindow* instance();
 
 private:
-
 	QTimer* timer;
 	QTime countdown;
     Ui::MainWindow ui;
@@ -46,6 +44,7 @@ private:
 	ThreadCutterWidget* threadWidget;
 	ConfigurationWidget* configWidget;
 	CryptoSequencerWidget* cryptoWidget;
+
 
 	void showConfiguration();
 	void initLCD(int minutes, int seconds);

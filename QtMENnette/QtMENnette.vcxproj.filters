@@ -121,9 +121,6 @@
     <ClCompile Include="ThreadCutterWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Clock.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SnakeMaze.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -21,6 +21,7 @@ public:
 
 signals:
 	void timePenalty(int penalty);
+	void returnToMenuRequested();
 
 protected:
     void updateGame();
