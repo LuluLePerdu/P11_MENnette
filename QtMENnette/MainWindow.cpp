@@ -301,18 +301,42 @@ void MainWindow::updateTimer() {
 		timerColor = (blink) ? QColor(255, 50, 50) : QColor(150, 0, 0);
 		paletteBlink.setColor(paletteBlink.WindowText, timerColor);
 		paletteBlink.setColor(paletteBlink.Light, timerColor);
-		//paletteBlink.setColor(paletteBlink.WindowText, timerColor);
 		ui.lcdClock->setPalette(paletteBlink);
-
 	}
 
-	if ((timeLeft.minute() <= 0 && timeLeft.second() <= 0) || timeLeft.minute() >= 55) {
-
+	if ((timeLeft.minute() <= 0 && timeLeft.second() <= 0)) {
 		timer->stop();
+		showEndGame(QTime(0, 0, 0), false); // lecture seule
+	}
+	else if (false) {
+		timer->stop();
+		showEndGame(timeLeft, true);
 		ui.lcdClock->display("PERDU");
 	}
 	else {
-
 		ui.lcdClock->display(formatTime);
 	}
+}
+
+void MainWindow::showEndGame(QTime finalTime, bool victory)
+{
+	QWidget* current = ui.stackedWidget->currentWidget();
+	if (current && current != configWidget && current != ui.pgeMain) {
+		ui.stackedWidget->removeWidget(current);
+		delete current;
+	}
+
+	endGameWidget = new EndGameWidget(finalTime, victory);
+
+	connect(endGameWidget, &EndGameWidget::returnToMainMenu, this, [this]() {
+		on_btnHome_clicked();
+		if (endGameWidget) {
+			ui.stackedWidget->removeWidget(endGameWidget);
+			delete endGameWidget;
+			endGameWidget = nullptr;
+		}
+		});
+
+	ui.stackedWidget->addWidget(endGameWidget);
+	ui.stackedWidget->setCurrentWidget(endGameWidget);
 }

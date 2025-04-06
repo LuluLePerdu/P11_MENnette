@@ -117,6 +117,7 @@
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
     <QtMoc Include="CryptoSequencerWidget.h" />
+    <ClCompile Include="EndGameWidget.cpp" />
     <ClCompile Include="ShakeIt.cpp" />
     <ClCompile Include="ShakeItWidget.cpp" />
     <ClCompile Include="SimonSays.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="Communication.h" />
     <QtMoc Include="ConfigurationWidget.h" />
     <ClInclude Include="CryptoSequencer.h" />
+    <QtMoc Include="EndGameWidget.h" />
     <ClInclude Include="ShakeIt.h" />
     <ClInclude Include="ShakeItWidget.h" />
     <QtMoc Include="SimonSays.h" />

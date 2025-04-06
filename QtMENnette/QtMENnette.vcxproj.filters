@@ -91,6 +91,9 @@
     <ClCompile Include="ClockWorker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EndGameWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\Color.h">
@@ -149,6 +152,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ClockWorker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="EndGameWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
