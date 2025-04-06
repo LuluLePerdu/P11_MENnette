@@ -235,6 +235,9 @@
     <QtMoc Include="ConfigurationWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="SimonSays.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="ClockWorker.h">
       <Filter>Header Files</Filter>
     </QtMoc>

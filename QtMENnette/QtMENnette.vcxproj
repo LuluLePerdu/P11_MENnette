@@ -146,7 +146,7 @@
     <ClInclude Include="CryptoSequencer.h" />
     <ClInclude Include="ShakeIt.h" />
     <ClInclude Include="ShakeItWidget.h" />
-    <ClInclude Include="SimonSays.h" />
+    <QtMoc Include="SimonSays.h" />
     <QtMoc Include="SimonSaysWidget.h" />
     <ClInclude Include="SnakeMaze.h" />
     <QtMoc Include="SnakeMazeWidget.h" />

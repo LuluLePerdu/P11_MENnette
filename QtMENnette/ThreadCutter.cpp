@@ -11,7 +11,7 @@ ThreadCutter::ThreadCutter() {
 }
 
 void ThreadCutter::run() {
-    bool ledArray[8];
+    //bool ledArray[8];
     Communication& comm = Communication::getInstance();
 
 
