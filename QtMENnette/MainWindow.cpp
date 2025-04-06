@@ -95,6 +95,12 @@ void MainWindow::on_btnHome_clicked() {
 		delete cryptoWidget;
 		cryptoWidget = nullptr;
 	}
+	/*Communication& comm = Communication::getInstance();
+	comm.sendMsg({
+		MSG_ID_PC_MOTOR,
+		0,
+		0,
+		});*/
 	ui.labDebug->setText("Home");
 }
 
