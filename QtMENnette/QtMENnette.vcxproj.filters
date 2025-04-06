@@ -21,17 +21,8 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
-    <Filter Include="Models">
-      <UniqueIdentifier>{1e0438eb-d7d0-4a6f-a7cb-9644096e1255}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Views">
-      <UniqueIdentifier>{b1625eb5-98ff-4481-b966-18b4dc385af6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{e92457b7-2342-4b4f-8c9b-9748fa3c7c23}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Controllers">
-      <UniqueIdentifier>{5580bed2-2593-4c90-bb4e-dec5f87258ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,50 +49,8 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Models\MainMenuModel.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\ShakeItModel.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\SimonSaysModel.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\ThreadCutterModel.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\Communication.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Controllers\GameController.cpp">
-      <Filter>Controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="Controllers\MainMenuController.cpp">
-      <Filter>Controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="Controllers\ShakeItController.cpp">
-      <Filter>Controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="Controllers\SimonSaysController.cpp">
-      <Filter>Controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="Controllers\ThreadCutterController.cpp">
-      <Filter>Controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\GameView.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\MainMenuView.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ShakeItView.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\SimonSaysView.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ThreadCutterView.cpp">
-      <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="ShakeIt.cpp">
       <Filter>Source Files</Filter>
@@ -144,38 +93,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Models\GameModel.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\MainMenuModel.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\SimonSaysModel.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\ThreadCutterModel.h">
-      <Filter>Models</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Color.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\common.hpp">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Controllers\MainMenuController.h">
-      <Filter>Controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Controllers\SimonSaysController.h">
-      <Filter>Controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Controllers\ThreadCutterController.h">
-      <Filter>Controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\MainMenuView.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\SimonSaysView.h">
-      <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Communication.h">
       <Filter>Utils</Filter>
@@ -188,15 +110,6 @@
     </ClInclude>
     <ClInclude Include="ThreadCutter.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ShakeItView.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Controllers\ShakeItController.h">
-      <Filter>Controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\ShakeItModel.h">
-      <Filter>Models</Filter>
     </ClInclude>
     <ClInclude Include="SnakeMaze.h">
       <Filter>Header Files</Filter>
@@ -214,9 +127,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Views\ThreadCutterView.h">
-      <Filter>Views</Filter>
-    </QtMoc>
     <QtMoc Include="SnakeMazeWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>

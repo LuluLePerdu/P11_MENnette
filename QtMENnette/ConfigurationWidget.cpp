@@ -89,9 +89,9 @@ void ConfigurationWidget::setupUi()
 	cryptoRangeSpin = new QSpinBox();
 	cryptoRangeSpin->setRange(1, 255);
 	cryptoRangeSpin->setValue(50);
-	cryptoLayout->addRow("range:", cryptoRangeSpin);
+	cryptoLayout->addRow("Range:", cryptoRangeSpin);
 
-	mainLayout->addWidget(createGameSection("CRYPTO SEQUENCER", cryptoRangeSpin));
+    mainLayout->addWidget(createGameSection("CRYPTO SEQUENCER", cryptoContent));
 
     QPushButton* applyButton = new QPushButton("CONFIRMER");
     applyButton->setFixedHeight(45);

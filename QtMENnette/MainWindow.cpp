@@ -95,13 +95,16 @@ void MainWindow::on_btnHome_clicked() {
 		delete cryptoWidget;
 		cryptoWidget = nullptr;
 	}
-	/*Communication& comm = Communication::getInstance();
+	Communication& comm = Communication::getInstance();
 	comm.sendMsg({
 		MSG_ID_PC_MOTOR,
+		100,
 		0,
-		0,
-		});*/
-	ui.labDebug->setText("Home");
+		});
+	int a = comm.readMsg(MSG_ID_AR_POTENTIOMETER);
+
+	//ui.labDebug->setText("Home");
+	ui.labDebug->setText(QString::number(a));
 }
 
 void MainWindow::on_btnLED_released() {
