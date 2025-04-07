@@ -1,4 +1,3 @@
-//#include "stdafx.h"
 #include "MainWindow.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(nullptr), debugTimer(new QTimer(this))
@@ -25,17 +24,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		ui.stackedWidget->setCurrentIndex(0);
 		});
 
-	//connect(threadWidget, &ThreadCutterWidget::outcomeSubmitted, this, &MainWindow::ledSetText);
-
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-
-	//connect(ui.btnPoten, &QPushButton::clicked, this, &MainWindow::on_btnPoten_clicked);
-
 	initLCD(3, 0);
 
 	Communication& comm = Communication::getInstance();
-	//comm.sendMsg({ 205, 100, 0 });
 	srand(comm.seed);
+	showConfiguration();
 }
 
 MainWindow::~MainWindow()
@@ -101,7 +95,16 @@ void MainWindow::on_btnHome_clicked() {
 		delete cryptoWidget;
 		cryptoWidget = nullptr;
 	}
-	ui.labDebug->setText("Home");
+	Communication& comm = Communication::getInstance();
+	comm.sendMsg({
+		MSG_ID_PC_MOTOR,
+		100,
+		0,
+		});
+	int a = comm.readMsg(MSG_ID_AR_POTENTIOMETER);
+
+	//ui.labDebug->setText("Home");
+	ui.labDebug->setText(QString::number(a));
 }
 
 void MainWindow::on_btnLED_released() {
@@ -141,6 +144,7 @@ void MainWindow::on_btnSnake_clicked()
 		if (snakeWidget) {
 			snakeWidget->stopGame();
 		}
+		ui.btnSnake->setEnabled(false);
 	});
 
 	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) { totalPenaltyTime += penalty; });
@@ -154,7 +158,12 @@ void MainWindow::on_btnSnake_clicked()
 }
 
 void MainWindow::on_btnSimon_clicked() {
-	simonWidget = new SimonSaysWidget(this);
+	simonWidget = new SimonSaysWidget(this, 10);
+
+	connect(simonWidget, &SimonSaysWidget::timePenalty, this, [this](int penalty) {
+		totalPenaltyTime += penalty;
+		});
+
 	ui.stackedWidget->addWidget(simonWidget);
 	ui.stackedWidget->setCurrentIndex(4);
 	ui.stackedWidget->setCurrentWidget(simonWidget);
@@ -169,8 +178,19 @@ void MainWindow::on_btnAccel_clicked() {
 void MainWindow::on_btnPoten_clicked() {
 	ui.stackedWidget->setCurrentIndex(5);
 
+	if (cryptoWidget) {
+		ui.stackedWidget->removeWidget(cryptoWidget);
+		delete cryptoWidget;
+		cryptoWidget = nullptr;
+	}
 	cryptoWidget = new CryptoSequencerWidget(this, configWidget->getCryptoRange());
 
+	connect(cryptoWidget, &CryptoSequencerWidget::returnToMenuRequested, this, [this]() {\
+		delete cryptoWidget;
+		cryptoWidget = nullptr;
+		ui.stackedWidget->setCurrentIndex(0);
+		ui.btnPoten->setEnabled(false);
+		});
 	connect(cryptoWidget, &CryptoSequencerWidget::timePenalty, this, [this](int penalty) {
 		totalPenaltyTime += penalty;
 		});
@@ -281,18 +301,42 @@ void MainWindow::updateTimer() {
 		timerColor = (blink) ? QColor(255, 50, 50) : QColor(150, 0, 0);
 		paletteBlink.setColor(paletteBlink.WindowText, timerColor);
 		paletteBlink.setColor(paletteBlink.Light, timerColor);
-		//paletteBlink.setColor(paletteBlink.WindowText, timerColor);
 		ui.lcdClock->setPalette(paletteBlink);
-
 	}
 
-	if ((timeLeft.minute() <= 0 && timeLeft.second() <= 0) || timeLeft.minute() >= 55) {
-
+	if ((timeLeft.minute() <= 0 && timeLeft.second() <= 0)) {
 		timer->stop();
+		showEndGame(QTime(0, 0, 0), false); // lecture seule
+	}
+	else if (false) {
+		timer->stop();
+		showEndGame(timeLeft, true);
 		ui.lcdClock->display("PERDU");
 	}
 	else {
-
 		ui.lcdClock->display(formatTime);
 	}
+}
+
+void MainWindow::showEndGame(QTime finalTime, bool victory)
+{
+	QWidget* current = ui.stackedWidget->currentWidget();
+	if (current && current != configWidget && current != ui.pgeMain) {
+		ui.stackedWidget->removeWidget(current);
+		delete current;
+	}
+
+	endGameWidget = new EndGameWidget(finalTime, victory);
+
+	connect(endGameWidget, &EndGameWidget::returnToMainMenu, this, [this]() {
+		on_btnHome_clicked();
+		if (endGameWidget) {
+			ui.stackedWidget->removeWidget(endGameWidget);
+			delete endGameWidget;
+			endGameWidget = nullptr;
+		}
+		});
+
+	ui.stackedWidget->addWidget(endGameWidget);
+	ui.stackedWidget->setCurrentWidget(endGameWidget);
 }

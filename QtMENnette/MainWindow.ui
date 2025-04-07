@@ -1268,6 +1268,18 @@ QPushButton:pressed {
      <height>201</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	
+	background-color: rgb(200, 0, 0);
+	border-style: outset;
+	border-radius: 25px;
+	border-image: url(:/MainWindow/Media/exit.png);
+}
+QPushButton:hover{
+	background-color: rgb(150, 0, 0);
+}</string>
+   </property>
    <property name="text">
     <string/>
    </property>

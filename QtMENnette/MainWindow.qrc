@@ -3,5 +3,9 @@
         <file>Background.png</file>
         <file>jp.jpg</file>
         <file>robus2000.png</file>
+        <file>snake.png</file>
+        <file>simon.png</file>
+        <file>Media/exit.png</file>
+        <file>Media/house.png</file>
     </qresource>
 </RCC>

@@ -109,11 +109,6 @@
   <ItemGroup>
     <ClCompile Include="ClockWorker.cpp" />
     <ClCompile Include="ConfigurationWidget.cpp" />
-    <ClCompile Include="Controllers\GameController.cpp" />
-    <ClCompile Include="Controllers\MainMenuController.cpp" />
-    <ClCompile Include="Controllers\ShakeItController.cpp" />
-    <ClCompile Include="Controllers\SimonSaysController.cpp" />
-    <ClCompile Include="Controllers\ThreadCutterController.cpp" />
     <ClCompile Include="CryptoSequencer.cpp" />
     <ClCompile Include="CryptoSequencerWidget.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
@@ -122,6 +117,7 @@
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
     <QtMoc Include="CryptoSequencerWidget.h" />
+    <ClCompile Include="EndGameWidget.cpp" />
     <ClCompile Include="ShakeIt.cpp" />
     <ClCompile Include="ShakeItWidget.cpp" />
     <ClCompile Include="SimonSays.cpp" />
@@ -131,22 +127,14 @@
     <ClCompile Include="ThreadCutter.cpp" />
     <ClCompile Include="ThreadCutterWidget.cpp" />
     <ClCompile Include="Utils\Communication.cpp" />
-    <ClCompile Include="Views\GameView.cpp" />
-    <ClCompile Include="Views\MainMenuView.cpp" />
-    <ClCompile Include="Views\ShakeItView.cpp" />
-    <ClCompile Include="Views\SimonSaysView.cpp" />
-    <ClCompile Include="Views\ThreadCutterView.cpp" />
     <QtMoc Include="ClockWorker.h" />
     <ClInclude Include="Communication.h" />
     <QtMoc Include="ConfigurationWidget.h" />
-    <ClInclude Include="Controllers\MainMenuController.h" />
-    <ClInclude Include="Controllers\ShakeItController.h" />
-    <ClInclude Include="Controllers\SimonSaysController.h" />
-    <ClInclude Include="Controllers\ThreadCutterController.h" />
     <ClInclude Include="CryptoSequencer.h" />
+    <QtMoc Include="EndGameWidget.h" />
     <ClInclude Include="ShakeIt.h" />
     <ClInclude Include="ShakeItWidget.h" />
-    <ClInclude Include="SimonSays.h" />
+    <QtMoc Include="SimonSays.h" />
     <QtMoc Include="SimonSaysWidget.h" />
     <ClInclude Include="SnakeMaze.h" />
     <QtMoc Include="SnakeMazeWidget.h" />
@@ -154,24 +142,11 @@
     <QtMoc Include="ThreadCutterWidget.h" />
     <ClInclude Include="Utils\Color.h" />
     <ClInclude Include="Utils\common.hpp" />
-    <ClInclude Include="Views\MainMenuView.h" />
-    <ClInclude Include="Views\ShakeItView.h" />
-    <ClInclude Include="Views\SimonSaysView.h" />
-    <QtMoc Include="Views\ThreadCutterView.h" />
     <QtRcc Include="MainWindow.qrc" />
     <QtUic Include="MainWindow.ui" />
     <QtMoc Include="MainWindow.h" />
-    <ClCompile Include="Models\MainMenuModel.cpp" />
-    <ClCompile Include="Models\ShakeItModel.cpp" />
-    <ClCompile Include="Models\SimonSaysModel.cpp" />
-    <ClCompile Include="Models\ThreadCutterModel.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClInclude Include="Models\GameModel.h" />
-    <ClInclude Include="Models\MainMenuModel.h" />
-    <ClInclude Include="Models\ShakeItModel.h" />
-    <ClInclude Include="Models\SimonSaysModel.h" />
-    <ClInclude Include="Models\ThreadCutterModel.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
