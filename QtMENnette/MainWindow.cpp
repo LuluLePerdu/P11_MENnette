@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	ui.setupUi(this);
 
 
+	player = new QMediaPlayer(this);
 	this->setStyleSheet(
 		"MainWindow {"
 		"   background-image: url(:/MainWindow/Background.png);"
@@ -30,6 +31,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	Communication& comm = Communication::getInstance();
 	srand(comm.seed);
 	showConfiguration();
+	
 }
 
 MainWindow::~MainWindow()
@@ -38,6 +40,7 @@ MainWindow::~MainWindow()
 		ui.stackedWidget->removeWidget(snakeWidget);
 		delete snakeWidget;
 	}
+	player->stop();
 }
 
 MainWindow* MainWindow::instance() {
@@ -53,7 +56,7 @@ Ui::MainWindow* MainWindow::getUI() const
 void MainWindow::showConfiguration()
 {
 	ui.stackedWidget->setCurrentWidget(configWidget);
-	ui.labDebug->setText("Configuration");
+	//ui.labDebug->setText("Configuration");
 }
 
 void MainWindow::initLCD(int minutes, int seconds) {
@@ -102,9 +105,15 @@ void MainWindow::on_btnHome_clicked() {
 		0,
 		});
 	int a = comm.readMsg(MSG_ID_AR_POTENTIOMETER);
-
-	//ui.labDebug->setText("Home");
-	ui.labDebug->setText(QString::number(a));
+	
+	if (audioOutput) {
+		delete audioOutput;
+	}
+	audioOutput = new QAudioOutput(this);
+	player->setSource(QUrl("qrc:/MainWindow/Media/jeff.mp3"));
+	player->setAudioOutput(audioOutput);
+	audioOutput->setVolume(50);
+	player->play();
 }
 
 void MainWindow::on_btnLED_released() {
@@ -117,7 +126,7 @@ void MainWindow::on_btnLED_released() {
 	ui.stackedWidget->addWidget(threadWidget);
 	ui.stackedWidget->setCurrentIndex(3);
 	ui.stackedWidget->setCurrentWidget(threadWidget);
-	ui.labDebug->setText("LED");
+	//ui.labDebug->setText("LED");
 
 }
 
@@ -153,7 +162,7 @@ void MainWindow::on_btnSnake_clicked()
 	snakeWidget->setFocusPolicy(Qt::StrongFocus);
 
 	ui.stackedWidget->setCurrentWidget(snakeWidget);
-	ui.labDebug->setText("Snake");
+	//ui.labDebug->setText("Snake");
 	snakeWidget->startGame();
 }
 
@@ -167,12 +176,12 @@ void MainWindow::on_btnSimon_clicked() {
 	ui.stackedWidget->addWidget(simonWidget);
 	ui.stackedWidget->setCurrentIndex(4);
 	ui.stackedWidget->setCurrentWidget(simonWidget);
-	ui.labDebug->setText("Simon");
+	//ui.labDebug->setText("Simon");
 }
 
 void MainWindow::on_btnAccel_clicked() {
 	ui.stackedWidget->setCurrentIndex(2);
-	ui.labDebug->setText("Accel");
+	//ui.labDebug->setText("Accel");
 }
 
 void MainWindow::on_btnPoten_clicked() {
@@ -197,7 +206,7 @@ void MainWindow::on_btnPoten_clicked() {
 
 	ui.stackedWidget->addWidget(cryptoWidget);
 	ui.stackedWidget->setCurrentWidget(cryptoWidget);
-	ui.labDebug->setText("Poten");
+	//ui.labDebug->setText("Poten");
 
 }
 

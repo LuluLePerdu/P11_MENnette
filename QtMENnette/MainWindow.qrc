@@ -7,5 +7,6 @@
         <file>simon.png</file>
         <file>Media/exit.png</file>
         <file>Media/house.png</file>
+        <file>Media/jeff.mp3</file>
     </qresource>
 </RCC>

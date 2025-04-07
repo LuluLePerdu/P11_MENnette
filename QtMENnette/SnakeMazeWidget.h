@@ -16,6 +16,7 @@
 #include "SnakeMaze.h"
 #include <cstdlib>
 
+
 class SnakeMazeWidget : public QWidget
 {
     Q_OBJECT

@@ -17,6 +17,10 @@
 #include <QTime>
 #include <QPalette>
 #include <QElapsedTimer>
+#include <qmediaplayer.h>
+#include <qaudiooutput.h>
+#include <qdebug.h>
+
 
 class CryptoSequencerWidget;
 
@@ -46,7 +50,10 @@ private:
     SimonSaysWidget* simonWidget = nullptr;  
     ThreadCutterWidget* threadWidget = nullptr; 
     ConfigurationWidget* configWidget = nullptr; 
-    CryptoSequencerWidget* cryptoWidget = nullptr; 
+    CryptoSequencerWidget* cryptoWidget = nullptr;
+
+	QMediaPlayer* player = nullptr;
+	QAudioOutput* audioOutput = nullptr;
 
     void showConfiguration();
     void initLCD(int minutes, int seconds);

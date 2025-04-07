@@ -36,6 +36,8 @@ std::string CryptoSequencer::updateSequence() {
 		return "GAME COMPLETED!";
 	}
     Communication& comm = Communication::getInstance();
+
+    
     int keyInput = -1;
     int usrInput = -1;
 

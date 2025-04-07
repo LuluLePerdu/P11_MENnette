@@ -2,7 +2,6 @@
 #include <QDebug>
 #include <QtWidgets/QApplication>
 #include <qtimer.h>
-#include <QDebug>
 
 #include "MainWindow.h"
 #include "SimonSays.h"
