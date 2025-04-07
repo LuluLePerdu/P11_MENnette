@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1478</width>
-    <height>996</height>
+    <width>1336</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,252 +16,1140 @@
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>9</y>
-     <width>1261</width>
-     <height>841</height>
+     <x>180</x>
+     <y>50</y>
+     <width>1071</width>
+     <height>661</height>
     </rect>
    </property>
-   <property name="maximumSize">
-    <size>
-     <width>1700</width>
-     <height>1000</height>
-    </size>
-   </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="pgeMain">
-    <widget class="QPushButton" name="btnSnake">
+    <widget class="QFrame" name="frame">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>30</y>
-       <width>101</width>
-       <height>101</height>
+       <x>140</x>
+       <y>100</y>
+       <width>841</width>
+       <height>471</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(55,55,55, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-border-style: outset;
-border-radius: 25px;
-}
-QPushButton:hover{
-	background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(96, 96, 106, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
+      <string notr="true">QFrame {
+    background-color: #2e2e2e;               /* gris foncé mat */
+    border: 4px solid #444;                  /* bordure acier brossé */
+    border-radius: 8px;
+    padding: 10px;
+    /* Simule des rivets en haut à gauche et bas à droite avec un dégradé subtil */
+    background-image: 
+        radial-gradient(circle at 10px 10px, #777 2px, transparent 3px),
+        radial-gradient(circle at 95% 95%, #777 2px, transparent 3px),
+        linear-gradient(#2e2e2e, #2e2e2e);   /* fond uni derrière les &quot;rivets&quot; */
+    background-repeat: no-repeat;
 }</string>
      </property>
-     <property name="text">
-      <string>Snake</string>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
      </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QPushButton" name="btnSimon">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>120</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #1e1e1e;        
+    color: #f2f2f2;                         
+    border: 2px solid #770000;              
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    box-shadow: 
+        0 0 8px rgba(255, 0, 0, 0.4),
+        inset 0 0 4px rgba(255, 0, 0, 0.2);
+}
+
+QPushButton:hover {
+    background-color: #2a0000;         
+    border: 2px solid #aa0000;
+    box-shadow: 
+        0 0 12px rgba(255, 0, 0, 0.6),
+        inset 0 0 6px rgba(255, 0, 0, 0.3);
+}
+
+QPushButton:pressed {
+    background-color: #100000;     
+    border: 2px solid #ff0000;
+    padding-top: 11px;
+    padding-left: 17px;
+    box-shadow: 
+        0 0 4px rgba(255, 0, 0, 0.3),
+        inset 0 0 10px rgba(255, 0, 0, 0.6);
+}
+
+</string>
+      </property>
+      <property name="text">
+       <string>Simon</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnLED">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>120</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #1e1e1e;              
+    color: #f2f2f2;                        
+    border: 2px solid #770000;             
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+ 
+    box-shadow: 
+        0 0 8px rgba(255, 0, 0, 0.4),
+        inset 0 0 4px rgba(255, 0, 0, 0.2);
+}
+
+QPushButton:hover {
+    background-color: #2a0000;          
+    border: 2px solid #aa0000;
+    box-shadow: 
+        0 0 12px rgba(255, 0, 0, 0.6),
+        inset 0 0 6px rgba(255, 0, 0, 0.3);
+}
+
+QPushButton:pressed {
+    background-color: #100000;        
+    border: 2px solid #ff0000;
+    padding-top: 11px;
+    padding-left: 17px;
+    box-shadow: 
+        0 0 4px rgba(255, 0, 0, 0.3),
+        inset 0 0 10px rgba(255, 0, 0, 0.6);
+}
+
+</string>
+      </property>
+      <property name="text">
+       <string>LED</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnAccel">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>250</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #1e1e1e;          
+    color: #f2f2f2;                         
+    border: 2px solid #770000;           
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+
+    box-shadow: 
+        0 0 8px rgba(255, 0, 0, 0.4),
+        inset 0 0 4px rgba(255, 0, 0, 0.2);
+}
+
+QPushButton:hover {
+    background-color: #2a0000;           
+    border: 2px solid #aa0000;
+    box-shadow: 
+        0 0 12px rgba(255, 0, 0, 0.6),
+        inset 0 0 6px rgba(255, 0, 0, 0.3);
+}
+
+QPushButton:pressed {
+    background-color: #100000;           
+    border: 2px solid #ff0000;
+    padding-top: 11px;
+    padding-left: 17px;
+    box-shadow: 
+        0 0 4px rgba(255, 0, 0, 0.3),
+        inset 0 0 10px rgba(255, 0, 0, 0.6);
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Accel</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnDebug">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>250</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #1e1e1e;           
+    color: #f2f2f2;                      
+    border: 2px solid #770000;             
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+
+    box-shadow: 
+        0 0 8px rgba(255, 0, 0, 0.4),
+        inset 0 0 4px rgba(255, 0, 0, 0.2);
+}
+
+QPushButton:hover {
+    background-color: #2a0000;        
+    border: 2px solid #aa0000;
+    box-shadow: 
+        0 0 12px rgba(255, 0, 0, 0.6),
+        inset 0 0 6px rgba(255, 0, 0, 0.3);
+}
+
+QPushButton:pressed {
+    background-color: #100000;     
+    border: 2px solid #ff0000;
+    padding-top: 11px;
+    padding-left: 17px;
+    box-shadow: 
+        0 0 4px rgba(255, 0, 0, 0.3),
+        inset 0 0 10px rgba(255, 0, 0, 0.6);
+}
+</string>
+      </property>
+      <property name="text">
+       <string>idk</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnPoten">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>250</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #1e1e1e;           
+    color: #f2f2f2;                       
+    border: 2px solid #770000;             
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+ 
+    box-shadow: 
+        0 0 8px rgba(255, 0, 0, 0.4),
+        inset 0 0 4px rgba(255, 0, 0, 0.2);
+}
+
+QPushButton:hover {
+    background-color: #2a0000;          
+    border: 2px solid #aa0000;
+    box-shadow: 
+        0 0 12px rgba(255, 0, 0, 0.6),
+        inset 0 0 6px rgba(255, 0, 0, 0.3);
+}
+
+QPushButton:pressed {
+    background-color: #100000;             
+    border: 2px solid #ff0000;
+    padding-top: 11px;
+    padding-left: 17px;
+    box-shadow: 
+        0 0 4px rgba(255, 0, 0, 0.3),
+        inset 0 0 10px rgba(255, 0, 0, 0.6);
+}
+
+</string>
+      </property>
+      <property name="text">
+       <string>Poten</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnSnake">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>120</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #1e1e1e;            
+    color: #f2f2f2;                         
+    border: 2px solid #770000;              
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+  
+    box-shadow: 
+        0 0 8px rgba(255, 0, 0, 0.4),
+        inset 0 0 4px rgba(255, 0, 0, 0.2);
+}
+
+QPushButton:hover {
+    background-color: #2a0000;          
+    border: 2px solid #aa0000;
+    box-shadow: 
+        0 0 12px rgba(255, 0, 0, 0.6),
+        inset 0 0 6px rgba(255, 0, 0, 0.3);
+}
+
+QPushButton:pressed {
+    background-color: #100000;           
+    border: 2px solid #ff0000;
+    padding-top: 11px;
+    padding-left: 17px;
+    box-shadow: 
+        0 0 4px rgba(255, 0, 0, 0.3),
+        inset 0 0 10px rgba(255, 0, 0, 0.6);
+}
+
+</string>
+      </property>
+      <property name="text">
+       <string>Snake</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnConfiguration">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>380</y>
+        <width>191</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #3a3a3a;    
+    color: #d0d0d0;                
+    border: 2px solid #111;          
+    border-radius: 4px;              
+    padding: 10px 16px;
+    font-family: 'OCR A Extended', 'Courier New', monospace; 
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: inset 0px 0px 3px #000, 2px 2px 6px #000; 
+}
+
+QPushButton:hover {
+    background-color: #505050;     
+    border: 2px solid #222;
+}
+
+QPushButton:pressed {
+    background-color: #222;        
+    border: 2px solid #444;
+    padding-top: 11px;               
+    padding-left: 17px;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Configuration</string>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcdClock">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>30</y>
+        <width>141</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 6px solid black; 
+border-radius: 10px;      
+padding: 10px;     </string>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="prbBargraph">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>50</y>
+        <width>51</width>
+        <height>291</height>
+       </rect>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QProgressBar {
+    background-color: #1e1e1e;              
+    border: 2px solid #770000;             
+    border-radius: 5px;
+    text-align: center;
+    color: #f2f2f2;                      
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 14px;
+
+
+    box-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+}
+
+QProgressBar::chunk {
+    background-color: #ff0000;          
+    border-radius: 4px;
+    box-shadow: 
+        inset 0 0 4px rgba(255, 80, 80, 0.8),
+        0 0 6px rgba(255, 0, 0, 0.7);
+}
+</string>
+      </property>
+      <property name="value">
+       <number>50</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Vertical</enum>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="btnHome">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>380</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Home</string>
+      </property>
+     </widget>
     </widget>
-    <widget class="QPushButton" name="btnLED">
+    <widget class="QLabel" name="DELBleu">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>30</y>
-       <width>101</width>
-       <height>101</height>
+       <x>270</x>
+       <y>-90</y>
+       <width>381</width>
+       <height>301</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(55,55,55, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-border-style: outset;
-border-radius: 25px;
-}
-QPushButton:hover{
-	background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(96, 96, 106, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-}</string>
-     </property>
      <property name="text">
-      <string>LED</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/bleu.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnSimon">
+    <widget class="QLabel" name="DELRouge">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>30</y>
-       <width>101</width>
-       <height>101</height>
+       <x>630</x>
+       <y>-90</y>
+       <width>381</width>
+       <height>301</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(55,55,55, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-border-style: outset;
-border-radius: 25px;
-}
-QPushButton:hover{
-	background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(96, 96, 106, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-}</string>
-     </property>
      <property name="text">
-      <string>Simon</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/jaune.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnAccel">
+    <widget class="QLabel" name="DELJaune">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>210</y>
-       <width>101</width>
-       <height>101</height>
+       <x>450</x>
+       <y>-90</y>
+       <width>381</width>
+       <height>311</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(55,55,55, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-border-style: outset;
-border-radius: 25px;
-}
-QPushButton:hover{
-	background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(96, 96, 106, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-}</string>
-     </property>
      <property name="text">
-      <string>Accel</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/red.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnPoten">
+    <widget class="QLabel" name="DELVert">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>210</y>
-       <width>101</width>
-       <height>101</height>
+       <x>110</x>
+       <y>-80</y>
+       <width>371</width>
+       <height>281</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(55,55,55, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-border-style: outset;
-border-radius: 25px;
-}
-QPushButton:hover{
-	background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(96, 96, 106, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-}</string>
-     </property>
      <property name="text">
-      <string>Poten</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/vert.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnDebug">
+    <widget class="QLabel" name="Fils">
      <property name="geometry">
       <rect>
-       <x>360</x>
-       <y>210</y>
-       <width>101</width>
-       <height>101</height>
+       <x>410</x>
+       <y>520</y>
+       <width>261</width>
+       <height>201</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(55,55,55, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-border-style: outset;
-border-radius: 25px;
-}
-QPushButton:hover{
-	background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(96, 96, 106, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-}</string>
-     </property>
      <property name="text">
-      <string>idk</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/fil-electrique-special-automobile-2mm.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnConfiguration">
-     <property name="geometry">
-      <rect>
-       <x>530</x>
-       <y>110</y>
-       <width>101</width>
-       <height>101</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(55,55,55, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-border-style: outset;
-border-radius: 25px;
-}
-QPushButton:hover{
-	background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(96, 96, 106, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-}</string>
-     </property>
-     <property name="text">
-      <string>Configuration</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnQuit">
-     <property name="geometry">
-      <rect>
-       <x>710</x>
-       <y>530</y>
-       <width>101</width>
-       <height>101</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(55,55,55, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-border-style: outset;
-border-radius: 25px;
-}
-QPushButton:hover{
-	background-color: qlineargradient(spread:pad, x1:1, y1:0.653, x2:1, y2:0, stop:0 rgba(96, 96, 106, 255), stop:0.798883 rgba(110, 58, 58, 255), stop:1 rgba(255, 0, 0, 255));
-}</string>
-     </property>
-     <property name="text">
-      <string>Quit</string>
-     </property>
-    </widget>
+    <zorder>Fils</zorder>
+    <zorder>DELVert</zorder>
+    <zorder>DELBleu</zorder>
+    <zorder>DELJaune</zorder>
+    <zorder>DELRouge</zorder>
+    <zorder>frame</zorder>
    </widget>
    <widget class="QWidget" name="pgeSnake"/>
    <widget class="QWidget" name="pgeAccel"/>
    <widget class="QWidget" name="pgeLED">
-    <widget class="QLabel" name="labInstruc">
+    <widget class="QLabel" name="Fils_2">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>20</y>
-       <width>600</width>
-       <height>300</height>
+       <x>350</x>
+       <y>530</y>
+       <width>261</width>
+       <height>201</height>
       </rect>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/fil-electrique-special-automobile-2mm.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="labResult">
+    <widget class="QLabel" name="DELVert_2">
      <property name="geometry">
       <rect>
        <x>50</x>
-       <y>350</y>
-       <width>600</width>
-       <height>32</height>
+       <y>-70</y>
+       <width>371</width>
+       <height>281</height>
       </rect>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/vert.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="DELRouge_4">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>-80</y>
+       <width>381</width>
+       <height>301</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/jaune.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DELBleu_2">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>-80</y>
+       <width>381</width>
+       <height>301</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/bleu.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frame_3">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>110</y>
+       <width>841</width>
+       <height>471</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+    background-color: #2e2e2e;               /* gris foncé mat */
+    border: 4px solid #444;                  /* bordure acier brossé */
+    border-radius: 8px;
+    padding: 10px;
+    /* Simule des rivets en haut à gauche et bas à droite avec un dégradé subtil */
+    background-image: 
+        radial-gradient(circle at 10px 10px, #777 2px, transparent 3px),
+        radial-gradient(circle at 95% 95%, #777 2px, transparent 3px),
+        linear-gradient(#2e2e2e, #2e2e2e);   /* fond uni derrière les &quot;rivets&quot; */
+    background-repeat: no-repeat;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QPushButton" name="btnConfiguration_4">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>380</y>
+        <width>191</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #3a3a3a;    
+    color: #d0d0d0;                
+    border: 2px solid #111;          
+    border-radius: 4px;              
+    padding: 10px 16px;
+    font-family: 'OCR A Extended', 'Courier New', monospace; 
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: inset 0px 0px 3px #000, 2px 2px 6px #000; 
+}
+
+QPushButton:hover {
+    background-color: #505050;     
+    border: 2px solid #222;
+}
+
+QPushButton:pressed {
+    background-color: #222;        
+    border: 2px solid #444;
+    padding-top: 11px;               
+    padding-left: 17px;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Configuration</string>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcdClock_2">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>20</y>
+        <width>151</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 6px solid black; 
+border-radius: 10px;      
+padding: 10px;     </string>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="prbBargraph_2">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>50</y>
+        <width>51</width>
+        <height>291</height>
+       </rect>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QProgressBar {
+    background-color: #1e1e1e;              
+    border: 2px solid #770000;             
+    border-radius: 5px;
+    text-align: center;
+    color: #f2f2f2;                      
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 14px;
+
+
+    box-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+}
+
+QProgressBar::chunk {
+    background-color: #ff0000;          
+    border-radius: 4px;
+    box-shadow: 
+        inset 0 0 4px rgba(255, 80, 80, 0.8),
+        0 0 6px rgba(255, 0, 0, 0.7);
+}
+</string>
+      </property>
+      <property name="value">
+       <number>50</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Vertical</enum>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="btnHome_4">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>380</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Home</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labResult">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>290</y>
+        <width>221</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Progression dans le jeux /3</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labInstruc">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>110</y>
+        <width>511</width>
+        <height>161</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Instructions</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="DELJaune_4">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>-80</y>
+       <width>381</width>
+       <height>311</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/red.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <zorder>DELVert_2</zorder>
+    <zorder>DELJaune_4</zorder>
+    <zorder>Fils_2</zorder>
+    <zorder>DELRouge_4</zorder>
+    <zorder>DELBleu_2</zorder>
+    <zorder>frame_3</zorder>
    </widget>
    <widget class="QWidget" name="pgeSimon"/>
    <widget class="QWidget" name="pgePoten">
-    <widget class="QLabel" name="labPotSequence">
+    <widget class="QFrame" name="frame_2">
      <property name="geometry">
       <rect>
        <x>200</x>
-       <y>100</y>
-       <width>301</width>
-       <height>91</height>
+       <y>140</y>
+       <width>841</width>
+       <height>471</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+    background-color: #2e2e2e;               /* gris foncé mat */
+    border: 4px solid #444;                  /* bordure acier brossé */
+    border-radius: 8px;
+    padding: 10px;
+    /* Simule des rivets en haut à gauche et bas à droite avec un dégradé subtil */
+    background-image: 
+        radial-gradient(circle at 10px 10px, #777 2px, transparent 3px),
+        radial-gradient(circle at 95% 95%, #777 2px, transparent 3px),
+        linear-gradient(#2e2e2e, #2e2e2e);   /* fond uni derrière les &quot;rivets&quot; */
+    background-repeat: no-repeat;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QPushButton" name="btnConfiguration_3">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>380</y>
+        <width>191</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #3a3a3a;    
+    color: #d0d0d0;                
+    border: 2px solid #111;          
+    border-radius: 4px;              
+    padding: 10px 16px;
+    font-family: 'OCR A Extended', 'Courier New', monospace; 
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: inset 0px 0px 3px #000, 2px 2px 6px #000; 
+}
+
+QPushButton:hover {
+    background-color: #505050;     
+    border: 2px solid #222;
+}
+
+QPushButton:pressed {
+    background-color: #222;        
+    border: 2px solid #444;
+    padding-top: 11px;               
+    padding-left: 17px;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Configuration</string>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcdClock_3">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>30</y>
+        <width>141</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 6px solid black; 
+border-radius: 10px;      
+padding: 10px;     </string>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="prbBargraph_4">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>50</y>
+        <width>51</width>
+        <height>291</height>
+       </rect>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QProgressBar {
+    background-color: #1e1e1e;              
+    border: 2px solid #770000;             
+    border-radius: 5px;
+    text-align: center;
+    color: #f2f2f2;                      
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 14px;
+
+
+    box-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+}
+
+QProgressBar::chunk {
+    background-color: #ff0000;          
+    border-radius: 4px;
+    box-shadow: 
+        inset 0 0 4px rgba(255, 80, 80, 0.8),
+        0 0 6px rgba(255, 0, 0, 0.7);
+}
+</string>
+      </property>
+      <property name="value">
+       <number>50</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Vertical</enum>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="btnHome_3">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>380</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Home</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labPotSequence">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>140</y>
+        <width>371</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Code </string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labInstruct">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>250</y>
+        <width>441</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Instructions</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="DELVert_3">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>-40</y>
+       <width>371</width>
+       <height>281</height>
       </rect>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/vert.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="DELBleu_3">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>-50</y>
+       <width>381</width>
+       <height>301</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/bleu.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DELJaune_3">
+     <property name="geometry">
+      <rect>
+       <x>510</x>
+       <y>-50</y>
+       <width>381</width>
+       <height>311</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/red.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>560</y>
+       <width>261</width>
+       <height>201</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/fil-electrique-special-automobile-2mm.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DELRouge_3">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>-50</y>
+       <width>381</width>
+       <height>301</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/jaune.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <zorder>label_3</zorder>
+    <zorder>DELRouge_3</zorder>
+    <zorder>DELJaune_3</zorder>
+    <zorder>DELBleu_3</zorder>
+    <zorder>DELVert_3</zorder>
+    <zorder>frame_2</zorder>
    </widget>
    <widget class="QWidget" name="page_7">
     <widget class="QLabel" name="labDebug_2">
@@ -279,71 +1167,115 @@ QPushButton:hover{
     </widget>
    </widget>
   </widget>
-  <widget class="QLCDNumber" name="lcdClock">
+  <widget class="QLabel" name="DELJaune_2">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>101</width>
-     <height>41</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QProgressBar" name="prbBargraph">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>220</y>
-     <width>51</width>
-     <height>291</height>
-    </rect>
-   </property>
-   <property name="sizeIncrement">
-    <size>
-     <width>0</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="value">
-    <number>50</number>
-   </property>
-   <property name="textVisible">
-    <bool>false</bool>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Orientation::Vertical</enum>
-   </property>
-   <property name="invertedAppearance">
-    <bool>false</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="labDebug">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>100</y>
-     <width>49</width>
-     <height>16</height>
+     <x>1250</x>
+     <y>390</y>
+     <width>381</width>
+     <height>311</height>
     </rect>
    </property>
    <property name="text">
-    <string>Home</string>
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../../../Image desing/lightbulbs/red.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
-  <widget class="QToolButton" name="btnHome">
+  <widget class="QToolButton" name="btnHome_2">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>140</y>
+     <x>860</x>
+     <y>860</y>
      <width>51</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
     <string>Home</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="DELRouge_2">
+   <property name="geometry">
+    <rect>
+     <x>1430</x>
+     <y>390</y>
+     <width>381</width>
+     <height>301</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../../../Image desing/lightbulbs/jaune.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnConfiguration_2">
+   <property name="geometry">
+    <rect>
+     <x>1120</x>
+     <y>860</y>
+     <width>191</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #3a3a3a;    
+    color: #d0d0d0;                
+    border: 2px solid #111;          
+    border-radius: 4px;              
+    padding: 10px 16px;
+    font-family: 'OCR A Extended', 'Courier New', monospace; 
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: inset 0px 0px 3px #000, 2px 2px 6px #000; 
+}
+
+QPushButton:hover {
+    background-color: #505050;     
+    border: 2px solid #222;
+}
+
+QPushButton:pressed {
+    background-color: #222;        
+    border: 2px solid #444;
+    padding-top: 11px;               
+    padding-left: 17px;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Configuration</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>1210</x>
+     <y>1000</y>
+     <width>261</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../../../Image desing/fil-electrique-special-automobile-2mm.jpg</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
