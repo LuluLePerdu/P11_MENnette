@@ -1192,19 +1192,6 @@ QProgressBar::chunk {
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QToolButton" name="btnHome_2">
-   <property name="geometry">
-    <rect>
-     <x>860</x>
-     <y>860</y>
-     <width>51</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Home</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="DELRouge_2">
    <property name="geometry">
     <rect>

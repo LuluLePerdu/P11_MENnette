@@ -1,11 +1,16 @@
 #include "SimonSaysWidget.h"
 
-SimonSaysWidget::SimonSaysWidget(QWidget* parent, int length) : 
-	QWidget(parent), 
-	currentIndex(0),
+SimonSaysWidget::SimonSaysWidget(QWidget* parent, int length, QLabel* greenLed, QLabel* blueLed, QLabel* redLed, QLabel* yellowLed) :
+    QWidget(parent),
+    currentIndex(0),
     inputIndex(0),
-	m_length(length),
-	logic(new SimonSays(m_length))
+    m_length(length),
+    logic(new SimonSays(m_length)),
+    m_greenLed(greenLed),
+    m_blueLed(blueLed),
+    m_redLed(redLed),
+    m_yellowLed(yellowLed),
+    group(new QSequentialAnimationGroup)
 {
 	gameTimer = new QTimer();
 	connect(gameTimer, &QTimer::timeout, this, [this]() {
@@ -14,11 +19,13 @@ SimonSaysWidget::SimonSaysWidget(QWidget* parent, int length) :
             newSequence();
         }
 		});
+    leds = {m_greenLed, m_blueLed, m_redLed, m_yellowLed};
 	getSequence();
 }
 
 void SimonSaysWidget::startGame() {
-	gameTimer->start(10);
+    gameTimer->start(10);
+    backupBlink(4, leds);
 }
 
 void SimonSaysWidget::checkInput(int storage) {
@@ -54,12 +61,14 @@ void SimonSaysWidget::checkInput(int storage) {
 void SimonSaysWidget::newSequence() {
     if (currentIndex >= m_length) {
         gameTimer->stop();
+        emit returnToMenuRequested();
     }
     else {
         if (inputIndex >= currentIndex) {
             inputIndex = 0;
             currentIndex++;
-            blinkSequence(currentIndex);
+            //blinkSequence(currentIndex);
+            backupBlink(currentIndex, leds);
         }
     }
 }
@@ -78,9 +87,36 @@ void SimonSaysWidget::blinkSequence(int currentLed) {
     }
 }
 
+void SimonSaysWidget::backupBlink(int currentLed, QList<QLabel*>& labLed) {
+    for (int i = 0; i < 4; i++) {
+        labLed[i]->hide();
+    }
+
+    QApplication::processEvents();
+
+    for (int i = 1; i < currentLed+1; i++) {
+        int timeOn = i * (500 + 500);
+        int timeOff = timeOn + 500;
+        QTimer::singleShot(timeOn, this, [this, &labLed, i]() {
+            labLed[sequence[i]]->show();
+            });
+        QTimer::singleShot(timeOff, this, [this, &labLed, i]() {
+            labLed[sequence[i]]->hide();
+            });
+    }
+
+    int finalTime = (currentLed+1) * 1000;
+    QTimer::singleShot(finalTime, this, [labLed]() {
+        for (int i = 0; i < 4; i++) {
+            labLed[i]->show();
+        }
+        });
+}
+
 bool SimonSaysWidget::checkEnd() {
     if (usrAnswer[inputIndex] != sequence[inputIndex]) {
         gameTimer->stop();
+        emit timePenalty(timeOnLoss);
         return true;
     }
     return false;

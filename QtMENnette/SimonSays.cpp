@@ -1,7 +1,7 @@
 #include "SimonSays.h"
 
 SimonSays::SimonSays(int length) : m_length(length), currentRep(0) {
-
+    setSequence();
 }
 
 void SimonSays::setSequence() {

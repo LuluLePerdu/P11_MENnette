@@ -14,5 +14,6 @@
         <file>Media/jaune.png</file>
         <file>Media/red.png</file>
         <file>Media/vert.png</file>
+        <file>Media/éteinte.PNG</file>
     </qresource>
 </RCC>

@@ -160,15 +160,15 @@ void MainWindow::on_btnSnake_clicked()
 }
 
 void MainWindow::on_btnSimon_clicked() {
-	simonWidget = new SimonSaysWidget(this, 10);
+	simonWidget = new SimonSaysWidget(this, 10, ui.DELVert, ui.DELBleu, ui.DELRouge, ui.DELJaune);
 
 	connect(simonWidget, &SimonSaysWidget::timePenalty, this, [this](int penalty) {
 		totalPenaltyTime += penalty;
 		});
 
-	ui.stackedWidget->addWidget(simonWidget);
-	ui.stackedWidget->setCurrentIndex(4);
-	ui.stackedWidget->setCurrentWidget(simonWidget);
+	//ui.stackedWidget->addWidget(simonWidget);
+	//ui.stackedWidget->setCurrentIndex(4);
+	//ui.stackedWidget->setCurrentWidget(simonWidget);
 	simonWidget->startGame();
 }
 
