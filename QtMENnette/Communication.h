@@ -38,6 +38,7 @@
 #define MSG_ID_PC_LCD 203
 #define MSG_ID_PC_STATE 204
 #define MSG_ID_PC_TIMER 205
+#define MSG_ID_PC_MUON 207
 #define MSG_ID_FROM_MISC 242
 
 struct Frame {

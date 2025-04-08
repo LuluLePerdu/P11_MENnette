@@ -58,6 +58,8 @@ private:
     void showConfiguration();
     void initLCD(int minutes, int seconds);
     void showEndGame(QTime finalTime, bool victory);
+	int totalGameWon = 0;
+	void errorSound();
 
 private slots:
     void on_btnHome_clicked();

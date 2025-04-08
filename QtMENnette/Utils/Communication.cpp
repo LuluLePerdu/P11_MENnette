@@ -18,33 +18,6 @@ std::wstring Communication::getOpenCOM() {
 
 }
 
-//Initialisation de la communication
-bool Communication::begin() {
-
-    std::wstring com = getOpenCOM();
-    if (com == L"ERROR") {
-        std::cerr << "ERROR-PC: No COM ports available" << std::endl;
-        return false;
-    }
-	//com.c_str()
-    hSerial = CreateFileW(com.c_str(), GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-    if (hSerial == INVALID_HANDLE_VALUE) {
-        std::cerr << " ERROR-PC: Error opening serial port" << std::endl;
-        return false;
-    }
-    PurgeComm(hSerial, PURGE_RXCLEAR | PURGE_TXCLEAR); // vide le buffer du serial
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
-
-    if (!configureSerialPort()) {
-        std::cerr << "ERROR-PC: Error configuring serial port" << std::endl;
-        CloseHandle(hSerial);
-        return false;
-    }
-    connected = true;
-    return true;
-}
-
 //Config de base
 bool Communication::configureSerialPort() {
 
@@ -78,19 +51,52 @@ bool Communication::configureSerialPort() {
     return true;
 }
 
+// DESCRIPTION: Demande un seed (premier muon recu) OU timeout de 5 secondes
 int Communication::createSeed() {
-	time_t initTime = time(nullptr);
-    int a = 0;
-	while (a == 0) {
-		a = readMsg(MSG_ID_FROM_MISC);
-		clear();
-	    if (a == MSG_DATA_ERROR) {
-		    return 0;
-	    }
-	}
-	time_t finalTime = time(nullptr);
-	int seed = difftime(finalTime, initTime);
-	return seed;
+    time_t initTime = time(nullptr);
+    sendMsg({ MSG_ID_PC_MUON, 1, 0 }); // Demande de seed
+    int a = -1;
+    while (a < 0) {
+        if (difftime(time(nullptr), initTime) >= 5.0) {
+            return 0; // Timeout
+        }
+        a = readMsg(MSG_ID_AR_MUON);
+        //clear();
+        if (a == MSG_DATA_ERROR) {
+            return 0;
+        }
+    }
+    time_t finalTime = time(nullptr);
+    int seed = difftime(finalTime, initTime);
+    return seed;
+}
+
+//Initialisation de la communication
+bool Communication::begin() {
+
+    std::wstring com = getOpenCOM();
+    if (com == L"ERROR") {
+        std::cerr << "ERROR-PC: No COM ports available" << std::endl;
+        return false;
+    }
+	//com.c_str()
+    hSerial = CreateFileW(com.c_str(), GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+    if (hSerial == INVALID_HANDLE_VALUE) {
+        std::cerr << " ERROR-PC: Error opening serial port" << std::endl;
+        return false;
+    }
+    PurgeComm(hSerial, PURGE_RXCLEAR | PURGE_TXCLEAR); // vide le buffer du serial
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+
+    if (!configureSerialPort()) {
+        std::cerr << "ERROR-PC: Error configuring serial port" << std::endl;
+        CloseHandle(hSerial);
+        return false;
+    }
+    connected = true;
+	seed = createSeed();
+    return true;
 }
 
 

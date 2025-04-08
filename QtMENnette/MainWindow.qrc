@@ -14,5 +14,8 @@
         <file>Media/jaune.png</file>
         <file>Media/red.png</file>
         <file>Media/vert.png</file>
+        <file>Media/beep_1sec.mp3</file>
+        <file>Media/buzzer_wrong.mp3</file>
+        <file>Media/beep_1secV2.mp3</file>
     </qresource>
 </RCC>

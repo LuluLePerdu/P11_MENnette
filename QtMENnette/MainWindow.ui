@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="pgeMain">
     <widget class="QFrame" name="frame">
@@ -881,10 +881,10 @@ QProgressBar::chunk {
     <widget class="QFrame" name="frame_2">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>140</y>
-       <width>841</width>
-       <height>471</height>
+       <x>20</x>
+       <y>60</y>
+       <width>1131</width>
+       <height>631</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1192,19 +1192,6 @@ QProgressBar::chunk {
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QToolButton" name="btnHome_2">
-   <property name="geometry">
-    <rect>
-     <x>860</x>
-     <y>860</y>
-     <width>51</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Home</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="DELRouge_2">
    <property name="geometry">
     <rect>
@@ -1222,47 +1209,6 @@ QProgressBar::chunk {
    </property>
    <property name="scaledContents">
     <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnConfiguration_2">
-   <property name="geometry">
-    <rect>
-     <x>1120</x>
-     <y>860</y>
-     <width>191</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton {
-    background-color: #3a3a3a;    
-    color: #d0d0d0;                
-    border: 2px solid #111;          
-    border-radius: 4px;              
-    padding: 10px 16px;
-    font-family: 'OCR A Extended', 'Courier New', monospace; 
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    box-shadow: inset 0px 0px 3px #000, 2px 2px 6px #000; 
-}
-
-QPushButton:hover {
-    background-color: #505050;     
-    border: 2px solid #222;
-}
-
-QPushButton:pressed {
-    background-color: #222;        
-    border: 2px solid #444;
-    padding-top: 11px;               
-    padding-left: 17px;
-}
-</string>
-   </property>
-   <property name="text">
-    <string>Configuration</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">

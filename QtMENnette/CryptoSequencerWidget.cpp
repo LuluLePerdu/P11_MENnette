@@ -16,37 +16,35 @@ CryptoSequencerWidget::CryptoSequencerWidget(QWidget* parent, int range) :
 
     // Set fonts and styles
     label->setFont(QFont("Cascadia Code", 100));
-    label->setText("1234567890");
+    //label->setText("1234567890");
     label->setAlignment(Qt::AlignCenter);
-	label->setStyleSheet("QLabel { color: rgb(51, 204, 204);}");
+	label->setStyleSheet("QLabel { color: rgb(220, 0, 0);}"); // rgb(51, 204, 204)
 
     labelT1->setFont(QFont("Cascadia Code", 70));
-    labelT1->setText("1234567890");
-    labelT1->setStyleSheet("QLabel{ color: rgba(51, 204, 204, 0.65);}");
+    //labelT1->setText("1234567890");
+    labelT1->setStyleSheet("QLabel{ color: rgba(220, 0, 0, 0.6);}");
     labelT1->setAlignment(Qt::AlignCenter);
 
     labelT2->setFont(QFont("Cascadia Code", 85));
-    labelT2->setText("1234567890");
-    labelT2->setStyleSheet("QLabel{ color: rgba(51, 204, 204, 0.85);}");
+    //labelT2->setText("1234567890");
+    labelT2->setStyleSheet("QLabel{ color: rgba(220, 0, 0, 0.8);}");
     labelT2->setAlignment(Qt::AlignCenter);
 
     labelB1->setFont(QFont("Cascadia Code", 85));
-    labelB1->setText("1234567890");
-    labelB1->setStyleSheet("QLabel{ color: rgba(51, 204, 204, 0.85);}");
+    //labelB1->setText("1234567890");
+    labelB1->setStyleSheet("QLabel{ color: rgba(220, 0, 0, 0.8);}");
     labelB1->setAlignment(Qt::AlignCenter);
 
     labelB2->setFont(QFont("Cascadia Code", 70));
-    labelB2->setText("1234567890");
-    labelB2->setStyleSheet("QLabel{ color: rgba(51, 204, 204, 0.65);}");
+    //labelB2->setText("1234567890");
+    labelB2->setStyleSheet("QLabel{ color: rgba(220, 0, 0, 0.6);}");
     labelB2->setAlignment(Qt::AlignCenter);
 
 	labelResult->setFont(QFont("Cascadia Code", 70));
-    labelResult->setText("eENTER CODE");
-    labelResult->setStyleSheet("QLabel { color: rgb(255, 165, 0); }"); 
+    //labelResult->setText("eENTER CODE");
+    labelResult->setStyleSheet("QLabel { color: rgb(255, 165, 0); box-shadow: 0 0 800px rgba(0,0,0,0.4) inset;}"); 
     labelResult->setAlignment(Qt::AlignCenter);
 
-
-    // Position labels on widget resize
     repositionLabels();
 }
 
@@ -83,8 +81,8 @@ void CryptoSequencerWidget::updateGame()
 		logic->wrongCode = false;
 		emit timePenalty(20);
     }
-    std::string a = logic->updateSequence();
-    label->setText(QString::fromStdString(a));
+    std::string a = logic->updateSequence() ;
+    label->setText(QString::fromStdString("> " + a + " <"));
     labelT1->setText(QString::fromStdString(logic->randomizeString(a, 0.4)));
     labelT2->setText(QString::fromStdString(logic->randomizeString(a, 0.15)));
     labelB1->setText(QString::fromStdString(logic->randomizeString(a, 0.15)));
@@ -101,8 +99,8 @@ void CryptoSequencerWidget::resizeEvent(QResizeEvent* event)
 
 void CryptoSequencerWidget::repositionLabels()
 {
-    int labelWidth = 800;
-    int labelHeigth = 110;
+    int labelWidth = 1300;
+    int labelHeigth = 115;
     //int labelHeigth = 120;
     int padding = 20;
 
