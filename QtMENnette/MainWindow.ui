@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1336</width>
-    <height>768</height>
+    <height>874</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,12 +18,12 @@
     <rect>
      <x>180</x>
      <y>50</y>
-     <width>1071</width>
-     <height>661</height>
+     <width>1151</width>
+     <height>711</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="pgeMain">
     <widget class="QFrame" name="frame">
@@ -257,7 +257,11 @@ QPushButton:pressed {
 </string>
       </property>
       <property name="text">
-       <string>idk</string>
+       <string>NE PAS
+TOUCHER</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="btnPoten">
@@ -472,28 +476,62 @@ QProgressBar::chunk {
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QToolButton" name="btnHome">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>380</y>
-        <width>51</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Home</string>
-      </property>
-     </widget>
+    </widget>
+    <widget class="QLabel" name="Fils">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>520</y>
+       <width>261</width>
+       <height>201</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-image: url(:/MainWindow/Media/fil-electrique-special-automobile-2mm.jpg);</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/fil-electrique-special-automobile-2mm.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DELVert">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>34</y>
+       <width>71</width>
+       <height>88</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-image: url(:/MainWindow/Media/vert.png);</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../Image desing/lightbulbs/vert.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
     </widget>
     <widget class="QLabel" name="DELBleu">
      <property name="geometry">
       <rect>
-       <x>270</x>
-       <y>-90</y>
-       <width>381</width>
-       <height>301</height>
+       <x>440</x>
+       <y>30</y>
+       <width>71</width>
+       <height>91</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-image: url(:/MainWindow/Media/bleu.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -508,11 +546,14 @@ QProgressBar::chunk {
     <widget class="QLabel" name="DELRouge">
      <property name="geometry">
       <rect>
-       <x>630</x>
-       <y>-90</y>
-       <width>381</width>
-       <height>301</height>
+       <x>610</x>
+       <y>30</y>
+       <width>61</width>
+       <height>91</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-image: url(:/MainWindow/Media/red.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -527,11 +568,14 @@ QProgressBar::chunk {
     <widget class="QLabel" name="DELJaune">
      <property name="geometry">
       <rect>
-       <x>450</x>
-       <y>-90</y>
-       <width>381</width>
-       <height>311</height>
+       <x>760</x>
+       <y>26</y>
+       <width>61</width>
+       <height>95</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-image: url(:/MainWindow/Media/jaune.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -543,49 +587,11 @@ QProgressBar::chunk {
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="DELVert">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>-80</y>
-       <width>371</width>
-       <height>281</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>../../../Image desing/lightbulbs/vert.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Fils">
-     <property name="geometry">
-      <rect>
-       <x>410</x>
-       <y>520</y>
-       <width>261</width>
-       <height>201</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>../../../Image desing/fil-electrique-special-automobile-2mm.jpg</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <zorder>Fils</zorder>
-    <zorder>DELVert</zorder>
-    <zorder>DELBleu</zorder>
     <zorder>DELJaune</zorder>
     <zorder>DELRouge</zorder>
+    <zorder>DELBleu</zorder>
+    <zorder>DELVert</zorder>
+    <zorder>Fils</zorder>
     <zorder>frame</zorder>
    </widget>
    <widget class="QWidget" name="pgeSnake"/>
@@ -1288,6 +1294,55 @@ QPushButton:hover{
    </property>
    <property name="scaledContents">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnHome">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>710</y>
+     <width>51</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton{
+	background-color: rgb(130,130,130);
+	
+	border-image: url(:/MainWindow/Media/house.png);
+	border-style: outset;
+	border-radius: 15px
+}
+QToolButton:hover{
+	background-color: rgb(75,75,75);
+}</string>
+   </property>
+   <property name="text">
+    <string>Home</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnQui">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>790</y>
+     <width>51</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton{
+	background-color: rgb(200, 0, 0);
+	border-image: url(:/MainWindow/Media/exit.png);
+	border-style: outset;
+	border-radius: 15px
+}
+QToolButton:hover{
+	background-color: rgb(130, 0, 0);
+}</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

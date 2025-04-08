@@ -17,6 +17,10 @@
 #include <QTime>
 #include <QPalette>
 #include <QElapsedTimer>
+#include <qmediaplayer.h>
+#include <qaudiooutput.h>
+#include <qdebug.h>
+
 
 class CryptoSequencerWidget;
 
@@ -46,7 +50,10 @@ private:
     SimonSaysWidget* simonWidget = nullptr;  
     ThreadCutterWidget* threadWidget = nullptr; 
     ConfigurationWidget* configWidget = nullptr; 
-    CryptoSequencerWidget* cryptoWidget = nullptr; 
+    CryptoSequencerWidget* cryptoWidget = nullptr;
+
+	QMediaPlayer* player = nullptr;
+	QAudioOutput* audioOutput = nullptr;
 
     void showConfiguration();
     void initLCD(int minutes, int seconds);
@@ -60,7 +67,7 @@ private slots:
     void on_btnAccel_clicked();
     void on_btnPoten_clicked();
     void on_btnDebug_clicked();
-    void on_btnQuit_clicked();
+    void on_btnQui_clicked();
 
     void updateTimer();
     void ledSetText(bool result);
