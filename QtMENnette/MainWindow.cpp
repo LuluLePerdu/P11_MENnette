@@ -22,15 +22,18 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	connect(ui.btnConfiguration, &QPushButton::clicked, this, &MainWindow::showConfiguration);
 
 	connect(configWidget, &ConfigurationWidget::settingsApplied, this, [this]() {
+		
 		ui.stackedWidget->setCurrentIndex(0);
+		initLCD(3,  0);
 		});
 
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-	initLCD(3, 0);
 
+	
 	Communication& comm = Communication::getInstance();
 	srand(comm.seed);
 	showConfiguration();
+	
 	
 }
 
@@ -56,6 +59,7 @@ Ui::MainWindow* MainWindow::getUI() const
 void MainWindow::showConfiguration()
 {
 	ui.stackedWidget->setCurrentWidget(configWidget);
+	
 	//ui.labDebug->setText("Configuration");
 }
 
@@ -211,7 +215,7 @@ void MainWindow::on_btnPoten_clicked() {
 }
 
 void MainWindow::on_btnDebug_clicked() {
-	ui.stackedWidget->setCurrentIndex(6);
+	//ui.stackedWidget->setCurrentIndex(6);
 
 
 	Communication& comm = Communication::getInstance();
@@ -228,11 +232,13 @@ void MainWindow::on_btnDebug_clicked() {
 	std::uniform_int_distribution<int> fontSizeDist(10, 45);
 
 	QStringList messages = {
-		"SECOEU LA MANETTE MAINTENANT!!!",
+		"SECOUE LA MANETTE MAINTENANT!!!",
 		"AAAAAAAAAAAAAAAAAAA\nAAAAAAA\nA L'AIDE AAAAAAAAAAAA",
 		"VITE!! VITE!! VITE!!",
 		"SHAKE! SHAKE! SHAKE!",
-		"URGENCE: SECOUEZ!"
+		"prend ça molo...",
+		"QU'EST-CE QUE TU FAIS?!?!",
+		"URGENCE: SECOUE!"
 	};
 	std::uniform_int_distribution<int> msgDist(0, messages.size() - 1);
 
@@ -266,23 +272,25 @@ void MainWindow::on_btnDebug_clicked() {
 		msg->show();
 	}
 
-	QPixmap jp(":/MainWindow/jp.jpg");
-	QPixmap jpScaled = jp.scaled(400, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-	QMessageBox* msgJP = new QMessageBox();
-	msgJP->setWindowTitle(QString("JP"));
-	msgJP->setIconPixmap(jpScaled);
-	msgJP->show();
-
 	QPixmap rob(":/MainWindow/robus2000.png");
 	QPixmap robScaled = rob.scaled(400, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 	QMessageBox* msgRob = new QMessageBox();
-	msgRob->setWindowTitle(QString("JP"));
+	msgRob->setWindowTitle(QString("robus..."));
 	msgRob->setIconPixmap(robScaled);
+	msgRob->move((screenWidth - 400), rand() % (screenHeight - 200));
 	msgRob->show();
+
+	QPixmap jp(":/MainWindow/jp.jpg");
+	QPixmap jpScaled = jp.scaled(600, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+	QMessageBox* msgJP = new QMessageBox();
+	msgJP->setWindowTitle(QString("manifestation"));
+	msgJP->setIconPixmap(jpScaled);
+	//msgJP->move((screenWidth - 400), rand() % (screenHeight - 200));
+	msgJP->show();
 	
 }
 
-void MainWindow::on_btnQuit_clicked() {
+void MainWindow::on_btnQui_clicked() {
 	QApplication::quit();
 }
 

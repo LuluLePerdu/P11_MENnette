@@ -8,5 +8,11 @@
         <file>Media/exit.png</file>
         <file>Media/house.png</file>
         <file>Media/jeff.mp3</file>
+        <file>Media/bleu.png</file>
+        <file>Media/cables.png</file>
+        <file>Media/fil-electrique-special-automobile-2mm.jpg</file>
+        <file>Media/jaune.png</file>
+        <file>Media/red.png</file>
+        <file>Media/vert.png</file>
     </qresource>
 </RCC>

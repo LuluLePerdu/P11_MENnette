@@ -50,6 +50,7 @@ std::string CryptoSequencer::updateSequence() {
     if (lcture.find(MSG_ID_AR_POTENTIOMETER) != lcture.end()) {
         usrInput = lcture[MSG_ID_AR_POTENTIOMETER];
     }
+    
 
     comm.clear();
     char characters[32] = "!@/\\$%?&*()=+#|\\*-[]^<>}{`;:,.'";
@@ -58,7 +59,6 @@ std::string CryptoSequencer::updateSequence() {
     for (int i = 0; i < 10; i++) {
         outputCode[i] = characters[std::rand() % 32];
     }
-
 
     if (usrInput == -2) {
         return "NO CONTROLLER";

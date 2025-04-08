@@ -67,7 +67,7 @@ private slots:
     void on_btnAccel_clicked();
     void on_btnPoten_clicked();
     void on_btnDebug_clicked();
-    void on_btnQuit_clicked();
+    void on_btnQui_clicked();
 
     void updateTimer();
     void ledSetText(bool result);
