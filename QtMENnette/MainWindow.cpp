@@ -53,7 +53,6 @@ Ui::MainWindow* MainWindow::getUI() const
 void MainWindow::showConfiguration()
 {
 	ui.stackedWidget->setCurrentWidget(configWidget);
-	ui.labDebug->setText("Configuration");
 }
 
 void MainWindow::initLCD(int minutes, int seconds) {
@@ -104,7 +103,6 @@ void MainWindow::on_btnHome_clicked() {
 	int a = comm.readMsg(MSG_ID_AR_POTENTIOMETER);
 
 	//ui.labDebug->setText("Home");
-	ui.labDebug->setText(QString::number(a));
 }
 
 void MainWindow::on_btnLED_released() {
@@ -117,7 +115,6 @@ void MainWindow::on_btnLED_released() {
 	ui.stackedWidget->addWidget(threadWidget);
 	ui.stackedWidget->setCurrentIndex(3);
 	ui.stackedWidget->setCurrentWidget(threadWidget);
-	ui.labDebug->setText("LED");
 
 }
 
@@ -153,7 +150,6 @@ void MainWindow::on_btnSnake_clicked()
 	snakeWidget->setFocusPolicy(Qt::StrongFocus);
 
 	ui.stackedWidget->setCurrentWidget(snakeWidget);
-	ui.labDebug->setText("Snake");
 	snakeWidget->startGame();
 }
 
@@ -167,12 +163,11 @@ void MainWindow::on_btnSimon_clicked() {
 	ui.stackedWidget->addWidget(simonWidget);
 	ui.stackedWidget->setCurrentIndex(4);
 	ui.stackedWidget->setCurrentWidget(simonWidget);
-	ui.labDebug->setText("Simon");
+	simonWidget->startGame();
 }
 
 void MainWindow::on_btnAccel_clicked() {
 	ui.stackedWidget->setCurrentIndex(2);
-	ui.labDebug->setText("Accel");
 }
 
 void MainWindow::on_btnPoten_clicked() {
@@ -197,7 +192,6 @@ void MainWindow::on_btnPoten_clicked() {
 
 	ui.stackedWidget->addWidget(cryptoWidget);
 	ui.stackedWidget->setCurrentWidget(cryptoWidget);
-	ui.labDebug->setText("Poten");
 
 }
 

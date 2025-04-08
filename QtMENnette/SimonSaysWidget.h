@@ -10,23 +10,25 @@ class SimonSaysWidget : public QWidget
 	Q_OBJECT
 public:
 	SimonSaysWidget(QWidget* parent = nullptr, int length = 10);
-	~SimonSaysWidget();
-
-protected:
 	void startGame();
 
-private:
-	void checkEnd();
-	void runNextStep();
-	QTimer* gameTimer;
-	QLabel* label;
-	SimonSays* logic;
-	int sequence[10];
-	vector<int> ansArray;
-	int timeOnLoss = 20;
+protected:
 
+private:
+	void checkInput(int storage);
+	bool checkEnd();
+	void getSequence();
+	void blinkSequence(int currentLed);
+	void newSequence();
+
+	int sequence[15];
+	int usrAnswer[15];
+	int inputIndex;
 	int currentIndex;
 	int m_length;
+
+	SimonSays* logic;
+	QTimer* gameTimer;
 signals:
 	void timePenalty(int seconds);
 };

@@ -134,7 +134,7 @@
     <QtMoc Include="EndGameWidget.h" />
     <ClInclude Include="ShakeIt.h" />
     <ClInclude Include="ShakeItWidget.h" />
-    <QtMoc Include="SimonSays.h" />
+    <ClInclude Include="SimonSays.h" />
     <QtMoc Include="SimonSaysWidget.h" />
     <ClInclude Include="SnakeMaze.h" />
     <QtMoc Include="SnakeMazeWidget.h" />

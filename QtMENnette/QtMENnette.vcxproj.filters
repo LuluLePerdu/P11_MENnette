@@ -108,9 +108,6 @@
     <ClInclude Include="ShakeIt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SimonSays.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ThreadCutter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -121,6 +118,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShakeItWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonSays.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -146,9 +146,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ConfigurationWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="SimonSays.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ClockWorker.h">

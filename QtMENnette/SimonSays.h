@@ -1,32 +1,19 @@
 #pragma once
 #include "Communication.h"
-#include <vector>
-#include <QTimer>
-#include <QWidget>
-#include <QLabel>
 
 using namespace std;
-class SimonSays : public QWidget
+class SimonSays
 {
-Q_OBJECT
 public:
 	SimonSays(int length);
-	~SimonSays();
-	void run(int index);
-	void readButtons(vector<int>& ansVector, int index);
-	//void run(int button);
+	int getElement(int position);
 	bool getCompleted();
-	bool getElement(int index);
-	void ledBlink(int index, bool state);
-	
+	void ledControl(int led, bool state);
+
 private:
-	//MainWindow* w = MainWindow::instance();
-	void simonSequence();
-	void blinkSequence(int index);
+	void setSequence();
 	int m_length;
-	int seqArray[10];
-	bool completed = true;
-	int m_currLength = 0;
-	QTimer* ledTimer;
-	QLabel* labDebug;
+	int seqArray[15];
+	bool completed = false;
+	int currentRep;
 };

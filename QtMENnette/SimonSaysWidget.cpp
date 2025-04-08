@@ -1,62 +1,93 @@
 #include "SimonSaysWidget.h"
 
 SimonSaysWidget::SimonSaysWidget(QWidget* parent, int length) : 
-	QWidget(parent),
-	gameTimer(new QTimer(this)),
-	label(new QLabel(this)),
-	logic(new SimonSays(length)),
+	QWidget(parent), 
+	currentIndex(0),
+    inputIndex(0),
 	m_length(length),
-	currentIndex(0)
+	logic(new SimonSays(m_length))
 {
+	gameTimer = new QTimer();
 	connect(gameTimer, &QTimer::timeout, this, [this]() {
-		logic->readButtons(ansArray, currentIndex);
-		checkEnd();
+        checkInput(inputIndex);
+        if (!checkEnd()) {
+            newSequence();
+        }
 		});
-
-
-	setFixedSize(5000, 500);
-	label->setFont(QFont("Cascadia Code", 30));
-	label->setText("1234567890");
-	//label->setStyleSheet("QLabel { background-color : black; }");
-	startGame();
-}
-
-SimonSaysWidget::~SimonSaysWidget() {
+	getSequence();
 }
 
 void SimonSaysWidget::startGame() {
 	gameTimer->start(10);
+}
+
+void SimonSaysWidget::checkInput(int storage) {
+    Communication& comm = Communication::getInstance();
+    
+    int msgInput;
+    comm.clear();
+    msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
+
+    switch (msgInput)
+    {
+    case 1:
+        usrAnswer[storage] = 3;
+        inputIndex++;
+        break;
+    case 2:
+        usrAnswer[storage] = 2;
+        inputIndex++;
+        break;
+    case 4:
+        usrAnswer[storage] = 1;
+        inputIndex++;
+        break;
+    case 8:
+        usrAnswer[storage] = 0;
+        inputIndex++;
+        break;
+    default:
+        break;
+    }
+}
+
+void SimonSaysWidget::newSequence() {
+    if (currentIndex >= m_length) {
+        gameTimer->stop();
+    }
+    else {
+        if (inputIndex >= currentIndex) {
+            inputIndex = 0;
+            currentIndex++;
+            blinkSequence(currentIndex);
+        }
+    }
+}
+
+void SimonSaysWidget::blinkSequence(int currentLed) {
+    for (int i = 0; i < currentLed; i++) {
+        int currentValue = i;
+        int timeOn = i * (500 + 500);
+        int timeOff = timeOn + 500;
+        QTimer::singleShot(timeOn, this, [this, currentValue]() {
+            logic->ledControl(currentValue, true);
+            });
+        QTimer::singleShot(timeOff, this, [this, currentValue]() {
+            logic->ledControl(currentValue, false);
+            });
+    }
+}
+
+bool SimonSaysWidget::checkEnd() {
+    if (usrAnswer[inputIndex] != sequence[inputIndex]) {
+        gameTimer->stop();
+        return true;
+    }
+    return false;
+}
+
+void SimonSaysWidget::getSequence() {
 	for (int i = 0; i < m_length; i++) {
-		runNextStep();
+		sequence[i] = logic->getElement(i);
 	}
 }
-
-void SimonSaysWidget::runNextStep() {
-	if (currentIndex < m_length) {
-		logic->run(currentIndex);
-
-		int sequenceTime = currentIndex * (500 + 500) + 1500;
-
-		QTimer::singleShot(sequenceTime, this, [this]() {
-			currentIndex++;
-			runNextStep();
-			});
-	}
-}
-
-void SimonSaysWidget::checkEnd() {
-	if (!logic->getCompleted()) {
-		gameTimer->stop();
-		label->setText("Perdu!!");
-		emit timePenalty(timeOnLoss);
-	}
-}
-/*
-void SimonSaysWidget::updateGame() {
-	QString qSeq;
-	for (int i = 0; i < 10; i++) {
-		qSeq += QString::number(sequence[i]) + " ";
-	}
-	label->setText(qSeq);
-}
-*/
