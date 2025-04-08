@@ -22,9 +22,17 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	connect(ui.btnConfiguration, &QPushButton::clicked, this, &MainWindow::showConfiguration);
 
 	connect(configWidget, &ConfigurationWidget::settingsApplied, this, [this]() {
-		
 		ui.stackedWidget->setCurrentIndex(0);
 		initLCD(3,  0);
+		if (audioOutput) {
+			delete audioOutput;
+		}
+		audioOutput = new QAudioOutput(this);
+		player->setSource(QUrl("qrc:/MainWindow/Media/beep_1sec.mp3"));
+		player->setAudioOutput(audioOutput);
+		audioOutput->setVolume(50);
+		player->setLoops(QMediaPlayer::Infinite);
+		player->play();
 		});
 
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
@@ -100,15 +108,19 @@ void MainWindow::on_btnHome_clicked() {
 		delete cryptoWidget;
 		cryptoWidget = nullptr;
 	}
-	Communication& comm = Communication::getInstance();
+	/*Communication& comm = Communication::getInstance();
 	comm.sendMsg({
 		MSG_ID_PC_MOTOR,
 		100,
 		0,
-		});
-	int a = comm.readMsg(MSG_ID_AR_POTENTIOMETER);
-
-	//ui.labDebug->setText("Home");
+		});*/
+	
+	/*if (audioOutput) {
+		delete audioOutput;
+	}*/
+	
+	errorSound();
+	totalGameWon++;
 }
 
 void MainWindow::on_btnLED_released() {
@@ -116,6 +128,7 @@ void MainWindow::on_btnLED_released() {
 
 	connect(threadWidget, &ThreadCutterWidget::timePenalty, this, [this](int penalty) {
 		totalPenaltyTime += penalty;
+		errorSound();
 		});
 
 	ui.stackedWidget->addWidget(threadWidget);
@@ -148,9 +161,14 @@ void MainWindow::on_btnSnake_clicked()
 			snakeWidget->stopGame();
 		}
 		ui.btnSnake->setEnabled(false);
+		totalGameWon++;
 	});
 
-	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) { totalPenaltyTime += penalty; });
+	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) { 
+		totalPenaltyTime += penalty;
+		errorSound();
+
+		});
 
 	snakeWidget->setFocus();
 	snakeWidget->setFocusPolicy(Qt::StrongFocus);
@@ -164,6 +182,7 @@ void MainWindow::on_btnSimon_clicked() {
 
 	connect(simonWidget, &SimonSaysWidget::timePenalty, this, [this](int penalty) {
 		totalPenaltyTime += penalty;
+		errorSound();
 		});
 
 	//ui.stackedWidget->addWidget(simonWidget);
@@ -191,6 +210,7 @@ void MainWindow::on_btnPoten_clicked() {
 		cryptoWidget = nullptr;
 		ui.stackedWidget->setCurrentIndex(0);
 		ui.btnPoten->setEnabled(false);
+		totalGameWon++;
 		});
 	connect(cryptoWidget, &CryptoSequencerWidget::timePenalty, this, [this](int penalty) {
 		totalPenaltyTime += penalty;
@@ -312,6 +332,10 @@ void MainWindow::updateTimer() {
 		timer->stop();
 		showEndGame(QTime(0, 0, 0), false); // lecture seule
 	}
+	else if (totalGameWon >= 4) {
+		timer->stop();
+		showEndGame(timeLeft, true);
+	}
 	else if (false) {
 		timer->stop();
 		showEndGame(timeLeft, true);
@@ -324,6 +348,7 @@ void MainWindow::updateTimer() {
 
 void MainWindow::showEndGame(QTime finalTime, bool victory)
 {
+	player->stop();
 	QWidget* current = ui.stackedWidget->currentWidget();
 	if (current && current != configWidget && current != ui.pgeMain) {
 		ui.stackedWidget->removeWidget(current);
@@ -343,4 +368,24 @@ void MainWindow::showEndGame(QTime finalTime, bool victory)
 
 	ui.stackedWidget->addWidget(endGameWidget);
 	ui.stackedWidget->setCurrentWidget(endGameWidget);
+}
+
+void MainWindow::errorSound() {
+	QAudioOutput* outputWrong = new QAudioOutput(this);
+	QMediaPlayer* playerWrong = new QMediaPlayer(this);
+
+	connect(playerWrong, &QMediaPlayer::playbackStateChanged, this, [playerWrong, outputWrong](QMediaPlayer::PlaybackState state) {
+			if (state == QMediaPlayer::StoppedState) {
+				playerWrong->deleteLater();
+				outputWrong->deleteLater();
+			}
+		});
+
+	playerWrong->setSource(QUrl("qrc:/MainWindow/Media/buzzer_wrong.mp3"));
+	playerWrong->setAudioOutput(outputWrong);
+	outputWrong->setVolume(10);
+	playerWrong->play();
+
+	//delete playerWrong;
+	//delete outputWrong;
 }
