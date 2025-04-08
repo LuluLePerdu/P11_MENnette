@@ -34,7 +34,8 @@ void ThreadCutterWidget::startGame() {
 		"\n\nSinon, si la DEL bleue et la DEL jaune sont allumées mais aucune autre, appuyez sur le bouton jaune."
 		"\n\nSinon, si uniquement la DEL rouge est allumée, appuyez sur le bouton le plus à gauche."
 		"\n\nSinon, si aucune des autres conditions n'est remplie mais que 2 DELs sont allumées, appuyez sur le bouton rouge."
-		"\n\nSinon, appuyez sur le deuxième bouton à partir de la gauche."));
+		"\n\nSinon, appuyez sur le deuxième bouton à partir de la gauche."
+		"\n\nSi vous voyez un interrupteur sur lequel l'inscription \'NE PAS ACTIVER\' est inscrite, il ne faudrait peut-être pas l'activer..."));
 	
 	logic.turnOffLed();
 	logic.render();
