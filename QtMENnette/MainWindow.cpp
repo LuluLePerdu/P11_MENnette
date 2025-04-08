@@ -184,10 +184,14 @@ void MainWindow::on_btnSimon_clicked() {
 		totalPenaltyTime += penalty;
 		errorSound();
 		});
-
-	//ui.stackedWidget->addWidget(simonWidget);
-	//ui.stackedWidget->setCurrentIndex(4);
-	//ui.stackedWidget->setCurrentWidget(simonWidget);
+	connect(simonWidget, &SimonSaysWidget::gameWon, this, [this]() {
+		ui.btnSimon->setEnabled(false);
+		QMessageBox msg;
+		msg.setWindowTitle("Simon Says");
+		msg.setText("GAME COMPLETED!");
+		msg.exec();
+		totalGameWon++;
+		});
 	simonWidget->startGame();
 }
 
