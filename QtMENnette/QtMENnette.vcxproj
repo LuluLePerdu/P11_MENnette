@@ -141,7 +141,6 @@
     <ClInclude Include="ThreadCutter.h" />
     <QtMoc Include="ThreadCutterWidget.h" />
     <ClInclude Include="Utils\Color.h" />
-    <ClInclude Include="Utils\common.hpp" />
     <QtRcc Include="MainWindow.qrc" />
     <QtUic Include="MainWindow.ui" />
     <QtMoc Include="MainWindow.h" />
