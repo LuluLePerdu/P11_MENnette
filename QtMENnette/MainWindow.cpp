@@ -160,7 +160,7 @@ void MainWindow::on_btnSnake_clicked()
 }
 
 void MainWindow::on_btnSimon_clicked() {
-	simonWidget = new SimonSaysWidget(this, 10, ui.DELVert, ui.DELBleu, ui.DELRouge, ui.DELJaune);
+	simonWidget = new SimonSaysWidget(this, 2, ui.DELVert, ui.DELBleu, ui.DELRouge, ui.DELJaune);
 
 	connect(simonWidget, &SimonSaysWidget::timePenalty, this, [this](int penalty) {
 		totalPenaltyTime += penalty;

@@ -2,128 +2,153 @@
 
 SimonSaysWidget::SimonSaysWidget(QWidget* parent, int length, QLabel* greenLed, QLabel* blueLed, QLabel* redLed, QLabel* yellowLed) :
     QWidget(parent),
-    currentIndex(0),
+    currentLevel(0),
     inputIndex(0),
-    m_length(length),
-    logic(new SimonSays(m_length)),
+    sequenceLength(length),
+    isShowingSequence(false),
+    isWaitingForInput(false),
+    logic(new SimonSays(sequenceLength)),
     m_greenLed(greenLed),
     m_blueLed(blueLed),
     m_redLed(redLed),
-    m_yellowLed(yellowLed),
-    group(new QSequentialAnimationGroup)
+    m_yellowLed(yellowLed)
 {
-	gameTimer = new QTimer();
-	connect(gameTimer, &QTimer::timeout, this, [this]() {
-        checkInput(inputIndex);
-        if (!checkEnd()) {
-            newSequence();
-        }
-		});
-    leds = {m_greenLed, m_blueLed, m_redLed, m_yellowLed};
-	getSequence();
+    gameTimer = new QTimer(this);
+    connect(gameTimer, &QTimer::timeout, this, &SimonSaysWidget::checkInput);
+
+    sequenceTimer = new QTimer(this);
+    sequenceTimer->setSingleShot(true);
+
+    leds = { m_greenLed, m_blueLed, m_redLed, m_yellowLed };
+    getSequence();
 }
 
 void SimonSaysWidget::startGame() {
-    gameTimer->start(10);
-    backupBlink(4, leds);
+    currentLevel = 1;
+    resetUserInput();
+    showSequence();
 }
 
-void SimonSaysWidget::checkInput(int storage) {
+void SimonSaysWidget::stopGame() {
+    gameTimer->stop();
+    sequenceTimer->stop();
+}
+
+void SimonSaysWidget::checkInput() {
+    if (!isWaitingForInput) return;
+
     Communication& comm = Communication::getInstance();
-    
-    int msgInput;
     comm.clear();
-    msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
+    int msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
 
-    switch (msgInput)
-    {
-    case 1:
-        usrAnswer[storage] = 3;
-        inputIndex++;
-        break;
-    case 2:
-        usrAnswer[storage] = 2;
-        inputIndex++;
-        break;
-    case 4:
-        usrAnswer[storage] = 1;
-        inputIndex++;
-        break;
-    case 8:
-        usrAnswer[storage] = 0;
-        inputIndex++;
-        break;
-    default:
-        break;
+    if (msgInput > 0) {
+        processUserInput(msgInput);
     }
 }
 
-void SimonSaysWidget::newSequence() {
-    if (currentIndex >= m_length) {
-        gameTimer->stop();
-        emit returnToMenuRequested();
+void SimonSaysWidget::processUserInput(int button) {
+    int pressedButton = -1;
+
+    switch (button) {
+    case 1: 
+        pressedButton = 3; 
+        break;  
+    case 2: 
+        pressedButton = 2; 
+        break;  
+    case 4: 
+        pressedButton = 1; 
+        break;
+    case 8: 
+        pressedButton = 0; 
+        break;  
+    default: return;
     }
-    else {
-        if (inputIndex >= currentIndex) {
-            inputIndex = 0;
-            currentIndex++;
-            //blinkSequence(currentIndex);
-            backupBlink(currentIndex, leds);
+
+    //leds[pressedButton]->setStyleSheet("background-color: white;");
+
+    userInput[inputIndex] = pressedButton;
+    inputIndex++;
+
+    if (inputIndex >= currentLevel) {
+        isWaitingForInput = false;
+        if (checkSequence()) {
+            if (currentLevel >= sequenceLength) {
+                gameOver(true);
+            }
+            else {
+                currentLevel++;
+                resetUserInput();
+                QTimer::singleShot(1000, this, &SimonSaysWidget::showSequence);
+            }
+        }
+        else {
+            gameOver(false);
         }
     }
 }
 
-void SimonSaysWidget::blinkSequence(int currentLed) {
-    for (int i = 0; i < currentLed; i++) {
-        int currentValue = i;
-        int timeOn = i * (500 + 500);
-        int timeOff = timeOn + 500;
-        QTimer::singleShot(timeOn, this, [this, currentValue]() {
-            logic->ledControl(currentValue, true);
-            });
-        QTimer::singleShot(timeOff, this, [this, currentValue]() {
-            logic->ledControl(currentValue, false);
-            });
-    }
-}
+void SimonSaysWidget::showSequence() {
+    isShowingSequence = true;
+    isWaitingForInput = false;
 
-void SimonSaysWidget::backupBlink(int currentLed, QList<QLabel*>& labLed) {
     for (int i = 0; i < 4; i++) {
-        labLed[i]->hide();
+        leds[i]->hide();
     }
-
     QApplication::processEvents();
 
-    for (int i = 1; i < currentLed+1; i++) {
-        int timeOn = i * (500 + 500);
-        int timeOff = timeOn + 500;
-        QTimer::singleShot(timeOn, this, [this, &labLed, i]() {
-            labLed[sequence[i]]->show();
+    for (int i = 0; i < currentLevel; i++) {
+        int ledIndex = sequence[i];
+        QTimer::singleShot(i * (blinkDuration + 200), this, [this, ledIndex]() {
+            leds[ledIndex]->show();
+            QApplication::processEvents();
             });
-        QTimer::singleShot(timeOff, this, [this, &labLed, i]() {
-            labLed[sequence[i]]->hide();
+        QTimer::singleShot(i * (blinkDuration + 200) + blinkDuration, this, [this, ledIndex]() {
+            leds[ledIndex]->hide();
+            QApplication::processEvents();
             });
     }
 
-    int finalTime = (currentLed+1) * 1000;
-    QTimer::singleShot(finalTime, this, [labLed]() {
+    QTimer::singleShot(currentLevel * (blinkDuration + 200), this, [this]() {
         for (int i = 0; i < 4; i++) {
-            labLed[i]->show();
+            leds[i]->show();
         }
+        isShowingSequence = false;
+        isWaitingForInput = true;
+        inputIndex = 0;
+        gameTimer->start(10);
         });
 }
 
-bool SimonSaysWidget::checkEnd() {
-    if (usrAnswer[inputIndex] != sequence[inputIndex]) {
-        gameTimer->stop();
-        emit timePenalty(timeOnLoss);
-        return true;
+bool SimonSaysWidget::checkSequence() {
+    for (int i = 0; i < currentLevel; i++) {
+        if (userInput[i] != sequence[i]) {
+            return false;
+        }
     }
-    return false;
+    return true;
+}
+
+void SimonSaysWidget::resetUserInput() {
+    inputIndex = 0;
+    for (int i = 0; i < 15; i++) {
+        userInput[i] = -1;
+    }
+}
+
+void SimonSaysWidget::gameOver(bool won) {
+    stopGame();
+    if (won) {
+        emit gameWon();
+    }
+    else {
+        emit timePenalty(timeOnLoss);
+    }
+    emit returnToMenuRequested();
 }
 
 void SimonSaysWidget::getSequence() {
-	for (int i = 0; i < m_length; i++) {
-		sequence[i] = logic->getElement(i);
-	}
+    for (int i = 0; i < sequenceLength; i++) {
+        sequence[i] = logic->getElement(i);
+    }
 }
