@@ -89,6 +89,12 @@ void MainWindow::on_btnHome_clicked() {
 }
 
 void MainWindow::on_btnLED_released() {
+	if (threadWidget) {
+		ui.stackedWidget->removeWidget(threadWidget);
+		delete threadWidget;
+		threadWidget = nullptr;
+	}
+	
 	threadWidget = new ThreadCutterWidget(this);
 
 	this->setStyleSheet(
@@ -100,6 +106,21 @@ void MainWindow::on_btnLED_released() {
 	connect(threadWidget, &ThreadCutterWidget::timePenalty, this, [this](int penalty) {
 		totalPenaltyTime += penalty;
 		errorSound();
+		});
+
+	connect(threadWidget, &ThreadCutterWidget::returnToMenuRequested, this, [this](bool won) {
+		this->setStyleSheet(
+			"MainWindow {"
+			"   border-image: url(:/MainWindow/Background.png);"
+			"}"
+		);
+
+		ui.stackedWidget->setCurrentIndex(0);
+
+		if (won) {
+			ui.btnLED->setEnabled(false);
+			totalGameWon++;
+		}
 		});
 
 	ui.stackedWidget->addWidget(threadWidget);
