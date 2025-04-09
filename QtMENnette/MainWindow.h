@@ -69,6 +69,10 @@ private:
     void showEndGame(QTime finalTime, bool victory);
     void showPopUps();
 
+    // #### LE TEMPS ####
+    int minutes = 3;
+    int secondes = 0;
+
 private slots:
     void on_btnHome_clicked();
     void on_btnSnake_clicked();
