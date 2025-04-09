@@ -24,6 +24,8 @@ public:
 
     int getCryptoRange() const;
 
+    int getSimonLength() const;
+
 signals:
     void settingsApplied();
 

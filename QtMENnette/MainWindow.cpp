@@ -21,8 +21,11 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		ui.stackedWidget->setCurrentIndex(0);
 		initLCD(3,  0);
 		if (audioOutput) {
+			buzzTimer->stop();
 			delete audioOutput;
 			delete buzzTimer;
+			delete timer;
+			
 		}
 		totalGameWon = 0;
 		ui.btnLED->setEnabled(true);
@@ -117,7 +120,7 @@ void MainWindow::on_btnLED_released() {
 		"}"
 	);
 	Communication& comm = Communication::getInstance();
-	connect(threadWidget, &ThreadCutterWidget::timePenalty, this, [this](int penalty, Communication comm) {
+	connect(threadWidget, &ThreadCutterWidget::timePenalty, this, [this, &comm](int penalty) {
 		totalPenaltyTime += penalty;
 		elapsedTime = eTimer.elapsed();
 		QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
@@ -175,7 +178,7 @@ void MainWindow::on_btnSnake_clicked()
 	});
 
 	Communication& comm = Communication::getInstance();
-	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty, Communication comm) { 
+	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this, &comm](int penalty) { 
 		totalPenaltyTime += penalty;
 		elapsedTime = eTimer.elapsed();
 		QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
@@ -193,7 +196,7 @@ void MainWindow::on_btnSnake_clicked()
 
 void MainWindow::on_btnSimon_clicked() {
 
-	simonWidget = new SimonSaysWidget(this, 6, ui.DELVert, ui.DELBleu, ui.DELRouge, ui.DELJaune);
+	simonWidget = new SimonSaysWidget(this, configWidget->getSimonLength(), ui.DELVert, ui.DELBleu, ui.DELRouge, ui.DELJaune);
 
 	connect(simonWidget, &SimonSaysWidget::timePenalty, this, [this](int penalty) {
 
@@ -271,7 +274,7 @@ void MainWindow::on_btnPoten_clicked() {
 		});
 
 	Communication& comm = Communication::getInstance();
-	connect(cryptoWidget, &CryptoSequencerWidget::timePenalty, this, [this](int penalty, Communication comm) {
+	connect(cryptoWidget, &CryptoSequencerWidget::timePenalty, this, [this, &comm](int penalty) {
 		totalPenaltyTime += penalty;
 		elapsedTime = eTimer.elapsed();
 		QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
