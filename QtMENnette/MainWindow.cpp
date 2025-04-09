@@ -22,13 +22,26 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		initLCD(3,  0);
 		if (audioOutput) {
 			delete audioOutput;
+			delete buzzTimer;
 		}
-		audioOutput = new QAudioOutput(this);
-		player->setSource(QUrl("qrc:/MainWindow/Media/beep_1sec.mp3"));
-		player->setAudioOutput(audioOutput);
-		audioOutput->setVolume(0.5);
-		player->setLoops(QMediaPlayer::Infinite);
-		player->play();
+		totalGameWon = 0;
+		ui.btnLED->setEnabled(true);
+		ui.btnSimon->setEnabled(true);
+		ui.btnSnake->setEnabled(true);
+		ui.btnAccel->setEnabled(true);
+		ui.btnPoten->setEnabled(true);
+
+		buzzTimer = new QTimer(this);
+		Communication& comm = Communication::getInstance();
+		connect(buzzTimer, &QTimer::timeout, this, [this, &comm]() {
+			comm.buzz(50);
+			audioOutput = new QAudioOutput(this);
+			player->setSource(QUrl("qrc:/MainWindow/Media/beep_1sec.mp3"));
+			player->setAudioOutput(audioOutput);
+			audioOutput->setVolume(0.5);
+			player->play();
+			});
+		buzzTimer->start(1000);
 		});
 
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
@@ -78,6 +91,7 @@ void MainWindow::initLCD(int minutes, int seconds) {
 	connect(timer, &QTimer::timeout, this, &MainWindow::updateTimer);
 	timer->start(100);
 	blink = false;
+	
 }
 
 
@@ -376,7 +390,7 @@ void MainWindow::updateTimer() {
 		ui.lcdClock->setPalette(paletteBlink);
 	}
 
-	if ((timeLeft.minute() <= 0 && timeLeft.second() <= 0)) {
+	if (((timeLeft.minute() <= 0 && timeLeft.second() <= 0) || timeLeft.minute() >= 55)) {
 		timer->stop();
 		showEndGame(QTime(0, 0, 0), false); // lecture seule
 	}
