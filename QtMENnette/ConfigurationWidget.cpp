@@ -65,16 +65,33 @@ void ConfigurationWidget::setupUi()
 
     mainLayout->addWidget(createGameSection("SIMON SAYS", simonContent));
 
-    QWidget* threadContent = new QWidget();
-    QFormLayout* threadLayout = new QFormLayout(threadContent);
-    threadLayout->setContentsMargins(10, 10, 10, 10);
-
     //COMBOBOX
 	//SPINBOX
 
     //add row
 
+    // ===== THREAD CUTTER =====
+    QWidget* threadContent = new QWidget();
+    QFormLayout* threadLayout = new QFormLayout(threadContent);
+    threadLayout->setContentsMargins(10, 10, 10, 10);
+
+    difficultyThreadCombo = new QComboBox();
+    difficultyThreadCombo->addItem("Facile", EASY);
+    difficultyThreadCombo->addItem("Normal", NORMAL);
+    difficultyThreadCombo->addItem("Difficile", HARD);
+    difficultyThreadCombo->addItem("Custom", CUSTOM);
+
+    threadTimeSpin = new QSpinBox();
+    threadTimeSpin->setRange(10, 50);
+    threadTimeSpin->setSuffix(" sec");
+
+    threadLayout->addRow(QString::fromLatin1("Difficulté:"), difficultyThreadCombo);
+    threadLayout->addRow(QString::fromLatin1("Pénalité:"), threadTimeSpin);
+
+    connect(difficultyThreadCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ConfigurationWidget::)
+
     mainLayout->addWidget(createGameSection("THREAD CUTTER", threadContent));
+
 
 
 	// ===== CRYPTO SEQUENCER =====
@@ -223,6 +240,22 @@ void ConfigurationWidget::onDifficultyChanged(int index)
     updateDifficultySettings();
 }
 
+void ConfigurationWidget::onDiffChangedThread(int index) {
+    Q_UNUSED(index);
+
+    switch (difficultyThreadCombo->currentData().toInt())
+    {
+    case EASY:
+        threadTimeSpin->setValue(10);
+    case NORMAL:
+        threadTimeSpin->setValue(30);
+    case HARD:
+        threadTimeSpin->setValue(50);
+    default:
+        break;
+    }
+}
+
 void ConfigurationWidget::updateDifficultySettings()
 {
     Difficulty diff = static_cast<Difficulty>(difficultyCombo->currentData().toInt());
@@ -244,3 +277,5 @@ int ConfigurationWidget::getMazeHeight() const { return mazeHeightSpin->value();
 int ConfigurationWidget::getMazeTime() const { return mazeTimeSpin->value(); }
 
 int ConfigurationWidget::getCryptoRange() const { return cryptoRangeSpin->value(); }
+
+int ConfigurationWidget::getThreadPenalty() const { return threadTimeSpin->value(); }

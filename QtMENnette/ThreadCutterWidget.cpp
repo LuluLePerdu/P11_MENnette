@@ -1,6 +1,6 @@
 #include "ThreadCutterWidget.h"
 
-ThreadCutterWidget::ThreadCutterWidget(QWidget* parent) : QWidget(parent) 
+ThreadCutterWidget::ThreadCutterWidget(QWidget* parent, int timePenalty) : QWidget(parent), timeOnLoss(timePenalty)
 {
 	gameTimer = new QTimer(this);
 
@@ -50,4 +50,12 @@ void ThreadCutterWidget::checkEnd() {
 void ThreadCutterWidget::renderText(QLabel* label, QString text) {
 	label->setText(text);
 	label->setVisible(true);
+}
+
+int ThreadCutterWidget::getTimePenalty() {
+	return timeOnLoss;
+}
+
+void ThreadCutterWidget::setTimePenalty(int time) {
+	timeOnLoss = time;
 }
