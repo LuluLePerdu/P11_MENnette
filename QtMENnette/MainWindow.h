@@ -70,14 +70,14 @@ private:
 	void errorSound();
     void deleteGames();
 	bool isInGame = false;
-
+    void showPopUps();
 
 private slots:
     void on_btnHome_clicked();
     void on_btnSnake_clicked();
     void on_btnLED_released();
     void on_btnSimon_clicked();
-    void on_btnAccel_clicked();
+    //void on_btnAccel_clicked();
     void on_btnPoten_clicked();
     void on_btnDebug_clicked();
     void on_btnQui_clicked();

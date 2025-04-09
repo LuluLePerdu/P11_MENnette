@@ -12,10 +12,6 @@ AccelWidget::~AccelWidget()
 
 void AccelWidget::startGame()
 {
-	QMessageBox msg;
-	msg.setWindowTitle("Addddsadsadasdas");
-	msg.setText("SHAKE LA MANNETTE");
-	msg.exec();
 	gameTimer = new QTimer(this);
 	Communication& comm = Communication::getInstance();
 	QObject::connect(gameTimer, &QTimer::timeout, this, [this, &comm]() {

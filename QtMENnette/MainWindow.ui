@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="pgeMain">
     <widget class="QFrame" name="frame">
@@ -158,63 +158,12 @@ QPushButton:pressed {
        <string>LED</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btnAccel">
+     <widget class="QPushButton" name="btnDebug">
       <property name="geometry">
        <rect>
         <x>370</x>
         <y>250</y>
-        <width>101</width>
-        <height>101</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-    background-color: #1e1e1e;          
-    color: #f2f2f2;                         
-    border: 2px solid #770000;           
-    border-radius: 6px;
-    padding: 10px 16px;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    font-size: 16px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-
-
-    box-shadow: 
-        0 0 8px rgba(255, 0, 0, 0.4),
-        inset 0 0 4px rgba(255, 0, 0, 0.2);
-}
-
-QPushButton:hover {
-    background-color: #2a0000;           
-    border: 2px solid #aa0000;
-    box-shadow: 
-        0 0 12px rgba(255, 0, 0, 0.6),
-        inset 0 0 6px rgba(255, 0, 0, 0.3);
-}
-
-QPushButton:pressed {
-    background-color: #100000;           
-    border: 2px solid #ff0000;
-    padding-top: 11px;
-    padding-left: 17px;
-    box-shadow: 
-        0 0 4px rgba(255, 0, 0, 0.3),
-        inset 0 0 10px rgba(255, 0, 0, 0.6);
-}
-</string>
-      </property>
-      <property name="text">
-       <string>Accel</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnDebug">
-      <property name="geometry">
-       <rect>
-        <x>520</x>
-        <y>250</y>
-        <width>101</width>
+        <width>251</width>
         <height>101</height>
        </rect>
       </property>
@@ -258,7 +207,7 @@ QPushButton:pressed {
       </property>
       <property name="text">
        <string>NE PAS
-TOUCHER</string>
+ACTIVER</string>
       </property>
       <property name="checkable">
        <bool>false</bool>

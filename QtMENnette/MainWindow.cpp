@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		ui.btnLED->setEnabled(true);
 		ui.btnSimon->setEnabled(true);
 		ui.btnSnake->setEnabled(true);
-		ui.btnAccel->setEnabled(true);
+		//ui.btnAccel->setEnabled(true);
 		ui.btnPoten->setEnabled(true);
 
 		randomGame = (std::rand() % 4) + 1;
@@ -51,6 +51,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 				accelWidget = new AccelWidget(this);
 				ui.stackedWidget->addWidget(accelWidget);
 				ui.stackedWidget->setCurrentWidget(accelWidget);
+				showPopUps();
 				accelWidget->startGame();
 			}
 			if (totalGameWon == randomGame && accelWidget->hasWon()) {
@@ -123,7 +124,7 @@ void MainWindow::initLCD(int minutes, int seconds) {
 void MainWindow::on_btnHome_clicked() {
 	ui.stackedWidget->setCurrentIndex(0);
 	deleteGames();
-	//totalGameWon++;
+	totalGameWon++;
 }
 
 
@@ -249,8 +250,8 @@ void MainWindow::on_btnSimon_clicked() {
 }
 
 
-void MainWindow::on_btnAccel_clicked() {
-}
+//void MainWindow::on_btnAccel_clicked() {
+//}
 
 
 void MainWindow::on_btnPoten_clicked() {
@@ -287,79 +288,7 @@ void MainWindow::on_btnPoten_clicked() {
 }
 
 void MainWindow::on_btnDebug_clicked() {
-	//ui.stackedWidget->setCurrentIndex(6);
-
-
-	Communication& comm = Communication::getInstance();
-	std::mt19937 mt(Communication::getInstance().seed);
-
-	int numPopups = 5;
-	QScreen* screen = QGuiApplication::primaryScreen();
-	QRect screenGeometry = screen->geometry();
-	int screenWidth = screenGeometry.width();
-	int screenHeight = screenGeometry.height();
-
-	std::uniform_int_distribution<int> xDist(0, screenWidth - 400);
-	std::uniform_int_distribution<int> yDist(0, screenHeight - 200);
-	std::uniform_int_distribution<int> fontSizeDist(10, 45);
-
-	QStringList messages = {
-		"SECOUE LA MANETTE MAINTENANT!!!",
-		"AAAAAAAAAAAAAAAAAAA\nAAAAAAA\nA L'AIDE AAAAAAAAAAAA",
-		"VITE!! VITE!! VITE!!",
-		"SHAKE! SHAKE! SHAKE!",
-		"prend ça molo...",
-		"QU'EST-CE QUE TU FAIS?!?!",
-		"URGENCE: SECOUE!"
-	};
-	std::uniform_int_distribution<int> msgDist(0, messages.size() - 1);
-
-	QStringList fonts = {
-		"Comic Sans MS",
-		"Impact",
-		"Arial Black",
-		"Verdana",
-		"Times New Roman",
-		"Cascadia Code"
-	};
-	std::uniform_int_distribution<int> fontDist(0, fonts.size() - 1);
-
-	for (int i = 0; i < numPopups; i++) {
-		QMessageBox* msg = new QMessageBox();
-		msg->setWindowTitle(QString("MESSAGE IMPORTANT"));
-
-		msg->setText(messages[msgDist(mt)]);
-
-		QFont randomFont(fonts[fontDist(mt)], fontSizeDist(mt));
-		randomFont.setBold(true);
-		msg->setFont(randomFont);
-
-		//msg->setStandardButtons(QMessageBox::NoButton);
-		//msg->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
-
-		int x = rand() % (screenWidth - 400);
-		int y = rand() % (screenHeight - 200);
-
-		msg->move(x, y);
-		msg->show();
-	}
-
-	QPixmap rob(":/MainWindow/robus2000.png");
-	QPixmap robScaled = rob.scaled(400, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-	QMessageBox* msgRob = new QMessageBox();
-	msgRob->setWindowTitle(QString("robus..."));
-	msgRob->setIconPixmap(robScaled);
-	msgRob->move((screenWidth - 400), rand() % (screenHeight - 200));
-	msgRob->show();
-
-	QPixmap jp(":/MainWindow/jp.jpg");
-	QPixmap jpScaled = jp.scaled(600, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-	QMessageBox* msgJP = new QMessageBox();
-	msgJP->setWindowTitle(QString("manifestation"));
-	msgJP->setIconPixmap(jpScaled);
-	//msgJP->move((screenWidth - 400), rand() % (screenHeight - 200));
-	msgJP->show();
-	
+	showPopUps();
 }
 
 void MainWindow::on_btnQui_clicked() {
@@ -488,4 +417,76 @@ void MainWindow::deleteGames() {
 		delete cryptoWidget;
 		cryptoWidget = nullptr;
 	}
+}
+
+void MainWindow::showPopUps() {
+	Communication& comm = Communication::getInstance();
+	std::mt19937 mt(Communication::getInstance().seed);
+
+	int numPopups = 5;
+	QScreen* screen = QGuiApplication::primaryScreen();
+	QRect screenGeometry = screen->geometry();
+	int screenWidth = screenGeometry.width();
+	int screenHeight = screenGeometry.height();
+
+	std::uniform_int_distribution<int> xDist(0, screenWidth - 400);
+	std::uniform_int_distribution<int> yDist(0, screenHeight - 200);
+	std::uniform_int_distribution<int> fontSizeDist(10, 45);
+
+	QStringList messages = {
+		"SECOUE LA MANETTE MAINTENANT!!!",
+		"AAAAAAAAAAAAAAAAAAA\nAAAAAAA\nA L'AIDE AAAAAAAAAAAA",
+		"VITE!! VITE!! VITE!!",
+		"SHAKE! SHAKE! SHAKE!",
+		"prend ça molo...",
+		"QU'EST-CE QUE TU FAIS?!?!",
+		"URGENCE: SECOUE!"
+	};
+	std::uniform_int_distribution<int> msgDist(0, messages.size() - 1);
+
+	QStringList fonts = {
+		"Comic Sans MS",
+		"Impact",
+		"Arial Black",
+		"Verdana",
+		"Times New Roman",
+		"Cascadia Code"
+	};
+	std::uniform_int_distribution<int> fontDist(0, fonts.size() - 1);
+
+	for (int i = 0; i < numPopups; i++) {
+		QMessageBox* msg = new QMessageBox();
+		msg->setWindowTitle(QString("MESSAGE IMPORTANT"));
+
+		msg->setText(messages[msgDist(mt)]);
+
+		QFont randomFont(fonts[fontDist(mt)], fontSizeDist(mt));
+		randomFont.setBold(true);
+		msg->setFont(randomFont);
+
+		//msg->setStandardButtons(QMessageBox::NoButton);
+		//msg->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
+
+		int x = rand() % (screenWidth - 400);
+		int y = rand() % (screenHeight - 200);
+
+		msg->move(x, y);
+		msg->show();
+	}
+
+	QPixmap rob(":/MainWindow/robus2000.png");
+	QPixmap robScaled = rob.scaled(400, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+	QMessageBox* msgRob = new QMessageBox();
+	msgRob->setWindowTitle(QString("robus..."));
+	msgRob->setIconPixmap(robScaled);
+	msgRob->move((screenWidth - 400), rand() % (screenHeight - 200));
+	msgRob->show();
+
+	QPixmap jp(":/MainWindow/jp.jpg");
+	QPixmap jpScaled = jp.scaled(600, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+	QMessageBox* msgJP = new QMessageBox();
+	msgJP->setWindowTitle(QString("manifestation"));
+	msgJP->setIconPixmap(jpScaled);
+	//msgJP->move((screenWidth - 400), rand() % (screenHeight - 200));
+	msgJP->show();
 }
