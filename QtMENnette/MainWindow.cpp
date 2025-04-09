@@ -361,7 +361,7 @@ void MainWindow::updateTimer() {
 		ui.lcdClock->setPalette(paletteBlink);
 	}
 
-	if ((timeLeft.minute() <= 0 && timeLeft.second() <= 0)) {
+	if (((timeLeft.minute() <= 0 && timeLeft.second() <= 0) || timeLeft.minute() >= 55)) {
 		timer->stop();
 		showEndGame(QTime(0, 0, 0), false); // lecture seule
 	}
