@@ -22,13 +22,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		initLCD(3,  0);
 		if (audioOutput) {
 			delete audioOutput;
+			delete buzzTimer;
 		}
-		/*audioOutput = new QAudioOutput(this);
-		player->setSource(QUrl("qrc:/MainWindow/Media/beep_1sec.mp3"));
-		player->setAudioOutput(audioOutput);
-		audioOutput->setVolume(0.5);
-		player->setLoops(QMediaPlayer::Infinite);
-		player->play();*/
+		totalGameWon = 0;
+		ui.btnLED->setEnabled(true);
+		ui.btnSimon->setEnabled(true);
+		ui.btnSnake->setEnabled(true);
+		ui.btnAccel->setEnabled(true);
+		ui.btnPoten->setEnabled(true);
 
 		buzzTimer = new QTimer(this);
 		Communication& comm = Communication::getInstance();
