@@ -240,10 +240,18 @@ void SnakeMazeWidget::handleInputs()
         QPointF prevPos(logic.getPlayerX(), logic.getPlayerY());
 
         switch (joystickValue) {
-            case 4: logic.changeDirection(-1, 0); break; // Gauche
-            case 8: logic.changeDirection(1, 0);  break; // Droite
-            case 2: logic.changeDirection(0, -1); break; // Haut
-            case 1: logic.changeDirection(0, 1);  break; // Bas
+            case 4: 
+                logic.changeDirection(-1, 0); 
+                break; // Gauche
+            case 8: 
+                logic.changeDirection(1, 0);  
+                break; // Droite
+            case 2: 
+                logic.changeDirection(0, -1); 
+                break; // Haut
+            case 1: 
+                logic.changeDirection(0, 1);  
+                break; // Bas
             default: return;
         }
 
@@ -303,16 +311,23 @@ void SnakeMazeWidget::updateGame()
 
 void SnakeMazeWidget::showResultDialog()
 {
+    Communication& comm = Communication::getInstance();
     gameTimer->stop();
 
     int timeUsed = logic.getGameDuration() - logic.getTimeLeft();
     bool victory = timeUsed <= logic.getGameDuration();
 
     QMessageBox msgBox;
-    msgBox.setWindowTitle(victory ? "Mission accomplie" : "Échec");
-    msgBox.setText(victory
-        ? QString("Bombe désamorcée en %1 secondes!").arg(timeUsed)
-        : QString("Temps dépassé de %1 secondes!").arg(timeUsed - logic.getGameDuration()));
+    if (victory) {
+        msgBox.setWindowTitle(QString::fromLatin1("Mission accomplie"));
+        msgBox.setText(QString::fromLatin1("Bombe désamorcée en %1 secondes!").arg(timeUsed));
+        comm.buzz(57);
+    }
+    else {
+        msgBox.setWindowTitle(QString::fromLatin1("Échec"));
+        msgBox.setText(QString::fromLatin1("Temps dépassé de %1 secondes!").arg(timeUsed - logic.getGameDuration()));
+        comm.buzz(242);
+    }
 
     QPushButton* retryButton = msgBox.addButton("Recommencer", QMessageBox::ActionRole);
     QPushButton* menuButton = msgBox.addButton("Retour au menu", QMessageBox::AcceptRole);
