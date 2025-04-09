@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 
 	connect(configWidget, &ConfigurationWidget::settingsApplied, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
-		initLCD(3,  0);
+		initLCD(0,  5);
 		Communication& comm = Communication::getInstance();
 		comm.sendTime(3 * 60 + 0);
 		if (audioOutput) {
@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 			delete buzzTimer;			
 		}
 		totalGameWon = 0;
+		isInGame = true;
 		ui.btnLED->setEnabled(true);
 		ui.btnSimon->setEnabled(true);
 		ui.btnSnake->setEnabled(true);
@@ -37,30 +38,33 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		randomGame = (std::rand() % 4) + 1;
 
 		buzzTimer = new QTimer(this);
+		audioOutput = new QAudioOutput(this);
 		connect(buzzTimer, &QTimer::timeout, this, [this, &comm]() {
 			comm.buzz(50);
-			audioOutput = new QAudioOutput(this);
-			player->setSource(QUrl("qrc:/MainWindow/Media/beep_1sec.mp3"));
-			player->setAudioOutput(audioOutput);
-			audioOutput->setVolume(0.5);
-			player->play();
+			if (isInGame) {
+			
+				player->setSource(QUrl("qrc:/MainWindow/Media/beep_1sec.mp3"));
+				player->setAudioOutput(audioOutput);
+				audioOutput->setVolume(0.5);
+				player->play();
 
-			if (totalGameWon == randomGame && !accelWidget) {
-				comm.buzz(255);
-				ui.stackedWidget->setCurrentIndex(2);
-				accelWidget = new AccelWidget(this);
-				ui.stackedWidget->addWidget(accelWidget);
-				ui.stackedWidget->setCurrentWidget(accelWidget);
-				showPopUps();
-				accelWidget->startGame();
-			}
-			if (totalGameWon == randomGame && accelWidget->hasWon()) {
-				comm.buzz(255);
-				totalGameWon++;
-				//accelWidget->stopGame();
-				ui.stackedWidget->removeWidget(accelWidget);
-				//delete accelWidget;
-				ui.stackedWidget->setCurrentIndex(0);
+				if (totalGameWon == randomGame && !accelWidget) {
+					comm.buzz(255);
+					ui.stackedWidget->setCurrentIndex(2);
+					accelWidget = new AccelWidget(this);
+					ui.stackedWidget->addWidget(accelWidget);
+					ui.stackedWidget->setCurrentWidget(accelWidget);
+					showPopUps();
+					accelWidget->startGame();
+				}
+				if (totalGameWon == randomGame && accelWidget->hasWon()) {
+					comm.buzz(255);
+					totalGameWon++;
+					//accelWidget->stopGame();
+					ui.stackedWidget->removeWidget(accelWidget);
+					//delete accelWidget;
+					ui.stackedWidget->setCurrentIndex(0);
+				}
 			}
 			});
 		buzzTimer->start(1000);
@@ -413,8 +417,10 @@ void MainWindow::updateTimer() {
 
 void MainWindow::showEndGame(QTime finalTime, bool victory)
 {
+	isInGame = false;
 	deleteGames();
 	player->stop();
+	player = new QMediaPlayer(this);
 	player->setSource(QUrl("qrc:/MainWindow/Media/jeff.mp3"));
 	player->setAudioOutput(audioOutput);
 	audioOutput->setVolume(0.15);
