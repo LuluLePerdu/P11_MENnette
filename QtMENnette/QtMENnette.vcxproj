@@ -131,7 +131,7 @@
     <ClCompile Include="Utils\Communication.cpp" />
     <QtMoc Include="ClockWorker.h" />
     <ClInclude Include="Accel.h" />
-    <ClInclude Include="AccelWidget.h" />
+    <QtMoc Include="AccelWidget.h" />
     <ClInclude Include="Communication.h" />
     <QtMoc Include="ConfigurationWidget.h" />
     <ClInclude Include="CryptoSequencer.h" />

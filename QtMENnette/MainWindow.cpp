@@ -20,9 +20,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	connect(configWidget, &ConfigurationWidget::settingsApplied, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
 		initLCD(3,  0);
+		Communication& comm = Communication::getInstance();
+		comm.sendTime(3 * 60 + 0);
 		if (audioOutput) {
+			buzzTimer->stop();
 			delete audioOutput;
-			delete buzzTimer;
+			delete buzzTimer;			
 		}
 		totalGameWon = 0;
 		ui.btnLED->setEnabled(true);
@@ -31,8 +34,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		ui.btnAccel->setEnabled(true);
 		ui.btnPoten->setEnabled(true);
 
+		randomGame = (std::rand() % 4) + 1;
+
 		buzzTimer = new QTimer(this);
-		Communication& comm = Communication::getInstance();
 		connect(buzzTimer, &QTimer::timeout, this, [this, &comm]() {
 			comm.buzz(50);
 			audioOutput = new QAudioOutput(this);
@@ -40,14 +44,31 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 			player->setAudioOutput(audioOutput);
 			audioOutput->setVolume(0.5);
 			player->play();
+
+			if (totalGameWon == randomGame && !accelWidget) {
+				comm.buzz(255);
+				ui.stackedWidget->setCurrentIndex(2);
+				accelWidget = new AccelWidget(this);
+				ui.stackedWidget->addWidget(accelWidget);
+				ui.stackedWidget->setCurrentWidget(accelWidget);
+				accelWidget->startGame();
+			}
+			if (totalGameWon == randomGame && accelWidget->hasWon()) {
+				comm.buzz(255);
+				totalGameWon++;
+				//accelWidget->stopGame();
+				ui.stackedWidget->removeWidget(accelWidget);
+				//delete accelWidget;
+				ui.stackedWidget->setCurrentIndex(0);
+			}
 			});
 		buzzTimer->start(1000);
 		});
 
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
 	Communication& comm = Communication::getInstance();
-	comm.sendTime(3 * 60 + 0);
 	showConfiguration();
+	
 	
 }
 
@@ -78,6 +99,10 @@ void MainWindow::showConfiguration()
 
 
 void MainWindow::initLCD(int minutes, int seconds) {
+	if (timer) {
+		timer->stop();
+		delete timer;
+	}
 	timer = new QTimer(this);
 	countdown = QTime(0, minutes, seconds);
 
@@ -109,19 +134,22 @@ void MainWindow::on_btnLED_released() {
 		threadWidget = nullptr;
 	}
 	
-	threadWidget = new ThreadCutterWidget(this);
+	threadWidget = new ThreadCutterWidget(this, configWidget->getThreadPenalty());
 
 	this->setStyleSheet(
 		"MainWindow {"
 		"   border-image: url(:/MainWindow/Media/ThreadCutterInstructionsReasonableSize.jpg);"
 		"}"
 	);
-
-	connect(threadWidget, &ThreadCutterWidget::timePenalty, this, [this](int penalty) {
+	Communication& comm = Communication::getInstance();
+	connect(threadWidget, &ThreadCutterWidget::timePenalty, this, [this, &comm](int penalty) {
 		totalPenaltyTime += penalty;
+		elapsedTime = eTimer.elapsed();
+		QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
+		comm.sendTime(timeLeft.minute() * 60 + timeLeft.second());
 		errorSound();
 		});
-
+	
 	connect(threadWidget, &ThreadCutterWidget::returnToMenuRequested, this, [this](bool won) {
 		this->setStyleSheet(
 			"MainWindow {"
@@ -171,8 +199,12 @@ void MainWindow::on_btnSnake_clicked()
 		totalGameWon++;
 	});
 
-	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) { 
+	Communication& comm = Communication::getInstance();
+	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this, &comm](int penalty) { 
 		totalPenaltyTime += penalty;
+		elapsedTime = eTimer.elapsed();
+		QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
+		comm.sendTime(timeLeft.minute() * 60 + timeLeft.second());
 		errorSound();
 
 		});
@@ -186,7 +218,7 @@ void MainWindow::on_btnSnake_clicked()
 
 void MainWindow::on_btnSimon_clicked() {
 
-	simonWidget = new SimonSaysWidget(this, 6, ui.DELVert, ui.DELBleu, ui.DELRouge, ui.DELJaune);
+	simonWidget = new SimonSaysWidget(this, configWidget->getSimonLength(), ui.DELVert, ui.DELBleu, ui.DELRouge, ui.DELJaune);
 
 	connect(simonWidget, &SimonSaysWidget::timePenalty, this, [this](int penalty) {
 
@@ -198,6 +230,9 @@ void MainWindow::on_btnSimon_clicked() {
 		msg.exec();
 		Communication& comm = Communication::getInstance();
 		comm.buzz(255);
+		elapsedTime = eTimer.elapsed();
+		QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
+		comm.sendTime(timeLeft.minute() * 60 + timeLeft.second());
 		});
 	connect(simonWidget, &SimonSaysWidget::gameWon, this, [this]() {
 
@@ -215,28 +250,6 @@ void MainWindow::on_btnSimon_clicked() {
 
 
 void MainWindow::on_btnAccel_clicked() {
-	ui.stackedWidget->setCurrentIndex(2);
-	QMessageBox msg;
-	msg.setWindowTitle("Addddsadsadasdas");
-	msg.setText("SHAKE LA MANNETTE");
-	msg.exec();
-	Communication& comm = Communication::getInstance();
-	QTimer gameTimer;
-	QObject::connect(&gameTimer, &QTimer::timeout, this, [this, &comm]() {
-		int shake = comm.readMsg(MSG_ID_AR_SHAKED);
-		if (shake == 1) {
-			QMessageBox msg;
-			msg.setWindowTitle("Addddsadsadasdas");
-			msg.setText("SHAKE LA MANNETTE");
-			msg.exec();
-		}
-		/*else if (shake == 0) {
-			QMessageBox msg;
-			msg.setWindowTitle("Addddsadsadasdas");
-			msg.setText("SHAKE LA MANNETTE");
-			msg.show();
-		}*/
-		});
 }
 
 
@@ -259,8 +272,13 @@ void MainWindow::on_btnPoten_clicked() {
 		ui.btnPoten->setEnabled(false);
 		totalGameWon++;
 		});
-	connect(cryptoWidget, &CryptoSequencerWidget::timePenalty, this, [this](int penalty) {
+
+	Communication& comm = Communication::getInstance();
+	connect(cryptoWidget, &CryptoSequencerWidget::timePenalty, this, [this, &comm](int penalty) {
 		totalPenaltyTime += penalty;
+		elapsedTime = eTimer.elapsed();
+		QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
+		comm.sendTime(timeLeft.minute() * 60 + timeLeft.second());
 		});
 
 	ui.stackedWidget->addWidget(cryptoWidget);
@@ -361,7 +379,7 @@ void MainWindow::ledSetText(bool result) {
 }
 
 void MainWindow::updateTimer() {
-	int elapsedTime = eTimer.elapsed();
+	elapsedTime = eTimer.elapsed();
 	QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
 	QString formatTime = timeLeft.toString("mm:ss");
 	QPalette paletteBlink = ui.lcdClock->palette();
@@ -379,7 +397,7 @@ void MainWindow::updateTimer() {
 		timer->stop();
 		showEndGame(QTime(0, 0, 0), false); // lecture seule
 	}
-	else if (totalGameWon >= 4) {
+	else if (totalGameWon >= 5) {
 		timer->stop();
 		showEndGame(timeLeft, true);
 	}
