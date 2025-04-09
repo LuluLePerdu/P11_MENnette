@@ -100,6 +100,84 @@ void MainWindow::showConfiguration()
 {
 	deleteGames();
 	ui.stackedWidget->setCurrentWidget(configWidget);
+	totalPenaltyTime = 0;
+
+	ui.btnLED->setStyleSheet(
+		"QPushButton{"
+		"background-color: #1e1e1e;"
+		"color: #f2f2f2;"
+		"border: 2px solid #770000;"
+		"border-radius: 6px;"
+		"padding: 10px 16px;"
+		"font-family: 'Courier New', monospace;"
+		"font-weight: bold;"
+		"font-size: 16px;"
+		"letter-spacing: 1px;"
+		"text-transform: uppercase;"
+
+		"box-shadow:"
+		"0 0 8px rgba(255, 0, 0, 0.4),"
+		"inset 0 0 4px rgba(255, 0, 0, 0.2);"
+		"}"
+	);
+
+	ui.btnSnake->setStyleSheet(
+		"QPushButton{"
+		"background-color: #1e1e1e;"
+		"color: #f2f2f2;"
+		"border: 2px solid #770000;"
+		"border-radius: 6px;"
+		"padding: 10px 16px;"
+		"font-family: 'Courier New', monospace;"
+		"font-weight: bold;"
+		"font-size: 16px;"
+		"letter-spacing: 1px;"
+		"text-transform: uppercase;"
+
+		"box-shadow:"
+		"0 0 8px rgba(255, 0, 0, 0.4),"
+		"inset 0 0 4px rgba(255, 0, 0, 0.2);"
+		"}"
+	);
+
+	ui.btnSimon->setStyleSheet(
+		"QPushButton{"
+		"background-color: #1e1e1e;"
+		"color: #f2f2f2;"
+		"border: 2px solid #770000;"
+		"border-radius: 6px;"
+		"padding: 10px 16px;"
+		"font-family: 'Courier New', monospace;"
+		"font-weight: bold;"
+		"font-size: 16px;"
+		"letter-spacing: 1px;"
+		"text-transform: uppercase;"
+
+		"box-shadow:"
+		"0 0 8px rgba(255, 0, 0, 0.4),"
+		"inset 0 0 4px rgba(255, 0, 0, 0.2);"
+		"}"
+	);
+
+	ui.btnPoten->setStyleSheet(
+		"QPushButton{"
+		"background-color: #1e1e1e;"
+		"color: #f2f2f2;"
+		"border: 2px solid #770000;"
+		"border-radius: 6px;"
+		"padding: 10px 16px;"
+		"font-family: 'Courier New', monospace;"
+		"font-weight: bold;"
+		"font-size: 16px;"
+		"letter-spacing: 1px;"
+		"text-transform: uppercase;"
+
+		"box-shadow:"
+		"0 0 8px rgba(255, 0, 0, 0.4),"
+		"inset 0 0 4px rgba(255, 0, 0, 0.2);"
+		"}"
+	);
+
 }
 
 
@@ -168,18 +246,18 @@ void MainWindow::on_btnLED_clicked() {
 			totalGameWon++;
 			ui.btnLED->setStyleSheet(
 				"QPushButton{"
-				"background - color: #1e1e1e;"
+				"background-color: #1e1e1e;"
 				"color: #f2f2f2;"
 				"border: 2px solid #00FF00;"
-				"border - radius: 6px;"
+				"border-radius: 6px;"
 				"padding: 10px 16px;"
-				"font - family: 'Courier New', monospace;"
-				"font - weight: bold;"
-				"font - size: 16px;"
-				"letter - spacing: 1px;"
-				"text - transform: uppercase;"
+				"font-family: 'Courier New', monospace;"
+				"font-weight: bold;"
+				"font-size: 16px;"
+				"letter-spacing: 1px;"
+				"text-transform: uppercase;"
 
-				"box - shadow:"
+				"box-shadow:"
 				"0 0 8px rgba(255, 0, 0, 0.4),"
 				"inset 0 0 4px rgba(255, 0, 0, 0.2);"
 				"}"
@@ -286,18 +364,18 @@ void MainWindow::on_btnSimon_clicked() {
 		totalGameWon++;
 		ui.btnSimon->setStyleSheet(
 			"QPushButton{"
-			"background - color: #1e1e1e;"
+			"background-color: #1e1e1e;"
 			"color: #f2f2f2;"
 			"border: 2px solid #00FF00;"
-			"border - radius: 6px;"
+			"border-radius: 6px;"
 			"padding: 10px 16px;"
-			"font - family: 'Courier New', monospace;"
-			"font - weight: bold;"
-			"font - size: 16px;"
-			"letter - spacing: 1px;"
-			"text - transform: uppercase;"
+			"font-family: 'Courier New', monospace;"
+			"font-weight: bold;"
+			"font-size: 16px;"
+			"letter-spacing: 1px;"
+			"text-transform: uppercase;"
 
-			"box - shadow:"
+			"box-shadow:"
 			"0 0 8px rgba(255, 0, 0, 0.4),"
 			"inset 0 0 4px rgba(255, 0, 0, 0.2);"
 			"}"
@@ -329,20 +407,20 @@ void MainWindow::on_btnPoten_clicked() {
 		ui.stackedWidget->setCurrentIndex(0);
 		ui.btnPoten->setEnabled(false);
 		totalGameWon++;
-		ui.btnSimon->setStyleSheet(
+		ui.btnPoten->setStyleSheet(
 			"QPushButton{"
-			"background - color: #1e1e1e;"
+			"background-color: #1e1e1e;"
 			"color: #f2f2f2;"
 			"border: 2px solid #00FF00;"
-			"border - radius: 6px;"
+			"border-radius: 6px;"
 			"padding: 10px 16px;"
-			"font - family: 'Courier New', monospace;"
-			"font - weight: bold;"
-			"font - size: 16px;"
-			"letter - spacing: 1px;"
-			"text - transform: uppercase;"
+			"font-family: 'Courier New', monospace;"
+			"font-weight: bold;"
+			"font-size: 16px;"
+			"letter-spacing: 1px;"
+			"text-transform: uppercase;"
 
-			"box - shadow:"
+			"box-shadow:"
 			"0 0 8px rgba(255, 0, 0, 0.4),"
 			"inset 0 0 4px rgba(255, 0, 0, 0.2);"
 			"}"
