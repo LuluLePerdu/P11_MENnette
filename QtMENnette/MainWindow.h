@@ -67,10 +67,6 @@ private:
     void showConfiguration();
     void initLCD(int minutes, int seconds);
     void showEndGame(QTime finalTime, bool victory);
-	int totalGameWon = 0;
-	void errorSound();
-    void deleteGames();
-	bool isInGame = false;
     void showPopUps();
 
 private slots:
