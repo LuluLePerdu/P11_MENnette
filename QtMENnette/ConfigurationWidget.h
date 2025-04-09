@@ -20,6 +20,8 @@ public:
     int getMazeHeight() const;
     int getMazeTime() const;
 
+    int getThreadPenalty() const;
+
     int getCryptoRange() const;
 
     int getSimonLength() const;
@@ -28,6 +30,7 @@ signals:
     void settingsApplied();
 
 private slots:
+    void onDiffChangedThread(int index);
     void onDifficultyChanged(int index);
 
 private:
@@ -44,6 +47,9 @@ private:
 
     QComboBox* simonSpeedCombo;
     QSpinBox* simonLengthSpin;
+
+    QComboBox* difficultyThreadCombo;
+    QSpinBox* threadTimeSpin;
 
 	QSpinBox* cryptoRangeSpin;
 

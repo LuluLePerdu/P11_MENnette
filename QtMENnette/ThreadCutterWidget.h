@@ -10,9 +10,11 @@ class ThreadCutterWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	explicit ThreadCutterWidget(QWidget* parent = nullptr);
+	explicit ThreadCutterWidget(QWidget* parent = nullptr, int timePenalty = 30);
 	~ThreadCutterWidget();
 	void startGame();
+	int getTimePenalty();
+	void setTimePenalty(int time);
 
 signals:
 	void timePenalty(int seconds);
@@ -24,5 +26,5 @@ private:
 	bool endOfGame = false;
 	QTimer* gameTimer;
 	ThreadCutter logic;
-	int timeOnLoss = 20;
+	int timeOnLoss;
 };

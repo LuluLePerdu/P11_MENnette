@@ -134,7 +134,7 @@ void MainWindow::on_btnLED_released() {
 		threadWidget = nullptr;
 	}
 	
-	threadWidget = new ThreadCutterWidget(this);
+	threadWidget = new ThreadCutterWidget(this, configWidget->getThreadPenalty());
 
 	this->setStyleSheet(
 		"MainWindow {"
