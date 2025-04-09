@@ -60,6 +60,8 @@ private:
     void showEndGame(QTime finalTime, bool victory);
 	int totalGameWon = 0;
 	void errorSound();
+    void deleteGames();
+	bool isInGame = false;
 
 private slots:
     void on_btnHome_clicked();

@@ -176,7 +176,7 @@ std::string CryptoSequencer::randomizeString(std::string input, float percent) {
 
 std::string CryptoSequencer::getUserCode() {
 	if (receivedCodeLength == 0) {
-		return "Aucun code saisi!";
+		return "Aucune saisi!";
 	}
 	std::string userCode;
 	for (int i = 0; i < receivedCodeLength; i++) {

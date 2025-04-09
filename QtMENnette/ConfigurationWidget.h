@@ -46,6 +46,7 @@ private:
 	QSpinBox* cryptoRangeSpin;
 
 
+
     struct DifficultyPreset {
         int width;
         int height;

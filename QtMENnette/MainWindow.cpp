@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		audioOutput = new QAudioOutput(this);
 		player->setSource(QUrl("qrc:/MainWindow/Media/beep_1sec.mp3"));
 		player->setAudioOutput(audioOutput);
-		audioOutput->setVolume(50);
+		audioOutput->setVolume(0.5);
 		player->setLoops(QMediaPlayer::Infinite);
 		player->play();
 		});
@@ -66,6 +66,7 @@ Ui::MainWindow* MainWindow::getUI() const
 
 void MainWindow::showConfiguration()
 {
+	deleteGames();
 	ui.stackedWidget->setCurrentWidget(configWidget);
 }
 
@@ -87,39 +88,7 @@ void MainWindow::initLCD(int minutes, int seconds) {
 
 void MainWindow::on_btnHome_clicked() {
 	ui.stackedWidget->setCurrentIndex(0);
-	if (snakeWidget) {
-		snakeWidget->stopGame();
-		ui.stackedWidget->removeWidget(snakeWidget);
-		delete snakeWidget;
-		snakeWidget = nullptr;
-	}
-	if (simonWidget) {
-		ui.stackedWidget->removeWidget(simonWidget);
-		delete simonWidget;
-		simonWidget = nullptr;
-	}
-	if (threadWidget) {
-		ui.stackedWidget->removeWidget(threadWidget);
-		delete threadWidget;
-		threadWidget = nullptr;
-	}
-	if (cryptoWidget) {
-		ui.stackedWidget->removeWidget(cryptoWidget);
-		delete cryptoWidget;
-		cryptoWidget = nullptr;
-	}
-	/*Communication& comm = Communication::getInstance();
-	comm.sendMsg({
-		MSG_ID_PC_MOTOR,
-		100,
-		0,
-		});*/
-	
-	/*if (audioOutput) {
-		delete audioOutput;
-	}*/
-	
-	errorSound();
+	deleteGames();
 	totalGameWon++;
 }
 
@@ -178,11 +147,16 @@ void MainWindow::on_btnSnake_clicked()
 }
 
 void MainWindow::on_btnSimon_clicked() {
+
 	simonWidget = new SimonSaysWidget(this, 2, ui.DELVert, ui.DELBleu, ui.DELRouge, ui.DELJaune);
 
 	connect(simonWidget, &SimonSaysWidget::timePenalty, this, [this](int penalty) {
 		totalPenaltyTime += penalty;
 		errorSound();
+		QMessageBox msg;
+		msg.setWindowTitle("Simon Says");
+		msg.setText("GAME LOST!");
+		msg.exec();
 		});
 	connect(simonWidget, &SimonSaysWidget::gameWon, this, [this]() {
 		ui.btnSimon->setEnabled(false);
@@ -201,6 +175,8 @@ void MainWindow::on_btnAccel_clicked() {
 
 void MainWindow::on_btnPoten_clicked() {
 	ui.stackedWidget->setCurrentIndex(5);
+	//this->setStyleSheet("MainWindow{ background-image: url(:/MainWindow/Media/paper1.jpg);}");
+
 
 	if (cryptoWidget) {
 		ui.stackedWidget->removeWidget(cryptoWidget);
@@ -352,7 +328,13 @@ void MainWindow::updateTimer() {
 
 void MainWindow::showEndGame(QTime finalTime, bool victory)
 {
+	deleteGames();
 	player->stop();
+	player->setSource(QUrl("qrc:/MainWindow/Media/jeff.mp3"));
+	player->setAudioOutput(audioOutput);
+	audioOutput->setVolume(0.15);
+	player->setLoops(QMediaPlayer::Once);
+	player->play();
 	QWidget* current = ui.stackedWidget->currentWidget();
 	if (current && current != configWidget && current != ui.pgeMain) {
 		ui.stackedWidget->removeWidget(current);
@@ -387,9 +369,33 @@ void MainWindow::errorSound() {
 
 	playerWrong->setSource(QUrl("qrc:/MainWindow/Media/buzzer_wrong.mp3"));
 	playerWrong->setAudioOutput(outputWrong);
-	outputWrong->setVolume(10);
+	outputWrong->setVolume(0.5);
 	playerWrong->play();
 
 	//delete playerWrong;
 	//delete outputWrong;
+}
+
+void MainWindow::deleteGames() {
+	if (snakeWidget) {
+		snakeWidget->stopGame();
+		ui.stackedWidget->removeWidget(snakeWidget);
+		delete snakeWidget;
+		snakeWidget = nullptr;
+	}
+	if (simonWidget) {
+		ui.stackedWidget->removeWidget(simonWidget);
+		delete simonWidget;
+		simonWidget = nullptr;
+	}
+	if (threadWidget) {
+		ui.stackedWidget->removeWidget(threadWidget);
+		delete threadWidget;
+		threadWidget = nullptr;
+	}
+	if (cryptoWidget) {
+		ui.stackedWidget->removeWidget(cryptoWidget);
+		delete cryptoWidget;
+		cryptoWidget = nullptr;
+	}
 }

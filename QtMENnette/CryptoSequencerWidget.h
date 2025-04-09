@@ -6,6 +6,7 @@
 #include "CryptoSequencer.h"
 #include <QGraphicsOpacityEffect>
 #include <QErrorMessage>
+#include <QTransform>
 
 class CryptoSequencer;
 
@@ -35,6 +36,8 @@ private:
 	QLabel* labelB1;
 	QLabel* labelB2;
 	QLabel* labelResult;
+	QLabel* labImg1;
+	QLabel* labImg2;
     CryptoSequencer* logic;
     
 

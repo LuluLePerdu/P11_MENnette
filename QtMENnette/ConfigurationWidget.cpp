@@ -24,6 +24,7 @@ void ConfigurationWidget::setupUi()
     mainLayout->setSpacing(15);
     mainLayout->setContentsMargins(15, 15, 15, 15);
 
+    // ===== SNAKE MAZE =====
     QWidget* snakeContent = new QWidget();
     QFormLayout* snakeLayout = new QFormLayout(snakeContent);
     snakeLayout->setContentsMargins(10, 10, 10, 10);
@@ -51,20 +52,15 @@ void ConfigurationWidget::setupUi()
 
     mainLayout->addWidget(createGameSection("SNAKE MAZE", snakeContent));
 
+    // ===== SIMON SAYS =====
     QWidget* simonContent = new QWidget();
     QFormLayout* simonLayout = new QFormLayout(simonContent);
     simonLayout->setContentsMargins(10, 10, 10, 10);
 
-    simonSpeedCombo = new QComboBox();
-    simonSpeedCombo->addItem("Facile", 1500);
-    simonSpeedCombo->addItem("Normal", 1000);
-    simonSpeedCombo->addItem("Difficile", 700);
-
     simonLengthSpin = new QSpinBox();
-    simonLengthSpin->setRange(3, 20);
+    simonLengthSpin->setRange(1, 15);
     simonLengthSpin->setValue(8);
 
-    simonLayout->addRow("Vitesse:", simonSpeedCombo);
     simonLayout->addRow("Longueur:", simonLengthSpin);
 
     mainLayout->addWidget(createGameSection("SIMON SAYS", simonContent));
@@ -87,7 +83,7 @@ void ConfigurationWidget::setupUi()
 	cryptoLayout->setContentsMargins(10, 10, 10, 10);
 
 	cryptoRangeSpin = new QSpinBox();
-	cryptoRangeSpin->setRange(1, 255);
+	cryptoRangeSpin->setRange(10, 255);
 	cryptoRangeSpin->setValue(50);
 	cryptoLayout->addRow("Range:", cryptoRangeSpin);
 
