@@ -38,7 +38,16 @@ CryptoSequencerWidget::CryptoSequencerWidget(QWidget* parent, int range) :
     labelB2->setAlignment(Qt::AlignCenter);
 
 	labelResult->setFont(QFont("Cascadia Code", 70));
-    labelResult->setStyleSheet("QLabel { color: rgb(255, 165, 0); box-shadow: 0 0 800px rgba(0,0,0,0.4) inset;}"); 
+    //labelResult->setStyleSheet("QLabel { color: rgb(255, 165, 0); box-shadow: 0 0 800px rgba(0,0,0,0.4) inset;}"); 
+	labelResult->setStyleSheet(
+        "QLabel {"
+        "background-color: #1e1e1e;"
+        "color: rgb(255, 165, 0);"
+        "border: 2px solid #770000;"
+        "border-radius: 6px;"
+        "padding: 10px 16px;"        
+        "}"
+);
     labelResult->setAlignment(Qt::AlignCenter);
 
     QPixmap originalPixmap(":/MainWindow/Media/titille.png");
@@ -137,7 +146,7 @@ void CryptoSequencerWidget::repositionLabels()
     labelResult->setGeometry(width() / 2 - labelWidth / 2, resultY, labelWidth, 100);
 
     labImg1->setGeometry(width()-250, 20, 250, 250);
-    labImg2->setGeometry(40, height()-260, 250, 250);
+    labImg2->setGeometry(0, height()-350, 250, 250);
 
 
 }

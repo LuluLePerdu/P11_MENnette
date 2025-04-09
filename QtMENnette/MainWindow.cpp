@@ -4,14 +4,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 {
 	ui.setupUi(this);
 
-
+	this->setFixedSize(1920, 1080);
 	player = new QMediaPlayer(this);
 	this->setStyleSheet(
 		"MainWindow {"
 		"   background-image: url(:/MainWindow/Background.png);"
 		"   background-position: center;"
-		"   background-repeat: no-repeat;"
-		"   background-attachment: fixed;"
+		//"   background-repeat: no-repeat;"
+		//"   background-attachment: fixed;"
 		"   background-size: 50% 50%;"
 		"}"
 	);
