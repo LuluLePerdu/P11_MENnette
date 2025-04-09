@@ -8,11 +8,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	player = new QMediaPlayer(this);
 	this->setStyleSheet(
 		"MainWindow {"
-		"   background-image: url(:/MainWindow/Background.png);"
-		"   background-position: center;"
-		//"   background-repeat: no-repeat;"
-		//"   background-attachment: fixed;"
-		"   background-size: 50% 50%;"
+		"   border-image: url(:/MainWindow/Background.png);"
 		"}"
 	);
 	configWidget = new ConfigurationWidget(this);
@@ -97,11 +93,7 @@ void MainWindow::on_btnLED_released() {
 
 	this->setStyleSheet(
 		"MainWindow {"
-		"   background-image: url(:/MainWindow/Media/ThreadCutterInstructionsReasonableSize.jpg);"
-		"   background-position: center;"
-		"   background-repeat: no-repeat;"
-		"   background-attachment: fixed;"
-		"   background-size: 50% 50%;"
+		"   border-image: url(:/MainWindow/Media/ThreadCutterInstructionsReasonableSize.jpg);"
 		"}"
 	);
 
