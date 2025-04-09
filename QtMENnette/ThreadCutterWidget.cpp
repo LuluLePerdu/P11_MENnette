@@ -46,7 +46,7 @@ void ThreadCutterWidget::startGame() {
 }
 
 void ThreadCutterWidget::checkEnd() {
-	//if (logic.getCompleted() != 2) {
+	if (logic.getCompleted() != 2) {
 		//QString output;
 		gameTimer->stop();
 		logic.turnOffLed();
@@ -73,7 +73,7 @@ void ThreadCutterWidget::checkEnd() {
 		//renderText(labRes, output);
 
 		
-	//}
+	}
 }
 
 void ThreadCutterWidget::renderText(QLabel* label, QString text) {
