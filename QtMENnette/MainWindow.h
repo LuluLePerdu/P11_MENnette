@@ -41,6 +41,7 @@ private:
     QTimer* debugTimer;
     QTimer* clockTimer;
     QElapsedTimer eTimer;
+    int elapsedTime;
     static MainWindow* w;
     QColor initTimerColor;
     int totalPenaltyTime = 0;

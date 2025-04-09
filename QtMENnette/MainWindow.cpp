@@ -119,12 +119,15 @@ void MainWindow::on_btnLED_released() {
 		"   border-image: url(:/MainWindow/Media/ThreadCutterInstructionsReasonableSize.jpg);"
 		"}"
 	);
-
-	connect(threadWidget, &ThreadCutterWidget::timePenalty, this, [this](int penalty) {
+	Communication& comm = Communication::getInstance();
+	connect(threadWidget, &ThreadCutterWidget::timePenalty, this, [this](int penalty, Communication comm) {
 		totalPenaltyTime += penalty;
+		elapsedTime = eTimer.elapsed();
+		QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
+		comm.sendTime(timeLeft.minute() * 60 + timeLeft.second());
 		errorSound();
 		});
-
+	
 	connect(threadWidget, &ThreadCutterWidget::returnToMenuRequested, this, [this](bool won) {
 		this->setStyleSheet(
 			"MainWindow {"
@@ -174,8 +177,12 @@ void MainWindow::on_btnSnake_clicked()
 		totalGameWon++;
 	});
 
-	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty) { 
+	Communication& comm = Communication::getInstance();
+	connect(snakeWidget, &SnakeMazeWidget::timePenalty, this, [this](int penalty, Communication comm) { 
 		totalPenaltyTime += penalty;
+		elapsedTime = eTimer.elapsed();
+		QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
+		comm.sendTime(timeLeft.minute() * 60 + timeLeft.second());
 		errorSound();
 
 		});
@@ -201,6 +208,9 @@ void MainWindow::on_btnSimon_clicked() {
 		msg.exec();
 		Communication& comm = Communication::getInstance();
 		comm.buzz(255);
+		elapsedTime = eTimer.elapsed();
+		QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
+		comm.sendTime(timeLeft.minute() * 60 + timeLeft.second());
 		});
 	connect(simonWidget, &SimonSaysWidget::gameWon, this, [this]() {
 
@@ -262,8 +272,13 @@ void MainWindow::on_btnPoten_clicked() {
 		ui.btnPoten->setEnabled(false);
 		totalGameWon++;
 		});
-	connect(cryptoWidget, &CryptoSequencerWidget::timePenalty, this, [this](int penalty) {
+
+	Communication& comm = Communication::getInstance();
+	connect(cryptoWidget, &CryptoSequencerWidget::timePenalty, this, [this](int penalty, Communication comm) {
 		totalPenaltyTime += penalty;
+		elapsedTime = eTimer.elapsed();
+		QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
+		comm.sendTime(timeLeft.minute() * 60 + timeLeft.second());
 		});
 
 	ui.stackedWidget->addWidget(cryptoWidget);
@@ -364,7 +379,7 @@ void MainWindow::ledSetText(bool result) {
 }
 
 void MainWindow::updateTimer() {
-	int elapsedTime = eTimer.elapsed();
+	elapsedTime = eTimer.elapsed();
 	QTime timeLeft = countdown.addMSecs(-elapsedTime - (totalPenaltyTime * 1000));
 	QString formatTime = timeLeft.toString("mm:ss");
 	QPalette paletteBlink = ui.lcdClock->palette();

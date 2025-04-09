@@ -23,9 +23,6 @@ private:
 	void checkEnd();
 	bool endOfGame = false;
 	QTimer* gameTimer;
-	QLabel* labIns;
-	QLabel* labRes;
-	QLabel* labDebug;
 	ThreadCutter logic;
 	int timeOnLoss = 20;
 };
