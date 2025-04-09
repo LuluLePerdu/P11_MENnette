@@ -9,12 +9,12 @@ ThreadCutterWidget::ThreadCutterWidget(QWidget* parent) : QWidget(parent)
 
 	connect(gameTimer, &QTimer::timeout, this, [this]() {
 		logic.run();
-		labDebug->setText(QVariant(logic.getCompleted()).toString());
+		//labDebug->setText(QVariant(logic.getCompleted()).toString());
 		checkEnd();
 		});
 
 	labIns->setGeometry(50, 200, 700, 300);
-	labDebug->setGeometry(100, 0, 100, 100);
+	//labDebug->setGeometry(100, 0, 100, 100);
 
 	labIns->setVisible(true);
 	labRes->setVisible(false);
