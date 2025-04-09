@@ -1257,7 +1257,8 @@ QPushButton:hover{
 	
 	border-image: url(:/MainWindow/Media/house.png);
 	border-style: outset;
-	border-radius: 15px
+	border-radius: 15px;
+	border-width: 5px;
 }
 QToolButton:hover{
 	background-color: rgb(75,75,75);
@@ -1281,7 +1282,8 @@ QToolButton:hover{
 	background-color: rgb(200, 0, 0);
 	border-image: url(:/MainWindow/Media/exit.png);
 	border-style: outset;
-	border-radius: 15px
+	border-radius: 15px;
+	border-width: 5px;
 }
 QToolButton:hover{
 	background-color: rgb(130, 0, 0);
