@@ -9,6 +9,7 @@
 #include "ConfigurationWidget.h"
 #include <QtWidgets/qmainwindow.h>
 #include "CryptoSequencerWidget.h"
+#include "AccelWidget.h"
 
 #include "qthread.h"
 #include "qlabel.h"
@@ -52,11 +53,15 @@ private:
     ThreadCutterWidget* threadWidget = nullptr; 
     ConfigurationWidget* configWidget = nullptr; 
     CryptoSequencerWidget* cryptoWidget = nullptr;
+	AccelWidget* accelWidget = nullptr;
 
 	QMediaPlayer* player = nullptr;
 	QAudioOutput* audioOutput = nullptr;
 
 	QTimer* buzzTimer = nullptr;
+    QTimer* gameTimer;
+    int randomGame = 2;
+
 
     void showConfiguration();
     void initLCD(int minutes, int seconds);

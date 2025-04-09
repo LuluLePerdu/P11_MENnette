@@ -129,9 +129,6 @@
     <ClInclude Include="Accel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AccelWidget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Utils\Information.txt">
@@ -161,6 +158,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="EndGameWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="AccelWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
