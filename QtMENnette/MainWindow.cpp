@@ -126,6 +126,16 @@ void MainWindow::on_btnHome_clicked() {
 void MainWindow::on_btnLED_released() {
 	threadWidget = new ThreadCutterWidget(this);
 
+	this->setStyleSheet(
+		"MainWindow {"
+		"   background-image: url(:/MainWindow/Media/ThreadCutterInstructionsReasonableSize.jpg);"
+		"   background-position: center;"
+		"   background-repeat: no-repeat;"
+		"   background-attachment: fixed;"
+		"   background-size: 50% 50%;"
+		"}"
+	);
+
 	connect(threadWidget, &ThreadCutterWidget::timePenalty, this, [this](int penalty) {
 		totalPenaltyTime += penalty;
 		errorSound();

@@ -27,6 +27,7 @@ ThreadCutterWidget::~ThreadCutterWidget() {
 }
 
 void ThreadCutterWidget::startGame() {
+	/*
 	renderText(labIns, QString::fromLatin1("Si la DEL verte et 2 autres DELs sont allumées, appuyez sur le bouton vert."
 		"\n\nSinon, si la DEL verte et la DEL rouge sont allumées mais aucune autre, appuyez sur le bouton rouge."
 		"\n\nSinon, si les 4 DELs sont allumées, appuyez sur le bouton rouge."
@@ -36,6 +37,7 @@ void ThreadCutterWidget::startGame() {
 		"\n\nSinon, si aucune des autres conditions n'est remplie mais que 2 DELs sont allumées, appuyez sur le bouton rouge."
 		"\n\nSinon, appuyez sur le deuxième bouton à partir de la gauche."
 		"\n\nSi vous voyez un interrupteur sur lequel l'inscription \'NE PAS ACTIVER\' est inscrite, il ne faudrait peut-être pas l'activer..."));
+	*/
 	
 	logic.turnOffLed();
 	logic.render();
