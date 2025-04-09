@@ -63,6 +63,7 @@ private:
     void deleteGames();
 	bool isInGame = false;
 
+
 private slots:
     void on_btnHome_clicked();
     void on_btnSnake_clicked();

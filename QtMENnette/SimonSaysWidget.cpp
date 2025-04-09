@@ -42,6 +42,7 @@ void SimonSaysWidget::checkInput() {
     int msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
 
     if (msgInput > 0) {
+        comm.buzz(60);
         processUserInput(msgInput);
     }
 }
@@ -145,6 +146,7 @@ void SimonSaysWidget::gameOver(bool won) {
         emit timePenalty(timeOnLoss);
     }
     emit returnToMenuRequested();
+
 }
 
 void SimonSaysWidget::getSequence() {

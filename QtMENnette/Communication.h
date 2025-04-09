@@ -13,7 +13,7 @@
 
 #define BAUD 9600 // A METTRE A 115200
 #define MSG_SIZE 3
-#define TIMEOUT_READ 20 //50
+#define TIMEOUT_READ 5//50//20?//10?
 
 #define MSG_ID_ERROR 71
 #define MSG_DATA_ERROR -1
@@ -71,6 +71,8 @@ public:
     unsigned char convertBoolsToByte(bool p_sw[8]);
     void byteToBoolArray(unsigned char b, bool arr[8]);
     int seed = 98212321;
+	void buzz(unsigned char strength);
+	void sendTime(unsigned char time);
 
 
 private:
