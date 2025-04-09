@@ -21,8 +21,11 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		ui.stackedWidget->setCurrentIndex(0);
 		initLCD(3,  0);
 		if (audioOutput) {
+			buzzTimer->stop();
 			delete audioOutput;
 			delete buzzTimer;
+			delete timer;
+			
 		}
 		totalGameWon = 0;
 		ui.btnLED->setEnabled(true);
