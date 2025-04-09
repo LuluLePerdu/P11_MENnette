@@ -394,6 +394,11 @@ void MainWindow::deleteGames() {
 		ui.stackedWidget->removeWidget(threadWidget);
 		delete threadWidget;
 		threadWidget = nullptr;
+		this->setStyleSheet(
+			"MainWindow {"
+			"   border-image: url(:/MainWindow/Background.png);"
+			"}"
+		);
 	}
 	if (cryptoWidget) {
 		ui.stackedWidget->removeWidget(cryptoWidget);
