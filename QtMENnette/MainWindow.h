@@ -30,23 +30,28 @@ class MainWindow : public QMainWindow {
 
 public:
     ~MainWindow();
-    MainWindow(QWidget* parent = nullptr);
-    Ui::MainWindow* getUI() const;
     static MainWindow* instance();
+    Ui::MainWindow* getUI() const;
+    MainWindow(QWidget* parent = nullptr);
 
 private:
     QTimer* timer;
+    int elapsedTime;
     QTime countdown;
     Ui::MainWindow ui;
+    QTimer* gameTimer;
+    int randomGame = 2;
     bool blink = false;
     QTimer* debugTimer;
     QTimer* clockTimer;
     QElapsedTimer eTimer;
-    int elapsedTime;
     static MainWindow* w;
     QColor initTimerColor;
     int totalPenaltyTime = 0;
     QPalette initTimerPalette;
+	QTimer* buzzTimer = nullptr;
+	QMediaPlayer* player = nullptr;
+	QAudioOutput* audioOutput = nullptr;
     EndGameWidget* endGameWidget = nullptr; 
     SnakeMazeWidget* snakeWidget = nullptr;
     SimonSaysWidget* simonWidget = nullptr;  
@@ -55,14 +60,10 @@ private:
     CryptoSequencerWidget* cryptoWidget = nullptr;
 	AccelWidget* accelWidget = nullptr;
 
-	QMediaPlayer* player = nullptr;
-	QAudioOutput* audioOutput = nullptr;
-
-	QTimer* buzzTimer = nullptr;
-    QTimer* gameTimer;
-    int randomGame = 2;
-
-
+	void errorSound();
+    void deleteGames();
+	int totalGameWon = 0;
+	bool isInGame = false;
     void showConfiguration();
     void initLCD(int minutes, int seconds);
     void showEndGame(QTime finalTime, bool victory);
@@ -75,7 +76,7 @@ private:
 private slots:
     void on_btnHome_clicked();
     void on_btnSnake_clicked();
-    void on_btnLED_released();
+    void on_btnLED_clicked();
     void on_btnSimon_clicked();
     //void on_btnAccel_clicked();
     void on_btnPoten_clicked();

@@ -329,15 +329,11 @@ void SnakeMazeWidget::showResultDialog()
         comm.buzz(242);
     }
 
-    QPushButton* retryButton = msgBox.addButton("Recommencer", QMessageBox::ActionRole);
-    QPushButton* menuButton = msgBox.addButton("Retour au menu", QMessageBox::AcceptRole);
+    QPushButton* menuButton = msgBox.addButton(QString::fromLatin1("Jeu terminé - Retour au menu"), QMessageBox::AcceptRole);
 
     msgBox.exec();
 
-    if (msgBox.clickedButton() == retryButton) {
-        startGame();
-    }
-    else {
+    if (msgBox.clickedButton() == menuButton) {
         emit returnToMenuRequested();
         emit timePenalty(timeUsed - logic.getGameDuration());
     }
