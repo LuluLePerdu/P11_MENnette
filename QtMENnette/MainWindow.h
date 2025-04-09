@@ -55,6 +55,8 @@ private:
 	QMediaPlayer* player = nullptr;
 	QAudioOutput* audioOutput = nullptr;
 
+	QTimer* buzzTimer = nullptr;
+
     void showConfiguration();
     void initLCD(int minutes, int seconds);
     void showEndGame(QTime finalTime, bool victory);
