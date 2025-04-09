@@ -46,22 +46,34 @@ void ThreadCutterWidget::startGame() {
 }
 
 void ThreadCutterWidget::checkEnd() {
-	if (logic.getCompleted() != 2) {
-		QString output;
+	//if (logic.getCompleted() != 2) {
+		//QString output;
+		gameTimer->stop();
+		logic.turnOffLed();
+
 		if (logic.getCompleted() == 0) {
-			output = QString::fromLatin1("Module désamorcé !");
+			//output = QString::fromLatin1("Module désamorcé !");
+			QMessageBox msg;
+			msg.setWindowTitle("LED GAME");
+			msg.setText("GAME COMPLETED!");
+			msg.exec();
+			emit returnToMenuRequested(true);
 
 		}
 		else {
-			output = QString::fromLatin1("Mauvais bouton !");
+			//output = QString::fromLatin1("Mauvais bouton !");
+			QMessageBox msg;
+			msg.setWindowTitle("LED GAME");
+			msg.setText("WRONG LED!");
+			msg.exec();
 			emit timePenalty(timeOnLoss);
+			emit returnToMenuRequested(false);
 		}
 
-		renderText(labRes, output);
+		//renderText(labRes, output);
 
-		gameTimer->stop();
-		logic.turnOffLed();
-	}
+		
+	//}
 }
 
 void ThreadCutterWidget::renderText(QLabel* label, QString text) {

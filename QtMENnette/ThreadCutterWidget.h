@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QTimer>
+#include <QMessageBox>
 #include "ThreadCutter.h"
 
 class ThreadCutterWidget : public QWidget
@@ -15,6 +16,7 @@ public:
 
 signals:
 	void timePenalty(int seconds);
+	void returnToMenuRequested(bool won);
 
 private:
 	void renderText(QLabel* label, QString text);
