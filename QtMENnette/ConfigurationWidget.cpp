@@ -244,3 +244,4 @@ int ConfigurationWidget::getMazeHeight() const { return mazeHeightSpin->value();
 int ConfigurationWidget::getMazeTime() const { return mazeTimeSpin->value(); }
 
 int ConfigurationWidget::getCryptoRange() const { return cryptoRangeSpin->value(); }
+int ConfigurationWidget::getSimonLength() const { return simonLengthSpin->value(); }
