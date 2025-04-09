@@ -45,6 +45,10 @@ void ConfigurationWidget::setupUi()
     mazeTimeSpin->setRange(10, 300);
     mazeTimeSpin->setSuffix(" sec");
 
+    mazeHeightSpin->setReadOnly(true);
+    mazeWidthSpin->setReadOnly(true);
+    mazeTimeSpin->setReadOnly(true);
+
     snakeLayout->addRow("Difficulte:", difficultyCombo);
     snakeLayout->addRow("Largeur:", mazeWidthSpin);
     snakeLayout->addRow("Hauteur:", mazeHeightSpin);
@@ -84,11 +88,15 @@ void ConfigurationWidget::setupUi()
     threadTimeSpin = new QSpinBox();
     threadTimeSpin->setRange(10, 50);
     threadTimeSpin->setSuffix(" sec");
+    threadTimeSpin->setReadOnly(true);
 
-    threadLayout->addRow(QString::fromLatin1("Difficulté:"), difficultyThreadCombo);
-    threadLayout->addRow(QString::fromLatin1("Pénalité:"), threadTimeSpin);
+    threadLayout->addRow(QString::fromLatin1("Difficulté :"), difficultyThreadCombo);
+    threadLayout->addRow(QString::fromLatin1("Pénalité :"), threadTimeSpin);
 
-    connect(difficultyThreadCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ConfigurationWidget::)
+    connect(difficultyThreadCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ConfigurationWidget::onDiffChangedThread);
+    
+    difficultyThreadCombo->setCurrentIndex(NORMAL);
+    onDiffChangedThread(NORMAL);
 
     mainLayout->addWidget(createGameSection("THREAD CUTTER", threadContent));
 
@@ -242,16 +250,20 @@ void ConfigurationWidget::onDifficultyChanged(int index)
 
 void ConfigurationWidget::onDiffChangedThread(int index) {
     Q_UNUSED(index);
-
+    threadTimeSpin->setReadOnly(true);
     switch (difficultyThreadCombo->currentData().toInt())
     {
     case EASY:
         threadTimeSpin->setValue(10);
+        break;
     case NORMAL:
         threadTimeSpin->setValue(30);
+        break;
     case HARD:
         threadTimeSpin->setValue(50);
+        break;
     default:
+        threadTimeSpin->setReadOnly(false);
         break;
     }
 }
@@ -261,10 +273,18 @@ void ConfigurationWidget::updateDifficultySettings()
     Difficulty diff = static_cast<Difficulty>(difficultyCombo->currentData().toInt());
 
     if (diff != CUSTOM) {
+        mazeHeightSpin->setReadOnly(true);
+        mazeWidthSpin->setReadOnly(true);
+        mazeTimeSpin->setReadOnly(true);
         DifficultyPreset preset = difficultyPresets[diff];
         mazeWidthSpin->setValue(preset.width);
         mazeHeightSpin->setValue(preset.height);
         mazeTimeSpin->setValue(preset.time);
+    }
+    else {
+        mazeHeightSpin->setReadOnly(false);
+        mazeWidthSpin->setReadOnly(false);
+        mazeTimeSpin->setReadOnly(false);
     }
 }
 
@@ -278,6 +298,5 @@ int ConfigurationWidget::getMazeTime() const { return mazeTimeSpin->value(); }
 
 int ConfigurationWidget::getCryptoRange() const { return cryptoRangeSpin->value(); }
 int ConfigurationWidget::getSimonLength() const { return simonLengthSpin->value(); }
-int ConfigurationWidget::getCryptoRange() const { return cryptoRangeSpin->value(); }
 
 int ConfigurationWidget::getThreadPenalty() const { return threadTimeSpin->value(); }
