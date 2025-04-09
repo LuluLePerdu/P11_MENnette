@@ -67,6 +67,9 @@ std::string CryptoSequencer::updateSequence() {
     if (usrInput >= 0) {
         int distance = static_cast<int>(CODE_LENGTH * std::abs(target - usrInput) / m_range);
         if (distance > CODE_LENGTH) distance = CODE_LENGTH;
+        /*if (distance <= 0) {
+            comm.buzz(100);
+        }*/
 
         for (int i = 0; i < CODE_LENGTH - distance; i++) {
             outputCode[i] = code[i];
@@ -86,8 +89,8 @@ std::string CryptoSequencer::updateSequence() {
         if (checkCode(keyInput)) {
 			isOver = true;
             return "CODE OK";
-            
         }
+        comm.buzz(60);
 
     }
 
@@ -129,16 +132,18 @@ bool CryptoSequencer::checkCode(int keyInput) {
     if (receivedCodeLength < CODE_LENGTH) {
         receivedCode[receivedCodeLength++] = static_cast<char>(keyInput);
     }
-
+	Communication& comm = Communication::getInstance();
     if (receivedCodeLength == CODE_LENGTH) {
 		receivedCode[receivedCodeLength] = '\0';
         if (strcmp(receivedCode, code) == 0) {
             receivedCodeLength = 0;
+			comm.buzz(200);
             return true;
         }
         else {
             receivedCodeLength = 0;
 			wrongCode = true;
+			comm.buzz(255);
             return false;
         }
     }
@@ -149,7 +154,7 @@ bool CryptoSequencer::checkCode(int keyInput) {
 
 std::string CryptoSequencer::randomizeString(std::string input, float percent) {
     if (input.empty()) {
-        return "";  // Handle empty string case
+        return ""; 
     }
 
     std::string output = input;

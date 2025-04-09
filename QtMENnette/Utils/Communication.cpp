@@ -285,3 +285,11 @@ void Communication::byteToBoolArray(unsigned char b, bool arr[8]) {
         arr[i] = (b >> i) & 1; // Met arr[i] à vrai si le bit i de b est à 1
     }
 }
+
+void Communication::buzz(unsigned char strength){
+	sendMsg({ MSG_ID_PC_MOTOR, strength, 0 });
+}
+
+void Communication::sendTime(unsigned char time){
+	sendMsg({ MSG_ID_PC_TIMER, time, 0 });
+}

@@ -32,12 +32,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		});
 
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-
-	
 	Communication& comm = Communication::getInstance();
-	srand(comm.seed);
+	comm.sendTime(3 * 60 + 0);
 	showConfiguration();
-	
 	
 }
 
@@ -66,6 +63,7 @@ void MainWindow::showConfiguration()
 	ui.stackedWidget->setCurrentWidget(configWidget);
 }
 
+
 void MainWindow::initLCD(int minutes, int seconds) {
 	timer = new QTimer(this);
 	countdown = QTime(0, minutes, seconds);
@@ -82,11 +80,13 @@ void MainWindow::initLCD(int minutes, int seconds) {
 	blink = false;
 }
 
+
 void MainWindow::on_btnHome_clicked() {
 	ui.stackedWidget->setCurrentIndex(0);
 	deleteGames();
-	totalGameWon++;
+	//totalGameWon++;
 }
+
 
 void MainWindow::on_btnLED_released() {
 	if (threadWidget) {
@@ -128,6 +128,7 @@ void MainWindow::on_btnLED_released() {
 	ui.stackedWidget->setCurrentWidget(threadWidget);
 
 }
+
 
 void MainWindow::on_btnSnake_clicked()
 {
@@ -171,30 +172,59 @@ void MainWindow::on_btnSnake_clicked()
 
 void MainWindow::on_btnSimon_clicked() {
 
-	simonWidget = new SimonSaysWidget(this, 2, ui.DELVert, ui.DELBleu, ui.DELRouge, ui.DELJaune);
+	simonWidget = new SimonSaysWidget(this, 6, ui.DELVert, ui.DELBleu, ui.DELRouge, ui.DELJaune);
 
 	connect(simonWidget, &SimonSaysWidget::timePenalty, this, [this](int penalty) {
+
 		totalPenaltyTime += penalty;
 		errorSound();
 		QMessageBox msg;
 		msg.setWindowTitle("Simon Says");
 		msg.setText("GAME LOST!");
 		msg.exec();
+		Communication& comm = Communication::getInstance();
+		comm.buzz(255);
 		});
 	connect(simonWidget, &SimonSaysWidget::gameWon, this, [this]() {
+
 		ui.btnSimon->setEnabled(false);
 		QMessageBox msg;
 		msg.setWindowTitle("Simon Says");
 		msg.setText("GAME COMPLETED!");
 		msg.exec();
+		Communication& comm = Communication::getInstance();
+		comm.buzz(255);
 		totalGameWon++;
 		});
 	simonWidget->startGame();
 }
 
+
 void MainWindow::on_btnAccel_clicked() {
 	ui.stackedWidget->setCurrentIndex(2);
+	QMessageBox msg;
+	msg.setWindowTitle("Addddsadsadasdas");
+	msg.setText("SHAKE LA MANNETTE");
+	msg.exec();
+	Communication& comm = Communication::getInstance();
+	QTimer gameTimer;
+	QObject::connect(&gameTimer, &QTimer::timeout, this, [this, &comm]() {
+		int shake = comm.readMsg(MSG_ID_AR_SHAKED);
+		if (shake == 1) {
+			QMessageBox msg;
+			msg.setWindowTitle("Addddsadsadasdas");
+			msg.setText("SHAKE LA MANNETTE");
+			msg.exec();
+		}
+		/*else if (shake == 0) {
+			QMessageBox msg;
+			msg.setWindowTitle("Addddsadsadasdas");
+			msg.setText("SHAKE LA MANNETTE");
+			msg.show();
+		}*/
+		});
 }
+
 
 void MainWindow::on_btnPoten_clicked() {
 	ui.stackedWidget->setCurrentIndex(5);
@@ -415,6 +445,11 @@ void MainWindow::deleteGames() {
 		ui.stackedWidget->removeWidget(threadWidget);
 		delete threadWidget;
 		threadWidget = nullptr;
+		this->setStyleSheet(
+			"MainWindow {"
+			"   border-image: url(:/MainWindow/Background.png);"
+			"}"
+		);
 	}
 	if (cryptoWidget) {
 		ui.stackedWidget->removeWidget(cryptoWidget);

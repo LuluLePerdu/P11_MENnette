@@ -107,6 +107,8 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Accel.cpp" />
+    <ClCompile Include="AccelWidget.cpp" />
     <ClCompile Include="ClockWorker.cpp" />
     <ClCompile Include="ConfigurationWidget.cpp" />
     <ClCompile Include="CryptoSequencer.cpp" />
@@ -128,6 +130,8 @@
     <ClCompile Include="ThreadCutterWidget.cpp" />
     <ClCompile Include="Utils\Communication.cpp" />
     <QtMoc Include="ClockWorker.h" />
+    <ClInclude Include="Accel.h" />
+    <ClInclude Include="AccelWidget.h" />
     <ClInclude Include="Communication.h" />
     <QtMoc Include="ConfigurationWidget.h" />
     <ClInclude Include="CryptoSequencer.h" />

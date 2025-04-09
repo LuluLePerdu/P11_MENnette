@@ -94,12 +94,15 @@
     <ClCompile Include="EndGameWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Accel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AccelWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\Color.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\common.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Communication.h">
@@ -121,6 +124,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SimonSays.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Accel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AccelWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
