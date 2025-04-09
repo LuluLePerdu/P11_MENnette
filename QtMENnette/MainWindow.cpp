@@ -20,12 +20,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	connect(configWidget, &ConfigurationWidget::settingsApplied, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
 		initLCD(3,  0);
+		Communication& comm = Communication::getInstance();
+		comm.sendTime(3 * 60 + 0);
 		if (audioOutput) {
 			buzzTimer->stop();
 			delete audioOutput;
-			delete buzzTimer;
-			delete timer;
-			
+			delete buzzTimer;			
 		}
 		totalGameWon = 0;
 		ui.btnLED->setEnabled(true);
@@ -34,8 +34,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		ui.btnAccel->setEnabled(true);
 		ui.btnPoten->setEnabled(true);
 
+		randomGame = (std::rand() % 4) + 1;
+
 		buzzTimer = new QTimer(this);
-		Communication& comm = Communication::getInstance();
 		connect(buzzTimer, &QTimer::timeout, this, [this, &comm]() {
 			comm.buzz(50);
 			audioOutput = new QAudioOutput(this);
@@ -43,14 +44,31 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 			player->setAudioOutput(audioOutput);
 			audioOutput->setVolume(0.5);
 			player->play();
+
+			if (totalGameWon == randomGame && !accelWidget) {
+				comm.buzz(255);
+				ui.stackedWidget->setCurrentIndex(2);
+				accelWidget = new AccelWidget(this);
+				ui.stackedWidget->addWidget(accelWidget);
+				ui.stackedWidget->setCurrentWidget(accelWidget);
+				accelWidget->startGame();
+			}
+			if (totalGameWon == randomGame && accelWidget->hasWon()) {
+				comm.buzz(255);
+				totalGameWon++;
+				//accelWidget->stopGame();
+				ui.stackedWidget->removeWidget(accelWidget);
+				//delete accelWidget;
+				ui.stackedWidget->setCurrentIndex(0);
+			}
 			});
 		buzzTimer->start(1000);
 		});
 
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
 	Communication& comm = Communication::getInstance();
-	comm.sendTime(3 * 60 + 0);
 	showConfiguration();
+	
 	
 }
 
@@ -81,6 +99,10 @@ void MainWindow::showConfiguration()
 
 
 void MainWindow::initLCD(int minutes, int seconds) {
+	if (timer) {
+		timer->stop();
+		delete timer;
+	}
 	timer = new QTimer(this);
 	countdown = QTime(0, minutes, seconds);
 
@@ -94,7 +116,6 @@ void MainWindow::initLCD(int minutes, int seconds) {
 	connect(timer, &QTimer::timeout, this, &MainWindow::updateTimer);
 	timer->start(100);
 	blink = false;
-	
 }
 
 
@@ -105,7 +126,7 @@ void MainWindow::on_btnHome_clicked() {
 }
 
 
-void MainWindow::on_btnLED_released() {
+void MainWindow::on_btnLED_clicked() {
 	if (threadWidget) {
 		ui.stackedWidget->removeWidget(threadWidget);
 		delete threadWidget;
@@ -282,28 +303,6 @@ void MainWindow::on_btnSimon_clicked() {
 
 
 void MainWindow::on_btnAccel_clicked() {
-	ui.stackedWidget->setCurrentIndex(2);
-	QMessageBox msg;
-	msg.setWindowTitle("Addddsadsadasdas");
-	msg.setText("SHAKE LA MANNETTE");
-	msg.exec();
-	Communication& comm = Communication::getInstance();
-	QTimer gameTimer;
-	QObject::connect(&gameTimer, &QTimer::timeout, this, [this, &comm]() {
-		int shake = comm.readMsg(MSG_ID_AR_SHAKED);
-		if (shake == 1) {
-			QMessageBox msg;
-			msg.setWindowTitle("Addddsadsadasdas");
-			msg.setText("SHAKE LA MANNETTE");
-			msg.exec();
-		}
-		/*else if (shake == 0) {
-			QMessageBox msg;
-			msg.setWindowTitle("Addddsadsadasdas");
-			msg.setText("SHAKE LA MANNETTE");
-			msg.show();
-		}*/
-		});
 }
 
 
@@ -469,7 +468,7 @@ void MainWindow::updateTimer() {
 		timer->stop();
 		showEndGame(QTime(0, 0, 0), false); // lecture seule
 	}
-	else if (totalGameWon >= 4) {
+	else if (totalGameWon >= 5) {
 		timer->stop();
 		showEndGame(timeLeft, true);
 	}
@@ -554,6 +553,10 @@ void MainWindow::deleteGames() {
 			"   border-image: url(:/MainWindow/Background.png);"
 			"}"
 		);
+
+		QPalette palette = ui.lcdClock->palette();
+		palette.setColor(palette.WindowText, QColor(50, 255, 50));
+		ui.lcdClock->setPalette(palette);
 	}
 	if (cryptoWidget) {
 		ui.stackedWidget->removeWidget(cryptoWidget);

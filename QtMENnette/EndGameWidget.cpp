@@ -9,15 +9,15 @@ EndGameWidget::EndGameWidget(QTime finalTime, bool victory, QWidget* parent)
     timeLabel->setText(playerTime.toString("mm:ss"));
 
     if (!isVictory) {
-        titleLabel->setText("Bombe explosée!");
+        titleLabel->setText(QString::fromLatin1("Bombe explosée!"));
         titleLabel->setStyleSheet("QLabel { color: #FF0000; font-size: 24px; font-weight: bold; padding: 10px; }");
         nameEdit->setEnabled(false);
         saveButton->setEnabled(false);
-        nameLabel->setText("Temps écoulé - Classement en lecture seule:");
+        nameLabel->setText(QString::fromLatin1("Temps écoulé - Classement en lecture seule:"));
         nameLabel->setStyleSheet("font-size: 16px; color: #FF0000;");
     }
     else {
-        titleLabel->setText("Bombe désamorcée!");
+        titleLabel->setText(QString::fromLatin1("Bombe désamorcée!"));
         titleLabel->setStyleSheet("QLabel { color: #00FF00; font-size: 24px; font-weight: bold; padding: 10px; }");
     }
 }
@@ -177,7 +177,7 @@ void EndGameWidget::loadLeaderboard()
         file.close();
     }
 
-    std::sort(leaderboard.begin(), leaderboard.end());
+    std::reverse(leaderboard.begin(), leaderboard.end());
     updateLeaderboardDisplay();
 }
 
@@ -195,7 +195,7 @@ void EndGameWidget::saveLeaderboard()
     newScore.time = playerTime;
     leaderboard.append(newScore);
 
-    std::sort(leaderboard.begin(), leaderboard.end());
+    std::reverse(leaderboard.begin(), leaderboard.end());
 
     if (leaderboard.size() > 15) {
         leaderboard.resize(15);
@@ -251,6 +251,7 @@ void EndGameWidget::updateLeaderboardDisplay()
         }
 
         leaderboardList->addItem(item);
+
         rank++;
     }
 }
