@@ -177,7 +177,7 @@ void EndGameWidget::loadLeaderboard()
         file.close();
     }
 
-    std::sort(leaderboard.begin(), leaderboard.end());
+    std::reverse(leaderboard.begin(), leaderboard.end());
     updateLeaderboardDisplay();
 }
 
