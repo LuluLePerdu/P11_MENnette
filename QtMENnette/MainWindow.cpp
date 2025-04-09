@@ -23,12 +23,24 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		if (audioOutput) {
 			delete audioOutput;
 		}
-		audioOutput = new QAudioOutput(this);
+		/*audioOutput = new QAudioOutput(this);
 		player->setSource(QUrl("qrc:/MainWindow/Media/beep_1sec.mp3"));
 		player->setAudioOutput(audioOutput);
 		audioOutput->setVolume(0.5);
 		player->setLoops(QMediaPlayer::Infinite);
-		player->play();
+		player->play();*/
+
+		buzzTimer = new QTimer(this);
+		Communication& comm = Communication::getInstance();
+		connect(buzzTimer, &QTimer::timeout, this, [this, &comm]() {
+			comm.buzz(50);
+			audioOutput = new QAudioOutput(this);
+			player->setSource(QUrl("qrc:/MainWindow/Media/beep_1sec.mp3"));
+			player->setAudioOutput(audioOutput);
+			audioOutput->setVolume(0.5);
+			player->play();
+			});
+		buzzTimer->start(1000);
 		});
 
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
@@ -78,6 +90,7 @@ void MainWindow::initLCD(int minutes, int seconds) {
 	connect(timer, &QTimer::timeout, this, &MainWindow::updateTimer);
 	timer->start(100);
 	blink = false;
+	
 }
 
 
