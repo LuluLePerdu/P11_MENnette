@@ -195,7 +195,7 @@ void EndGameWidget::saveLeaderboard()
     newScore.time = playerTime;
     leaderboard.append(newScore);
 
-    std::sort(leaderboard.begin(), leaderboard.end());
+    std::reverse(leaderboard.begin(), leaderboard.end());
 
     if (leaderboard.size() > 15) {
         leaderboard.resize(15);
@@ -251,6 +251,7 @@ void EndGameWidget::updateLeaderboardDisplay()
         }
 
         leaderboardList->addItem(item);
+
         rank++;
     }
 }
