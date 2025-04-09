@@ -116,7 +116,6 @@ void MainWindow::initLCD(int minutes, int seconds) {
 	connect(timer, &QTimer::timeout, this, &MainWindow::updateTimer);
 	timer->start(100);
 	blink = false;
-	
 }
 
 
@@ -127,7 +126,7 @@ void MainWindow::on_btnHome_clicked() {
 }
 
 
-void MainWindow::on_btnLED_released() {
+void MainWindow::on_btnLED_clicked() {
 	if (threadWidget) {
 		ui.stackedWidget->removeWidget(threadWidget);
 		delete threadWidget;
@@ -482,6 +481,10 @@ void MainWindow::deleteGames() {
 			"   border-image: url(:/MainWindow/Background.png);"
 			"}"
 		);
+
+		QPalette palette = ui.lcdClock->palette();
+		palette.setColor(palette.WindowText, QColor(50, 255, 50));
+		ui.lcdClock->setPalette(palette);
 	}
 	if (cryptoWidget) {
 		ui.stackedWidget->removeWidget(cryptoWidget);
