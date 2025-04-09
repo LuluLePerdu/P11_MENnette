@@ -21,5 +21,6 @@
         <file>Media/titille.png</file>
         <file>Media/tappez.png</file>
         <file>Media/paper1.jpg</file>
+        <file>Media/restart.png</file>
     </qresource>
 </RCC>

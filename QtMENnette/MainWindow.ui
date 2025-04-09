@@ -158,12 +158,63 @@ QPushButton:pressed {
        <string>LED</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btnDebug">
+     <widget class="QPushButton" name="btnAccel">
       <property name="geometry">
        <rect>
         <x>370</x>
         <y>250</y>
-        <width>251</width>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #1e1e1e;          
+    color: #f2f2f2;                         
+    border: 2px solid #770000;           
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+
+    box-shadow: 
+        0 0 8px rgba(255, 0, 0, 0.4),
+        inset 0 0 4px rgba(255, 0, 0, 0.2);
+}
+
+QPushButton:hover {
+    background-color: #2a0000;           
+    border: 2px solid #aa0000;
+    box-shadow: 
+        0 0 12px rgba(255, 0, 0, 0.6),
+        inset 0 0 6px rgba(255, 0, 0, 0.3);
+}
+
+QPushButton:pressed {
+    background-color: #100000;           
+    border: 2px solid #ff0000;
+    padding-top: 11px;
+    padding-left: 17px;
+    box-shadow: 
+        0 0 4px rgba(255, 0, 0, 0.3),
+        inset 0 0 10px rgba(255, 0, 0, 0.6);
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Accel</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnDebug">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>250</y>
+        <width>101</width>
         <height>101</height>
        </rect>
       </property>
@@ -207,7 +258,7 @@ QPushButton:pressed {
       </property>
       <property name="text">
        <string>NE PAS
-ACTIVER</string>
+TOUCHER</string>
       </property>
       <property name="checkable">
        <bool>false</bool>
@@ -315,47 +366,6 @@ QPushButton:pressed {
       </property>
       <property name="text">
        <string>Snake</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnConfiguration">
-      <property name="geometry">
-       <rect>
-        <x>320</x>
-        <y>380</y>
-        <width>191</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-    background-color: #3a3a3a;    
-    color: #d0d0d0;                
-    border: 2px solid #111;          
-    border-radius: 4px;              
-    padding: 10px 16px;
-    font-family: 'OCR A Extended', 'Courier New', monospace; 
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    box-shadow: inset 0px 0px 3px #000, 2px 2px 6px #000; 
-}
-
-QPushButton:hover {
-    background-color: #505050;     
-    border: 2px solid #222;
-}
-
-QPushButton:pressed {
-    background-color: #222;        
-    border: 2px solid #444;
-    padding-top: 11px;               
-    padding-left: 17px;
-}
-</string>
-      </property>
-      <property name="text">
-       <string>Configuration</string>
       </property>
      </widget>
      <widget class="QLCDNumber" name="lcdClock">
@@ -1202,7 +1212,7 @@ QPushButton:hover{
    </property>
    <property name="styleSheet">
     <string notr="true">QToolButton{
-	background-color: rgb(130,130,130);
+	background-color: rgb(64,176,194);
 	
 	border-image: url(:/MainWindow/Media/house.png);
 	border-style: outset;
@@ -1210,11 +1220,11 @@ QPushButton:hover{
 	border-width: 5px;
 }
 QToolButton:hover{
-	background-color: rgb(75,75,75);
+	background-color: rgb(32,88,97);
 }</string>
    </property>
    <property name="text">
-    <string>Home</string>
+    <string/>
    </property>
   </widget>
   <widget class="QToolButton" name="btnQui">
@@ -1237,6 +1247,34 @@ QToolButton:hover{
 QToolButton:hover{
 	background-color: rgb(130, 0, 0);
 }</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnConfiguration">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>630</y>
+     <width>51</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #3ab573;    
+
+	border-image: url(:/MainWindow/Media/restart.png);
+	border-style: outset;
+   	border-radius: 15px;
+	border-width: 5px;              
+}
+
+QPushButton:hover {
+    background-color: #267a4d;        
+}
+</string>
    </property>
    <property name="text">
     <string/>
