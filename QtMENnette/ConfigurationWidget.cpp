@@ -1,7 +1,5 @@
 #include "ConfigurationWidget.h"
 
-#include "ConfigurationWidget.h"
-
 /// <summary>
 /// Constructeur de la classe ConfigurationWidget.
 /// Initialise les préréglages de difficulté et configure l'interface utilisateur.
