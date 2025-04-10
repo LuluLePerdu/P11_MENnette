@@ -12,7 +12,6 @@ ConfigurationWidget::ConfigurationWidget(QWidget* parent) : QWidget(parent)
     difficultyPresets[NORMAL] = { 21, 21, 50 };
     difficultyPresets[HARD] = { 31, 31, 45 };
 
-    // Configuration de l'interface utilisateur et application du style
     setupUi();
     applyBombStyle();
 }
