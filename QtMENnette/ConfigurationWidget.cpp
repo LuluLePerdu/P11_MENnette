@@ -1,3 +1,7 @@
+///@file ConfigurationWidget.cpp
+///@brief Fichier source pour la classe ConfigurationWidget. Permet de configurer les paramètres de jeu pour les différents jeux et la création de l'interface utilisateur.
+///@author DUFL5093, GAGL1353, ROMZ6050
+
 #include "ConfigurationWidget.h"
 
 /// <summary>

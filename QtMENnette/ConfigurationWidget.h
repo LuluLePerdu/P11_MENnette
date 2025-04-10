@@ -1,3 +1,7 @@
+///@file ConfigurationWidget.h
+///@brief Fichier d'en-tête pour la classe ConfigurationWidget
+///@author DUFL5093, GAGL1353, ROMZ6050
+
 #pragma once
 
 #include <QMap>
