@@ -15,7 +15,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	ui.stackedWidget->addWidget(configWidget);
 	ui.stackedWidget->setCurrentIndex(0);
 	Communication& comm = Communication::getInstance();
-	comm.seed = comm.createSeed();
+	if (comm.seed != 0) {
+		comm.seed = comm.createSeed();
+	}
 
 
 	connect(ui.btnConfiguration, &QPushButton::clicked, this, &MainWindow::showConfiguration);
@@ -25,6 +27,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		initLCD(minutes,  secondes);
 		Communication& comm = Communication::getInstance();
 		comm.sendTime(minutes * 60 + secondes);
+		comm.seed = comm.createSeed();
 		if (audioOutput) {
 			buzzTimer->stop();
 			delete audioOutput;
@@ -44,6 +47,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		audioOutput = new QAudioOutput(this);
 		connect(buzzTimer, &QTimer::timeout, this, [this, &comm]() {
 			comm.buzz(50);
+			qDebug() << "Seed: " << comm.seed;
+
 			if (isInGame) {
 			
 				player->setSource(QUrl("qrc:/MainWindow/Media/beep_1sec.mp3"));
@@ -52,7 +57,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 				player->play();
 
 				if (totalGameWon == randomGame && !accelWidget) {
-					comm.buzz(255);
+					comm.buzz(255); // motor vibration
 					ui.stackedWidget->setCurrentIndex(2);
 					accelWidget = new AccelWidget(this);
 					ui.stackedWidget->addWidget(accelWidget);

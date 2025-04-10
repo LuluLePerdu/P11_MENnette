@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="pgeMain">
     <widget class="QFrame" name="frame">
@@ -503,7 +503,31 @@ QProgressBar::chunk {
     <zorder>frame</zorder>
    </widget>
    <widget class="QWidget" name="pgeSnake"/>
-   <widget class="QWidget" name="pgeAccel"/>
+   <widget class="QWidget" name="pgeAccel">
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>168</x>
+       <y>245</y>
+       <width>671</width>
+       <height>201</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Cascadia Code</family>
+       <pointsize>70</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>SECOUE LA
+MANNETTE!!!</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
    <widget class="QWidget" name="pgeLED">
     <widget class="QLabel" name="Fils_2">
      <property name="geometry">

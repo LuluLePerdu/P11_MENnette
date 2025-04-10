@@ -61,10 +61,6 @@ int Communication::createSeed() {
             return 0; // Timeout
         }
         a = readMsg(MSG_ID_AR_MUON);
-        //clear();
-        if (a == MSG_DATA_ERROR) {
-            return 0;
-        }
     }
     time_t finalTime = time(nullptr);
     int seed = difftime(finalTime, initTime);

@@ -11,7 +11,7 @@
 #include <map>
 //using namespace std;
 
-#define BAUD 38400 // A METTRE A 115200
+#define BAUD 9600 // A METTRE A 115200
 #define MSG_SIZE 3
 #define TIMEOUT_READ 5//50//20?//10?
 
@@ -70,7 +70,7 @@ public:
     void clear();
     unsigned char convertBoolsToByte(bool p_sw[8]);
     void byteToBoolArray(unsigned char b, bool arr[8]);
-    int seed = 98212321;
+    int seed = 0;
 	void buzz(unsigned char strength);
 	void sendTime(unsigned char time);
 

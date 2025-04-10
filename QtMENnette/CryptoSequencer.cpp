@@ -20,13 +20,19 @@ CryptoSequencer::~CryptoSequencer()
 void CryptoSequencer::initialize() {
     Communication& comm = Communication::getInstance();
 	comm.clear();
-    std::default_random_engine randomEngine(comm.seed);
-    target = (std::rand() % 255);
+    //std::default_random_engine randomEngine(comm.seed);
+	mt19937 randomEngine(comm.seed);
+	std::uniform_int_distribution<int> distribution(0, 255);
+
+	target = distribution(randomEngine);
+	std::uniform_int_distribution<int> digitDistribution(0, 14);
+    //target = (std::rand() % 255);
     char digits[15] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'F'}; 
 
     for (int i = 0; i < CODE_LENGTH; i++) {
-
-        code[i] = digits[std::rand() % 15];
+        
+		code[i] = digits[digitDistribution(randomEngine)];
+        //code[i] = digits[std::rand() % 15];
     }
 	code[CODE_LENGTH] = '\0';
 }
