@@ -10,59 +10,53 @@
 #include <QPushButton>
 #include <QFormLayout>
 #include <QVBoxLayout>
-#include <QFormLayout>
-#include <QPushButton>
 
 class ConfigurationWidget : public QWidget
 {
-    Q_OBJECT
+   Q_OBJECT
 public:
-    enum Difficulty { EASY, NORMAL, HARD, CUSTOM };
+	enum Difficulty { EASY, NORMAL, HARD, CUSTOM }; /// Enumération des niveaux de difficulté
 
-    explicit ConfigurationWidget(QWidget* parent = nullptr);
+   struct DifficultyPreset {
+       int width;  /// Largeur du labyrinthe
+       int height; /// Hauteur du labyrinthe
+       int time;   /// Temps limite pour résoudre le labyrinthe
+   };
 
-    int getMazeTime() const;
-    int getMazeWidth() const;
-    int getMazeHeight() const;
-    int getCryptoRange() const;
-    int getSimonLength() const;
-    int getThreadPenalty() const;
-    Difficulty getDifficulty() const;
+   explicit ConfigurationWidget(QWidget* parent = nullptr);
+
+   int getMazeTime() const;    /// Retourne le temps limite du labyrinthe
+   int getMazeWidth() const;   /// Retourne la largeur du labyrinthe
+   int getMazeHeight() const;  /// Retourne la hauteur du labyrinthe
+   int getCryptoRange() const; /// Retourne la plage de cryptographie
+   int getSimonLength() const; /// Retourne la longueur du jeu Simon
+   int getThreadPenalty() const; /// Retourne la pénalité de temps pour les threads
+   Difficulty getDifficulty() const; /// Retourne la difficulté sélectionnée
 
 signals:
-    void settingsApplied();
+   void settingsApplied(); /// Signal émis lorsque les paramètres sont appliqués
 
 private slots:
-    void onDiffChangedThread(int index);
-    void onDifficultyChanged(int index);
+   void onDiffChangedThread(int index); /// Slot pour gérer le changement de difficulté des threads
+   void onDifficultyChanged(int index); /// Slot pour gérer le changement de difficulté générale
 
 private:
+   QGroupBox* createGameSection(const QString& title, QWidget* content); /// Crée une section de jeu avec un titre et un contenu
+   void setupUi(); /// Configure l'interface utilisateur
+   void applyBombStyle(); /// Applique le style spécifique à la bombe
+   void updateDifficultySettings(); /// Met à jour les paramètres en fonction de la difficulté
 
-    struct DifficultyPreset {
-        int width;
-        int height;
-        int time;
-    };
+   QSpinBox* mazeTimeSpin = new QSpinBox(); /// SpinBox pour le temps limite du labyrinthe
+   QSpinBox* mazeWidthSpin = new QSpinBox(); /// SpinBox pour la largeur du labyrinthe
+   QSpinBox* mazeHeightSpin = new QSpinBox(); /// SpinBox pour la hauteur du labyrinthe
+   QComboBox* difficultyCombo = new QComboBox(); /// ComboBox pour sélectionner la difficulté
 
-    QGroupBox* createGameSection(const QString& title, QWidget* content);
+   QSpinBox* simonLengthSpin = new QSpinBox(); /// SpinBox pour la longueur du jeu Simon
 
-    QSpinBox* mazeTimeSpin;
-    QSpinBox* mazeWidthSpin;
-    QSpinBox* mazeHeightSpin;
-    QComboBox* difficultyCombo;
+   QSpinBox* threadTimeSpin = new QSpinBox(); /// SpinBox pour le temps des threads
+   QComboBox* difficultyThreadCombo = new QComboBox(); /// ComboBox pour la difficulté des threads
 
-    QSpinBox* simonLengthSpin;
-    QComboBox* simonSpeedCombo;
+   QSpinBox* cryptoRangeSpin = new QSpinBox(); /// SpinBox pour la plage de cryptographie
 
-    QSpinBox* threadTimeSpin;
-    QComboBox* difficultyThreadCombo;
-
-	QSpinBox* cryptoRangeSpin;
-
-    QMap<Difficulty, DifficultyPreset> difficultyPresets;
-
-    void setupUi();
-    void applyBombStyle();
-    void updateDifficultySettings();
-
+   QMap<Difficulty, DifficultyPreset> difficultyPresets; /// Map des préréglages de difficulté
 };
