@@ -1,7 +1,6 @@
 #pragma once
 #include "ui_MainWindow.h"
 
-#include "ClockWorker.h"
 #include "EndGameWidget.h"
 #include "SimonSaysWidget.h"
 #include "SnakeMazeWidget.h"
