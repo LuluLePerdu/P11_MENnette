@@ -1,11 +1,17 @@
 #pragma once
-#include <QWidget>
+
 #include <QMap>
+#include <QLabel>
+#include <QWidget>
+#include <QSpinBox>
 #include <QGroupBox>
 #include <QComboBox>
-#include <QSpinBox>
+#include <QOverload>
 #include <QPushButton>
 #include <QFormLayout>
+#include <QVBoxLayout>
+#include <QFormLayout>
+#include <QPushButton>
 
 class ConfigurationWidget : public QWidget
 {
@@ -15,16 +21,13 @@ public:
 
     explicit ConfigurationWidget(QWidget* parent = nullptr);
 
-    Difficulty getDifficulty() const;
+    int getMazeTime() const;
     int getMazeWidth() const;
     int getMazeHeight() const;
-    int getMazeTime() const;
-
-    int getThreadPenalty() const;
-
     int getCryptoRange() const;
-
     int getSimonLength() const;
+    int getThreadPenalty() const;
+    Difficulty getDifficulty() const;
 
 signals:
     void settingsApplied();
@@ -34,26 +37,6 @@ private slots:
     void onDifficultyChanged(int index);
 
 private:
-    void setupUi();
-    void applyBombStyle();
-    void updateDifficultySettings();
-
-    QGroupBox* createGameSection(const QString& title, QWidget* content);
-
-    QComboBox* difficultyCombo;
-    QSpinBox* mazeWidthSpin;
-    QSpinBox* mazeHeightSpin;
-    QSpinBox* mazeTimeSpin;
-
-    QComboBox* simonSpeedCombo;
-    QSpinBox* simonLengthSpin;
-
-    QComboBox* difficultyThreadCombo;
-    QSpinBox* threadTimeSpin;
-
-	QSpinBox* cryptoRangeSpin;
-
-
 
     struct DifficultyPreset {
         int width;
@@ -61,5 +44,25 @@ private:
         int time;
     };
 
+    QGroupBox* createGameSection(const QString& title, QWidget* content);
+
+    QSpinBox* mazeTimeSpin;
+    QSpinBox* mazeWidthSpin;
+    QSpinBox* mazeHeightSpin;
+    QComboBox* difficultyCombo;
+
+    QSpinBox* simonLengthSpin;
+    QComboBox* simonSpeedCombo;
+
+    QSpinBox* threadTimeSpin;
+    QComboBox* difficultyThreadCombo;
+
+	QSpinBox* cryptoRangeSpin;
+
     QMap<Difficulty, DifficultyPreset> difficultyPresets;
+
+    void setupUi();
+    void applyBombStyle();
+    void updateDifficultySettings();
+
 };
