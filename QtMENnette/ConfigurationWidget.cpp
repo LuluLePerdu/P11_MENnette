@@ -1,15 +1,17 @@
-#include <QVBoxLayout>
-#include <QFormLayout>
-#include <QPushButton>
-#include <QLabel>
-#include <QMap>
-#include <QComboBox>
-#include <QSpinBox>
-#include <QOverload>
+///@file ConfigurationWidget.cpp
+///@brief Fichier source pour la classe ConfigurationWidget. Permet de configurer les paramètres de jeu pour les différents jeux et la création de l'interface utilisateur.
+///@author DUFL5093, GAGL1353, ROMZ6050
+
 #include "ConfigurationWidget.h"
 
+/// <summary>
+/// Constructeur de la classe ConfigurationWidget.
+/// Initialise les préréglages de difficulté et configure l'interface utilisateur.
+/// </summary>
+/// <param name="parent">Le widget parent (par défaut nullptr).</param>
 ConfigurationWidget::ConfigurationWidget(QWidget* parent) : QWidget(parent)
 {
+    // Initialisation des préréglages de difficulté pour le jeu Snake Maze
     difficultyPresets[EASY] = { 15, 15, 60 };
     difficultyPresets[NORMAL] = { 21, 21, 50 };
     difficultyPresets[HARD] = { 31, 31, 45 };
@@ -18,6 +20,9 @@ ConfigurationWidget::ConfigurationWidget(QWidget* parent) : QWidget(parent)
     applyBombStyle();
 }
 
+/// <summary>
+/// Configure l'interface utilisateur pour les différents jeux.
+/// </summary>
 void ConfigurationWidget::setupUi()
 {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
@@ -29,19 +34,13 @@ void ConfigurationWidget::setupUi()
     QFormLayout* snakeLayout = new QFormLayout(snakeContent);
     snakeLayout->setContentsMargins(10, 10, 10, 10);
 
-    difficultyCombo = new QComboBox();
-    difficultyCombo->addItem("Facile", EASY);
-    difficultyCombo->addItem("Normal", NORMAL);
-    difficultyCombo->addItem("Difficile", HARD);
-    difficultyCombo->addItem("Custom", CUSTOM);
+    difficultyCombo->addItem("Facile ", EASY);
+    difficultyCombo->addItem("Normal ", NORMAL);
+    difficultyCombo->addItem("Difficile ", HARD);
+    difficultyCombo->addItem("Personaliser ", CUSTOM);
 
-    mazeWidthSpin = new QSpinBox();
     mazeWidthSpin->setRange(5, 50);
-
-    mazeHeightSpin = new QSpinBox();
     mazeHeightSpin->setRange(5, 50);
-
-    mazeTimeSpin = new QSpinBox();
     mazeTimeSpin->setRange(10, 300);
     mazeTimeSpin->setSuffix(" sec");
 
@@ -49,43 +48,35 @@ void ConfigurationWidget::setupUi()
     mazeWidthSpin->setReadOnly(true);
     mazeTimeSpin->setReadOnly(true);
 
-    snakeLayout->addRow("Difficulte:", difficultyCombo);
-    snakeLayout->addRow("Largeur:", mazeWidthSpin);
-    snakeLayout->addRow("Hauteur:", mazeHeightSpin);
-    snakeLayout->addRow("Temps:", mazeTimeSpin);
+    snakeLayout->addRow(QString::fromLatin1("Difficulté :"), difficultyCombo);
+    snakeLayout->addRow("Largeur :", mazeWidthSpin);
+    snakeLayout->addRow("Hauteur :", mazeHeightSpin);
+    snakeLayout->addRow("Temps :", mazeTimeSpin);
 
-    mainLayout->addWidget(createGameSection("SNAKE MAZE", snakeContent));
+    mainLayout->addWidget(createGameSection("Labyrinthe Explosif", snakeContent));
 
     // ===== SIMON SAYS =====
     QWidget* simonContent = new QWidget();
     QFormLayout* simonLayout = new QFormLayout(simonContent);
     simonLayout->setContentsMargins(10, 10, 10, 10);
 
-    simonLengthSpin = new QSpinBox();
     simonLengthSpin->setRange(1, 15);
     simonLengthSpin->setValue(8);
 
-    simonLayout->addRow("Longueur:", simonLengthSpin);
+    simonLayout->addRow("Longueur :", simonLengthSpin);
 
-    mainLayout->addWidget(createGameSection("SIMON SAYS", simonContent));
-
-    //COMBOBOX
-	//SPINBOX
-
-    //add row
+    mainLayout->addWidget(createGameSection("Jean Dit", simonContent));
 
     // ===== THREAD CUTTER =====
     QWidget* threadContent = new QWidget();
     QFormLayout* threadLayout = new QFormLayout(threadContent);
     threadLayout->setContentsMargins(10, 10, 10, 10);
 
-    difficultyThreadCombo = new QComboBox();
-    difficultyThreadCombo->addItem("Facile", EASY);
-    difficultyThreadCombo->addItem("Normal", NORMAL);
-    difficultyThreadCombo->addItem("Difficile", HARD);
-    difficultyThreadCombo->addItem("Custom", CUSTOM);
+    difficultyThreadCombo->addItem("Facile ", EASY);
+    difficultyThreadCombo->addItem("Normal ", NORMAL);
+    difficultyThreadCombo->addItem("Difficile ", HARD);
+    difficultyThreadCombo->addItem("Personaliser ", CUSTOM);
 
-    threadTimeSpin = new QSpinBox();
     threadTimeSpin->setRange(10, 50);
     threadTimeSpin->setSuffix(" sec");
     threadTimeSpin->setReadOnly(true);
@@ -94,26 +85,25 @@ void ConfigurationWidget::setupUi()
     threadLayout->addRow(QString::fromLatin1("Pénalité :"), threadTimeSpin);
 
     connect(difficultyThreadCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ConfigurationWidget::onDiffChangedThread);
-    
+
     difficultyThreadCombo->setCurrentIndex(NORMAL);
     onDiffChangedThread(NORMAL);
 
-    mainLayout->addWidget(createGameSection("THREAD CUTTER", threadContent));
+    mainLayout->addWidget(createGameSection("Coupe-fil", threadContent));
 
+    // ===== CRYPTO SEQUENCER =====
+    QWidget* cryptoContent = new QWidget();
+    QFormLayout* cryptoLayout = new QFormLayout(cryptoContent);
+    cryptoLayout->setContentsMargins(10, 10, 10, 10);
 
+    cryptoRangeSpin->setRange(10, 255);
+    cryptoRangeSpin->setValue(50);
 
-	// ===== CRYPTO SEQUENCER =====
-	QWidget* cryptoContent = new QWidget();
-	QFormLayout* cryptoLayout = new QFormLayout(cryptoContent);
-	cryptoLayout->setContentsMargins(10, 10, 10, 10);
+    cryptoLayout->addRow(QString::fromLatin1("Portée :"), cryptoRangeSpin);
 
-	cryptoRangeSpin = new QSpinBox();
-	cryptoRangeSpin->setRange(10, 255);
-	cryptoRangeSpin->setValue(50);
-	cryptoLayout->addRow("Range:", cryptoRangeSpin);
+    mainLayout->addWidget(createGameSection(QString::fromLatin1("Crypto Séquence "), cryptoContent));
 
-    mainLayout->addWidget(createGameSection("CRYPTO SEQUENCER", cryptoContent));
-
+    // ===== BOUTON APPLIQUER =====
     QPushButton* applyButton = new QPushButton("CONFIRMER");
     applyButton->setFixedHeight(45);
     mainLayout->addWidget(applyButton);
@@ -126,6 +116,12 @@ void ConfigurationWidget::setupUi()
     updateDifficultySettings();
 }
 
+/// <summary>
+/// Permet de créer une section de jeu avec un titre et un contenu.
+/// </summary>
+/// <param name="title">Le titre de la section</param>
+/// <param name="content">Le contenu de la section (essentiellement un widget) </param>
+/// <returns>Retourne la section avec le layout visuel approprié</returns>
 QGroupBox* ConfigurationWidget::createGameSection(const QString& title, QWidget* content)
 {
     QGroupBox* group = new QGroupBox(title);
@@ -135,6 +131,9 @@ QGroupBox* ConfigurationWidget::createGameSection(const QString& title, QWidget*
     return group;
 }
 
+/// <summary>
+/// Permet d'appliquer le style de la bombe sur le widget de configuration avec un QSS.
+/// </summary>
 void ConfigurationWidget::applyBombStyle()
 {
     setStyleSheet(R"(
@@ -242,12 +241,18 @@ void ConfigurationWidget::applyBombStyle()
     )");
 }
 
+/// <summary>
+/// Permet de signaler que les paramètres de configuration ont été appliqués spécifiquement pour le jeu de snake.
+/// </summary>
 void ConfigurationWidget::onDifficultyChanged(int index)
 {
-    Q_UNUSED(index);
+    Q_UNUSED(index); 
     updateDifficultySettings();
 }
 
+/// <summary>
+/// Permet de signaler que les paramètres de configuration ont été appliqués spécifiquement pour le jeu de thread.
+/// </summary>
 void ConfigurationWidget::onDiffChangedThread(int index) {
     Q_UNUSED(index);
     threadTimeSpin->setReadOnly(true);
@@ -268,6 +273,9 @@ void ConfigurationWidget::onDiffChangedThread(int index) {
     }
 }
 
+/// <summary>   
+/// Applique les paramètres de configuration pour le jeu de snake.
+/// </summary>
 void ConfigurationWidget::updateDifficultySettings()
 {
     Difficulty diff = static_cast<Difficulty>(difficultyCombo->currentData().toInt());
@@ -287,16 +295,55 @@ void ConfigurationWidget::updateDifficultySettings()
         mazeTimeSpin->setReadOnly(false);
     }
 }
+// Retourne le temps du labyrinthe configuré par l'utilisateur.
+int ConfigurationWidget::getMazeTime() const {
+    return mazeTimeSpin->value();
+}
 
+/// <summary>
+/// Retourne la largeur du labyrinthe configurée par l'utilisateur.
+/// </summary>
+/// <returns>La largeur du labyrinthe.</returns>
+int ConfigurationWidget::getMazeWidth() const {
+    return mazeWidthSpin->value();
+}
+
+/// <summary>
+/// Retourne la hauteur du labyrinthe configurée par l'utilisateur.
+/// </summary>
+/// <returns>La hauteur du labyrinthe.</returns>
+int ConfigurationWidget::getMazeHeight() const {
+    return mazeHeightSpin->value();
+}
+
+/// <summary>
+/// Retourne la plage de valeurs configurée pour le jeu Crypto Sequencer.
+/// </summary>
+/// <returns>La plage de valeurs.</returns>
+int ConfigurationWidget::getCryptoRange() const {
+    return cryptoRangeSpin->value();
+}
+
+/// <summary>
+/// Retourne la longueur configurée pour le jeu Simon Says.
+/// </summary>
+/// <returns>La longueur configurée.</returns>
+int ConfigurationWidget::getSimonLength() const {
+    return simonLengthSpin->value();
+}
+
+/// <summary>
+/// Retourne la pénalité de temps configurée pour le jeu Thread Cutter.
+/// </summary>
+/// <returns>La pénalité de temps.</returns>
+int ConfigurationWidget::getThreadPenalty() const {
+    return threadTimeSpin->value();
+}
+
+/// <summary>
+/// Retourne le niveau de difficulté sélectionné par l'utilisateur.
+/// </summary>
+/// <returns>Le niveau de difficulté.</returns>
 ConfigurationWidget::Difficulty ConfigurationWidget::getDifficulty() const {
     return static_cast<Difficulty>(difficultyCombo->currentData().toInt());
 }
-
-int ConfigurationWidget::getMazeWidth() const { return mazeWidthSpin->value(); }
-int ConfigurationWidget::getMazeHeight() const { return mazeHeightSpin->value(); }
-int ConfigurationWidget::getMazeTime() const { return mazeTimeSpin->value(); }
-
-int ConfigurationWidget::getCryptoRange() const { return cryptoRangeSpin->value(); }
-int ConfigurationWidget::getSimonLength() const { return simonLengthSpin->value(); }
-
-int ConfigurationWidget::getThreadPenalty() const { return threadTimeSpin->value(); }

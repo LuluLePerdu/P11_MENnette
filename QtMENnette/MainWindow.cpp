@@ -22,9 +22,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 
 	connect(configWidget, &ConfigurationWidget::settingsApplied, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
-		initLCD(3,  0);
+		initLCD(minutes,  secondes);
 		Communication& comm = Communication::getInstance();
-		comm.sendTime(3 * 60 + 0);
+		comm.sendTime(minutes * 60 + secondes);
 		if (audioOutput) {
 			buzzTimer->stop();
 			delete audioOutput;
@@ -121,7 +121,24 @@ void MainWindow::showConfiguration()
 		"0 0 8px rgba(255, 0, 0, 0.4),"
 		"inset 0 0 4px rgba(255, 0, 0, 0.2);"
 		"}"
-	);
+		"QPushButton:hover{"
+		"background-color: #2a0000;"
+		"border: 2px solid #aa0000;"
+		"box-shadow:"
+		"0 0 12px rgba(255, 0, 0, 0.6),"
+		"inset 0 0 6px rgba(255, 0, 0, 0.3);"
+		"}"
+
+		"QPushButton:pressed{"
+		"background-color: #100000;"
+		"border: 2px solid #ff0000;"
+		"padding-top: 11px;"
+		"padding-left: 17px;"
+		"box-shadow:"
+		"0 0 4px rgba(255, 0, 0, 0.3),"
+		"inset 0 0 10px rgba(255, 0, 0, 0.6);"
+		"}"
+		);
 
 	ui.btnSnake->setStyleSheet(
 		"QPushButton{"
@@ -139,6 +156,23 @@ void MainWindow::showConfiguration()
 		"box-shadow:"
 		"0 0 8px rgba(255, 0, 0, 0.4),"
 		"inset 0 0 4px rgba(255, 0, 0, 0.2);"
+		"}"
+		"QPushButton:hover{"
+		"background-color: #2a0000;"
+		"border: 2px solid #aa0000;"
+		"box-shadow:"
+		"0 0 12px rgba(255, 0, 0, 0.6),"
+		"inset 0 0 6px rgba(255, 0, 0, 0.3);"
+		"}"
+
+		"QPushButton:pressed{"
+		"background-color: #100000;"
+		"border: 2px solid #ff0000;"
+		"padding-top: 11px;"
+		"padding-left: 17px;"
+		"box-shadow:"
+		"0 0 4px rgba(255, 0, 0, 0.3),"
+		"inset 0 0 10px rgba(255, 0, 0, 0.6);"
 		"}"
 	);
 
@@ -159,6 +193,23 @@ void MainWindow::showConfiguration()
 		"0 0 8px rgba(255, 0, 0, 0.4),"
 		"inset 0 0 4px rgba(255, 0, 0, 0.2);"
 		"}"
+		"QPushButton:hover{"
+		"background-color: #2a0000;"
+		"border: 2px solid #aa0000;"
+		"box-shadow:"
+		"0 0 12px rgba(255, 0, 0, 0.6),"
+		"inset 0 0 6px rgba(255, 0, 0, 0.3);"
+		"}"
+
+		"QPushButton:pressed{"
+		"background-color: #100000;"
+		"border: 2px solid #ff0000;"
+		"padding-top: 11px;"
+		"padding-left: 17px;"
+		"box-shadow:"
+		"0 0 4px rgba(255, 0, 0, 0.3),"
+		"inset 0 0 10px rgba(255, 0, 0, 0.6);"
+		"}"
 	);
 
 	ui.btnPoten->setStyleSheet(
@@ -177,6 +228,23 @@ void MainWindow::showConfiguration()
 		"box-shadow:"
 		"0 0 8px rgba(255, 0, 0, 0.4),"
 		"inset 0 0 4px rgba(255, 0, 0, 0.2);"
+		"}"
+		"QPushButton:hover{"
+		"background-color: #2a0000;"
+		"border: 2px solid #aa0000;"
+		"box-shadow:"
+		"0 0 12px rgba(255, 0, 0, 0.6),"
+		"inset 0 0 6px rgba(255, 0, 0, 0.3);"
+		"}"
+
+		"QPushButton:pressed{"
+		"background-color: #100000;"
+		"border: 2px solid #ff0000;"
+		"padding-top: 11px;"
+		"padding-left: 17px;"
+		"box-shadow:"
+		"0 0 4px rgba(255, 0, 0, 0.3),"
+		"inset 0 0 10px rgba(255, 0, 0, 0.6);"
 		"}"
 	);
 

@@ -1,7 +1,6 @@
 #pragma once
 #include "ui_MainWindow.h"
 
-#include "ClockWorker.h"
 #include "EndGameWidget.h"
 #include "SimonSaysWidget.h"
 #include "SnakeMazeWidget.h"
@@ -68,6 +67,10 @@ private:
     void initLCD(int minutes, int seconds);
     void showEndGame(QTime finalTime, bool victory);
     void showPopUps();
+
+    // #### LE TEMPS ####
+    int minutes = 3;
+    int secondes = 0;
 
 private slots:
     void on_btnHome_clicked();
