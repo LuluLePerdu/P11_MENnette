@@ -34,10 +34,10 @@ void ConfigurationWidget::setupUi()
     QFormLayout* snakeLayout = new QFormLayout(snakeContent);
     snakeLayout->setContentsMargins(10, 10, 10, 10);
 
-    difficultyCombo->addItem("Facile", EASY);
-    difficultyCombo->addItem("Normal", NORMAL);
-    difficultyCombo->addItem("Difficile", HARD);
-    difficultyCombo->addItem("Custom", CUSTOM);
+    difficultyCombo->addItem("Facile ", EASY);
+    difficultyCombo->addItem("Normal ", NORMAL);
+    difficultyCombo->addItem("Difficile ", HARD);
+    difficultyCombo->addItem("Personaliser ", CUSTOM);
 
     mazeWidthSpin->setRange(5, 50);
     mazeHeightSpin->setRange(5, 50);
@@ -48,12 +48,12 @@ void ConfigurationWidget::setupUi()
     mazeWidthSpin->setReadOnly(true);
     mazeTimeSpin->setReadOnly(true);
 
-    snakeLayout->addRow("Difficulte:", difficultyCombo);
-    snakeLayout->addRow("Largeur:", mazeWidthSpin);
-    snakeLayout->addRow("Hauteur:", mazeHeightSpin);
-    snakeLayout->addRow("Temps:", mazeTimeSpin);
+    snakeLayout->addRow(QString::fromLatin1("Difficulté :"), difficultyCombo);
+    snakeLayout->addRow("Largeur :", mazeWidthSpin);
+    snakeLayout->addRow("Hauteur :", mazeHeightSpin);
+    snakeLayout->addRow("Temps :", mazeTimeSpin);
 
-    mainLayout->addWidget(createGameSection("SNAKE MAZE", snakeContent));
+    mainLayout->addWidget(createGameSection("Labyrinthe Explosif", snakeContent));
 
     // ===== SIMON SAYS =====
     QWidget* simonContent = new QWidget();
@@ -63,19 +63,19 @@ void ConfigurationWidget::setupUi()
     simonLengthSpin->setRange(1, 15);
     simonLengthSpin->setValue(8);
 
-    simonLayout->addRow("Longueur:", simonLengthSpin);
+    simonLayout->addRow("Longueur :", simonLengthSpin);
 
-    mainLayout->addWidget(createGameSection("SIMON SAYS", simonContent));
+    mainLayout->addWidget(createGameSection("Jean Dit", simonContent));
 
     // ===== THREAD CUTTER =====
     QWidget* threadContent = new QWidget();
     QFormLayout* threadLayout = new QFormLayout(threadContent);
     threadLayout->setContentsMargins(10, 10, 10, 10);
 
-    difficultyThreadCombo->addItem("Facile", EASY);
-    difficultyThreadCombo->addItem("Normal", NORMAL);
-    difficultyThreadCombo->addItem("Difficile", HARD);
-    difficultyThreadCombo->addItem("Custom", CUSTOM);
+    difficultyThreadCombo->addItem("Facile ", EASY);
+    difficultyThreadCombo->addItem("Normal ", NORMAL);
+    difficultyThreadCombo->addItem("Difficile ", HARD);
+    difficultyThreadCombo->addItem("Personaliser ", CUSTOM);
 
     threadTimeSpin->setRange(10, 50);
     threadTimeSpin->setSuffix(" sec");
@@ -89,7 +89,7 @@ void ConfigurationWidget::setupUi()
     difficultyThreadCombo->setCurrentIndex(NORMAL);
     onDiffChangedThread(NORMAL);
 
-    mainLayout->addWidget(createGameSection("THREAD CUTTER", threadContent));
+    mainLayout->addWidget(createGameSection("Coupe-fil", threadContent));
 
     // ===== CRYPTO SEQUENCER =====
     QWidget* cryptoContent = new QWidget();
@@ -99,9 +99,9 @@ void ConfigurationWidget::setupUi()
     cryptoRangeSpin->setRange(10, 255);
     cryptoRangeSpin->setValue(50);
 
-    cryptoLayout->addRow("Range:", cryptoRangeSpin);
+    cryptoLayout->addRow(QString::fromLatin1("Portée :"), cryptoRangeSpin);
 
-    mainLayout->addWidget(createGameSection("CRYPTO SEQUENCER", cryptoContent));
+    mainLayout->addWidget(createGameSection(QString::fromLatin1("Crypto Séquence "), cryptoContent));
 
     // ===== BOUTON APPLIQUER =====
     QPushButton* applyButton = new QPushButton("CONFIRMER");
