@@ -11,7 +11,7 @@
 #include <map>
 //using namespace std;
 
-#define BAUD 9600 // A METTRE A 115200
+#define BAUD 38400 // A METTRE A 115200
 #define MSG_SIZE 3
 #define TIMEOUT_READ 5//50//20?//10?
 

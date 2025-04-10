@@ -14,12 +14,15 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 	configWidget = new ConfigurationWidget(this);
 	ui.stackedWidget->addWidget(configWidget);
 	ui.stackedWidget->setCurrentIndex(0);
+	Communication& comm = Communication::getInstance();
+	comm.seed = comm.createSeed();
+
 
 	connect(ui.btnConfiguration, &QPushButton::clicked, this, &MainWindow::showConfiguration);
 
 	connect(configWidget, &ConfigurationWidget::settingsApplied, this, [this]() {
 		ui.stackedWidget->setCurrentIndex(0);
-		initLCD(0,  5);
+		initLCD(3,  0);
 		Communication& comm = Communication::getInstance();
 		comm.sendTime(3 * 60 + 0);
 		if (audioOutput) {
@@ -71,7 +74,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		});
 
 	connect(ui.btnSnake, &QPushButton::clicked, this, &MainWindow::on_btnSnake_clicked);
-	Communication& comm = Communication::getInstance();
 	showConfiguration();
 	
 	
