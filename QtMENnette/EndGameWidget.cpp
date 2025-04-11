@@ -1,5 +1,16 @@
+///@file EndGameWidget.cpp
+///@brief Fichier source pour la classe EndGameWidget - Fichier fait à la main pour l'évaluation de l'APP7
+/// @author DUFL5093, GAGL1353, ROMZ6050
+
+
 #include "EndGameWidget.h"
 
+/// <summary>
+/// Constructeur de la classe EndGameWidget.
+/// </summary>
+/// <param name="finalTime"></param>
+/// <param name="victory"></param>
+/// <param name="parent"></param>
 EndGameWidget::EndGameWidget(QTime finalTime, bool victory, QWidget* parent)
     : QWidget(parent), playerTime(finalTime), isVictory(victory)
 {
@@ -22,8 +33,14 @@ EndGameWidget::EndGameWidget(QTime finalTime, bool victory, QWidget* parent)
     }
 }
 
+/// <summary>
+/// Destructeur de la classe EndGameWidget.
+/// </summary>
 EndGameWidget::~EndGameWidget() {}
 
+/// <summary>
+/// Fonction pour configurer l'interface utilisateur.
+/// </summary>
 void EndGameWidget::setupUI()
 {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
@@ -151,6 +168,9 @@ void EndGameWidget::setupUI()
     connect(menuButton, &QPushButton::clicked, this, &EndGameWidget::onMenuClicked);
 }
 
+/// <summary>   
+/// Charge le classement à partir du fichier.
+/// </summary>
 void EndGameWidget::loadLeaderboard()
 {
     leaderboard.clear();
@@ -180,7 +200,9 @@ void EndGameWidget::loadLeaderboard()
     std::reverse(leaderboard.begin(), leaderboard.end());
     updateLeaderboardDisplay();
 }
-
+/// <summary>
+/// Sauvegarde le classement dans le fichier.
+/// </summary>
 void EndGameWidget::saveLeaderboard()
 {
     if (!isVictory) return;
@@ -217,6 +239,9 @@ void EndGameWidget::saveLeaderboard()
 
 }
 
+/// <summary>
+/// Mise à jour de l'affichage du classement.
+/// </summary>
 void EndGameWidget::updateLeaderboardDisplay()
 {
     leaderboardList->clear();
@@ -261,11 +286,17 @@ void EndGameWidget::updateLeaderboardDisplay()
     }
 }
 
+/// <summary>
+/// Sauve le classement lorsque le bouton "Enregistrer" est cliqué.
+/// </summary>
 void EndGameWidget::onSaveClicked()
 {
     saveLeaderboard();
 }
 
+/// <summary>
+/// Retourne au menu principal lorsque le bouton "Retour au menu" est cliqué.
+/// </summary>
 void EndGameWidget::onMenuClicked()
 {
     emit returnToMainMenu();
