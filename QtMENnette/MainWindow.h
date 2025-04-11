@@ -69,7 +69,7 @@ private:
     void showPopUps();
 
     // #### LE TEMPS ####
-    int minutes = 0;
+    int minutes = 3;
     int secondes = 30;
 
 private slots:
