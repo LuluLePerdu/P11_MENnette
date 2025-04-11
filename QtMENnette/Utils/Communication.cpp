@@ -1,4 +1,4 @@
-// * Autheur: Zakary Romdhane
+// * Autheur: Zakary Romdhane - ROMZ6050
 // * Date: 2025/03/16
 // * Modification: 2025/04/10
 // * Description: Communication custom pour l'ardunio du projet de session S2 2025 de l'équipe P11
