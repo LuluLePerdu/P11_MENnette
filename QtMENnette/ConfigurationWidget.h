@@ -1,5 +1,5 @@
 ///@file ConfigurationWidget.h
-///@brief Fichier d'en-tête pour la classe ConfigurationWidget
+///@brief Fichier d'en-tête pour la classe ConfigurationWidget - Fichier fait à la main pour l'évaluation de l'APP7
 ///@author DUFL5093, GAGL1353, ROMZ6050
 
 #pragma once
@@ -23,7 +23,7 @@ public:
 
   struct DifficultyPreset {
       int width;  /// Largeur du labyrinthe
-      int height; /// Hauteur du labyrinthe
+      int height; /// Hauteur du labyrinthes
       int time;   /// Temps limite pour résoudre le labyrinthe
   };
 
