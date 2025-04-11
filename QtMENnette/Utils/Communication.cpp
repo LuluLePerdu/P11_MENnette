@@ -135,7 +135,6 @@ Frame Communication::readMsg() {
     DWORD bytesRead;
     DWORD startTime = GetTickCount();
 
-    // Read the first byte
     while (true) {
         if (!ReadFile(hSerial, &msg[0], 1, &bytesRead, NULL) || bytesRead < 1) {
             if (GetTickCount() - startTime > TIMEOUT_READ) { // Timeout after TIMEOUT_READ ms
@@ -146,12 +145,9 @@ Frame Communication::readMsg() {
         break;
     }
 
-    // Read the rest of the message
     if (!ReadFile(hSerial, &msg[1], MSG_SIZE - 1, &bytesRead, NULL) || bytesRead < MSG_SIZE - 1) {
         return errorFrame;
     }
-
-    // Validate the checksum
     unsigned char checksum = 0;
     for (int i = 0; i < MSG_SIZE - 1; i++) {
         checksum ^= msg[i];
