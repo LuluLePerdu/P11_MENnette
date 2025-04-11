@@ -1,3 +1,8 @@
+// * Autheur: Zakary Romdhane
+// * Date: 2025/03/16
+// * Modification: 2025/04/10
+// * Description: Communication custom pour l'ardunio du projet de session S2 2025 de l'équipe P11
+
 #pragma once
 #include <iostream>
 #include <windows.h>
@@ -9,9 +14,11 @@
 #include <vector>
 
 #include <map>
-//using namespace std;
+//using namespace std; 
+//! NE PAS UTILISER NAMESPACE STD! BYTES AMBIGUS AVEC windows.h (?!)
 
-#define BAUD 9600 // A METTRE A 115200
+#define BAUD 9600   // A METTRE A 115200? 
+                    // NON! 
 #define MSG_SIZE 3
 #define TIMEOUT_READ 5//50//20?//10?
 

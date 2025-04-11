@@ -1,3 +1,8 @@
+// * Autheur: Zakary Romdhane
+// * Date: 2025/03/16
+// * Modification: 2025/04/10
+// * Description: Communication custom pour l'ardunio du projet de session S2 2025 de l'équipe P11
+
 #include "Communication.h"
 
 std::wstring Communication::getOpenCOM() {
