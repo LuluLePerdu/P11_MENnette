@@ -54,6 +54,8 @@ bool Communication::configureSerialPort() {
 // DESCRIPTION: Demande un seed (premier muon recu) OU timeout de 5 secondes
 int Communication::createSeed() {
     time_t initTime = time(nullptr);
+	auto initTimeHR = std::chrono::high_resolution_clock::now();
+
     sendMsg({ MSG_ID_PC_MUON, 1, 0 }); // Demande de seed
     int a = -1;
     while (a < 0) {
@@ -61,9 +63,11 @@ int Communication::createSeed() {
             return 0; // Timeout
         }
         a = readMsg(MSG_ID_AR_MUON);
+        if (a >= 0) { break; }
     }
-    time_t finalTime = time(nullptr);
-    int seed = difftime(finalTime, initTime);
+    auto finalTimeHR = std::chrono::high_resolution_clock::now();
+	//
+	int seed = std::chrono::duration_cast<std::chrono::milliseconds>(finalTimeHR - initTimeHR).count();
     return seed;
 }
 
@@ -91,7 +95,7 @@ bool Communication::begin() {
         return false;
     }
     connected = true;
-	seed = createSeed();
+	//seed = createSeed();
     return true;
 }
 

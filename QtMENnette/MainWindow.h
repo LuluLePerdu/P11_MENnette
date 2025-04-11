@@ -69,8 +69,8 @@ private:
     void showPopUps();
 
     // #### LE TEMPS ####
-    int minutes = 3;
-    int secondes = 0;
+    int minutes = 0;
+    int secondes = 30;
 
 private slots:
     void on_btnHome_clicked();

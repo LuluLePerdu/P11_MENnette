@@ -46,14 +46,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), threadWidget(null
 		buzzTimer = new QTimer(this);
 		audioOutput = new QAudioOutput(this);
 		connect(buzzTimer, &QTimer::timeout, this, [this, &comm]() {
-			comm.buzz(50);
+			//comm.buzz(50);
 			qDebug() << "Seed: " << comm.seed;
 
 			if (isInGame) {
 			
 				player->setSource(QUrl("qrc:/MainWindow/Media/beep_1sec.mp3"));
 				player->setAudioOutput(audioOutput);
-				audioOutput->setVolume(0.5);
+				audioOutput->setVolume(0.0);
 				player->play();
 
 				if (totalGameWon == randomGame && !accelWidget) {
@@ -280,7 +280,10 @@ void MainWindow::initLCD(int minutes, int seconds) {
 void MainWindow::on_btnHome_clicked() {
 	ui.stackedWidget->setCurrentIndex(0);
 	deleteGames();
-	totalGameWon++;
+	//totalGameWon++;
+	QPalette palette = ui.lcdClock->palette();
+	palette.setColor(palette.WindowText, QColor(50, 255, 50));
+	ui.lcdClock->setPalette(palette);
 }
 
 
@@ -410,7 +413,11 @@ void MainWindow::on_btnSnake_clicked()
 }
 
 void MainWindow::on_btnSimon_clicked() {
-
+	if (simonWidget) {
+		ui.stackedWidget->removeWidget(simonWidget);
+		delete simonWidget;
+		simonWidget = nullptr;
+	}
 	simonWidget = new SimonSaysWidget(this, configWidget->getSimonLength(), ui.DELVert, ui.DELBleu, ui.DELRouge, ui.DELJaune);
 
 	connect(simonWidget, &SimonSaysWidget::timePenalty, this, [this](int penalty) {
@@ -432,7 +439,7 @@ void MainWindow::on_btnSimon_clicked() {
 		ui.btnSimon->setEnabled(false);
 		QMessageBox msg;
 		msg.setWindowTitle("Simon Says");
-		msg.setText("GAME COMPLETED!");
+		msg.setText("JEU TERMINE!");
 		msg.exec();
 		Communication& comm = Communication::getInstance();
 		comm.buzz(255);
@@ -613,7 +620,7 @@ void MainWindow::errorSound() {
 
 	playerWrong->setSource(QUrl("qrc:/MainWindow/Media/buzzer_wrong.mp3"));
 	playerWrong->setAudioOutput(outputWrong);
-	outputWrong->setVolume(0.5);
+	outputWrong->setVolume(0.0);
 	playerWrong->play();
 
 	//delete playerWrong;
@@ -669,12 +676,9 @@ void MainWindow::showPopUps() {
 
 	QStringList messages = {
 		"SECOUE LA MANETTE MAINTENANT!!!",
-		"AAAAAAAAAAAAAAAAAAA\nAAAAAAA\nA L'AIDE AAAAAAAAAAAA",
 		"VITE!! VITE!! VITE!!",
 		"SHAKE! SHAKE! SHAKE!",
-		"prend ça molo...",
-		"QU'EST-CE QUE TU FAIS?!?!",
-		"URGENCE: SECOUE!"
+		"URGENCE: SHAKE LA MANETTE!"
 	};
 	std::uniform_int_distribution<int> msgDist(0, messages.size() - 1);
 

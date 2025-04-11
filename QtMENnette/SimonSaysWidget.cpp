@@ -42,7 +42,7 @@ void SimonSaysWidget::checkInput() {
     int msgInput = comm.readMsg(MSG_ID_AR_BUTTON);
 
     if (msgInput > 0) {
-        comm.buzz(60);
+        comm.buzz(80);
         processUserInput(msgInput);
     }
 }

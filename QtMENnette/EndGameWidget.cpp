@@ -213,11 +213,15 @@ void EndGameWidget::saveLeaderboard()
     updateLeaderboardDisplay();
     nameEdit->setEnabled(false);
     saveButton->setEnabled(false);
+    std::reverse(leaderboard.begin(), leaderboard.end());
+
 }
 
 void EndGameWidget::updateLeaderboardDisplay()
 {
     leaderboardList->clear();
+    std::reverse(leaderboard.begin(), leaderboard.end());
+
 
     int rank = 1;
     for (const PlayerScore& score : leaderboard) {
@@ -251,6 +255,7 @@ void EndGameWidget::updateLeaderboardDisplay()
         }
 
         leaderboardList->addItem(item);
+    
 
         rank++;
     }

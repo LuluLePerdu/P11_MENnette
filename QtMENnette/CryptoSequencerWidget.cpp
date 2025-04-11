@@ -89,7 +89,7 @@ void CryptoSequencerWidget::updateGame()
 		gameTimer->stop();
 		QMessageBox msg;
 		msg.setWindowTitle("Cryptographic Sequencer");
-		msg.setText("GAME COMPLETED!");
+		msg.setText("JEU TERMINE!");
 		msg.exec();
 		emit returnToMenuRequested();
 		return;

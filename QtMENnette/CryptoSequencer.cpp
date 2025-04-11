@@ -39,7 +39,7 @@ void CryptoSequencer::initialize() {
 
 std::string CryptoSequencer::updateSequence() {
 	if (isOver) {
-		return "GAME COMPLETED!";
+		return "SEQUENCE TROUVE!";
 	}
     Communication& comm = Communication::getInstance();
 
@@ -56,8 +56,6 @@ std::string CryptoSequencer::updateSequence() {
     if (lcture.find(MSG_ID_AR_POTENTIOMETER) != lcture.end()) {
         usrInput = lcture[MSG_ID_AR_POTENTIOMETER];
     }
-    
-
     comm.clear();
     char characters[32] = "!@/\\$%?&*()=+#|\\*-[]^<>}{`;:,.'";
 

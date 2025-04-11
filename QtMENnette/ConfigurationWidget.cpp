@@ -61,7 +61,7 @@ void ConfigurationWidget::setupUi()
     simonLayout->setContentsMargins(10, 10, 10, 10);
 
     simonLengthSpin->setRange(1, 15);
-    simonLengthSpin->setValue(8);
+    simonLengthSpin->setValue(5);
 
     simonLayout->addRow("Longueur :", simonLengthSpin);
 
